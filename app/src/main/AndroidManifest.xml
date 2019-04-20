@@ -18,19 +18,21 @@
         </activity>
 
         <service
-            android:name="com.meteorshower.autoclock.service.ControllerAccessibilityService"
+            android:name=".service.ControllerAccessibilityService"
             android:enabled="true"
             android:exported="true"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/tool" />
         </service>
 
+        <activity android:name=".view.BasicActivity"></activity>
     </application>
 
 </manifest>
