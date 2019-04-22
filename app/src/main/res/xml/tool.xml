@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
  <accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
-     android:accessibilityEventTypes="typeAllMask"
-     android:accessibilityFeedbackType="feedbackGeneric"
-     android:notificationTimeout="100"
-     android:accessibilityFlags="flagDefault"
-     android:canRetrieveWindowContent="true"
+    android:packageNames="com.tencent.mm,android,de.robv.android.xposed.installer,com.sollyu.android.appenv.dev,com.koushikdutta.superuser,com.android.settings,com.alibaba.android.rimet,com.main.easyweather"
+    android:accessibilityEventTypes="typeAllMask"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:notificationTimeout="100"
+    android:accessibilityFlags="flagDefault"
+    android:canRetrieveWindowContent="true"
  />
