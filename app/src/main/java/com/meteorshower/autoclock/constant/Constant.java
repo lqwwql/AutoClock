@@ -8,6 +8,12 @@ public class Constant {
     public static String APP_PATH = "/storage/emulated/0/AutoClock/";
     //异常捕获保存路径
     public static String ERROR = APP_PATH + "ERROR/";
+    //log文件保存路径
+    public static String LOG = "LOG";
     //TAG
     public static String TAG = "lqwtest";
+    //Token校验
+    public static String TOKEN = "";
+    //IP
+    public static String BASE_URL = "";
 }

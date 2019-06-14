@@ -1,5 +1,7 @@
 package com.meteorshower.autoclock.util;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Rect;
 import android.util.Log;
 
@@ -44,5 +46,16 @@ public class AccessibilityUtils {
             ShellUtils.CommandResult result = ShellUtils.execCommand(commonds, isRoot);
             Log.d("lqwtest", "result = " + result.toString());
         }
+    }
+
+    /**
+     * 回到桌面
+     * */
+    public static void goToHome(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //如果是服务里调用，必须加入new task标识
+        intent.addCategory(Intent.CATEGORY_HOME);
+        context.startActivity(intent);
     }
 }
