@@ -1,5 +1,6 @@
 package com.meteorshower.autoclock.view;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.View;
@@ -18,17 +19,23 @@ public class HomeActivity extends BasicActivity {
         switch (view.getId()) {
             case R.id.btn_start:
                 Log.d("lqwtest", "click btn_start");
-                try {
-                    Thread.sleep(5*1000);
-                    Rect rect = new Rect();
-                    rect.set(579, 563, 668, 652);
-                    AccessibilityUtils.clickRect(rect);
-                } catch (Exception e) {
-                    Log.d("lqwtest", "openModifyNameUI err = ", e);
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            goToHome();
+                            Thread.sleep(3 * 1000);
+                            Rect rect = new Rect();
+                            rect.set(579, 563, 668, 652);
+                            AccessibilityUtils.clickRect(rect);
+                        } catch (Exception e) {
+                            Log.d("lqwtest", "openModifyNameUI err = ", e);
+                        }
+                    }
+                }).start();
                 break;
             case R.id.btn_end:
-                Toast.makeText(HomeActivity.this, "点击开始",Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, "点击结束", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
@@ -38,5 +45,13 @@ public class HomeActivity extends BasicActivity {
     @Override
     protected int getLayoutID() {
         return R.layout.activity_home;
+    }
+
+    private void goToHome() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //如果是服务里调用，必须加入new task标识
+        intent.addCategory(Intent.CATEGORY_HOME);
+        startActivity(intent);
     }
 }
