@@ -22,7 +22,7 @@ public class HttpManager {
         call.enqueue(new Callback<BaseCallBack<JobData>>() {
             @Override
             public void onResponse(Call call, Response response) {
-                
+
             }
 
             @Override
