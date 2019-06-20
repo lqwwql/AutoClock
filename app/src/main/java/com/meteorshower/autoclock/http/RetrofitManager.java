@@ -47,7 +47,6 @@ public class RetrofitManager {
 
         mRetrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//添加rxjava转换器
                 .baseUrl(Constant.BASE_URL)
                 .client(client)
@@ -83,7 +82,7 @@ public class RetrofitManager {
         if (mRetrofit != null) {
             return mRetrofit;
         }
-        Log.e("err", "mRetrofit:==null ");
+        Log.e("lqwtest", "mRetrofit:==null ");
         return null;
     }
 

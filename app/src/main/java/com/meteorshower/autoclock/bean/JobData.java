@@ -2,31 +2,58 @@ package com.meteorshower.autoclock.bean;
 
 public class JobData {
 
-    private int jobId;
-    private String jobName;
-    private int state;
+    private int Id;
+    private String JobName;
+    private String JobTime;
+    private String ExtraInfo;
+    private int Status;
+    private int Type;
 
-    public int getJobId() {
-        return jobId;
+    public int getId() {
+        return Id;
     }
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
+    public void setId(int id) {
+        Id = id;
     }
 
     public String getJobName() {
-        return jobName;
+        return JobName;
     }
 
     public void setJobName(String jobName) {
-        this.jobName = jobName;
+        JobName = jobName;
     }
 
-    public int getState() {
-        return state;
+    public String getJobTime() {
+        return JobTime;
     }
 
-    public void setState(int state) {
-        this.state = state;
+    public void setJobTime(String jobTime) {
+        JobTime = jobTime;
+    }
+
+    public String getExtraInfo() {
+        return ExtraInfo;
+    }
+
+    public void setExtraInfo(String extraInfo) {
+        ExtraInfo = extraInfo;
+    }
+
+    public int getStatus() {
+        return Status;
+    }
+
+    public void setStatus(int status) {
+        Status = status;
+    }
+
+    public int getType() {
+        return Type;
+    }
+
+    public void setType(int type) {
+        Type = type;
     }
 }

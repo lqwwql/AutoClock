@@ -81,7 +81,7 @@ public class Util {
 
 	
 	/**
-	 * »ñÈ¡µ±Ç°Ğ¡Ê±£¬Èç¹ûÄÜ¹»»ñÈ¡ÍøÂçÊ±¼ä£¬Ôò»á·µ»ØÍøÂçÊ±¼ä
+	 * ??????Ğ¡???????????????????????????????
 	 */
 	public static int getCurHour() {
 		int curHour = getHour24();
@@ -93,23 +93,23 @@ public class Util {
 	}
 	
 	/**
-	 * Ä¬ÈÏ¸ñÊ½yyyy-MM-dd HH:mm:ss£¬»ñÈ¡ÍøÂçÊ±¼ä 
+	 * ?????yyyy-MM-dd HH:mm:ss???????????? 
 	 */
 	public static String getNetTime() {
 		return getNetTime("yyyy-MM-dd HH:mm:ss");
 	}
 	
 	/**
-	 * Ö¸¶¨¸ñÊ½»ñÈ¡ÍøÂçÊ±¼ä 
+	 * ???????????????? 
 	 */
     public static String getNetTime(String pattern) {
-        URL url = null;//È¡µÃ×ÊÔ´¶ÔÏó
+        URL url = null;//??????????
         try {
             url = new URL("http://www.baidu.com");
-            URLConnection uc = url.openConnection();//Éú³ÉÁ¬½Ó¶ÔÏó
+            URLConnection uc = url.openConnection();//???????????
             uc.setConnectTimeout(30*1000);
-            uc.connect(); //·¢³öÁ¬½Ó
-            long ld = uc.getDate(); //È¡µÃÍøÕ¾ÈÕÆÚÊ±¼ä
+            uc.connect(); //????????
+            long ld = uc.getDate(); //?????????????
             DateFormat formatter = new SimpleDateFormat(pattern);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(ld);
@@ -123,7 +123,7 @@ public class Util {
     }
     
 	/**
-	 * »ñÈ¡µ±Ç°µÄÊ±¼ä£¨½öĞ¡Ê±£¬24Ğ¡Ê±ÖÆ£©
+	 * ?????????????Ğ¡???24Ğ¡????
 	 */
 	public static int getHour24() {
 		long time = System.currentTimeMillis();
@@ -134,14 +134,14 @@ public class Util {
 	}
 	
 	/**
-	 * »ñÈ¡µ±Ç°Ê±¼ä
+	 * ?????????
 	 */
 	public static String getCurrentTime() {
 		return formatter.format(new Date());
 	}
 
 	/**
-	 * ×ª»»timeµÄÊ±¼ä
+	 * ???time?????
 	 */
 	public static String getCurrentTime(long time) {
 		return formatter.format(new Date(time));
@@ -159,7 +159,7 @@ public class Util {
 
 
 	/**
-	 * Ëæ»úÊıº¯Êı
+	 * ?????????
 	 * 
 	 * @param n
 	 * @return
@@ -169,19 +169,19 @@ public class Util {
 	}
 
 	/**
-	 * ´ÓÔ´×Ö·û´®srcÖĞ»ñÈ¡·ûºÏreg¹æÔòµÄ×Ó×Ö·û´®£¬²¢ÇÒ·µ»Ø£¬Èç¹ûsrc×Ö·û´®ÖĞÓĞ¶à¸ö×Ó×Ö·û´®·ûºÏreg¹æÔò£¬Ôò·µ»ØµÚÒ»¸ö·ûºÏµÄ×Ó×Ö·û´®
+	 * ????????src?Ğ»??????reg?????????????????????????src????????Ğ¶?????????????reg???????????????????????
 	 * 
 	 * @param src
-	 *            Ô´×Ö·û´®
+	 *            ??????
 	 * @param reg
-	 *            ÕıÔò±í´ïÊ½
+	 *            ???????
 	 * @return
 	 */
 	public static String reg(String src, String reg) {
-		Pattern p = Pattern.compile(reg);// ÔÚÕâÀï£¬±àÒë³ÉÒ»¸öÕıÔò
-		Matcher m = p.matcher(src);// »ñµÃÆ¥Åä
+		Pattern p = Pattern.compile(reg);// ??????????????????
+		Matcher m = p.matcher(src);// ??????
 		String res = "";
-		while (m.find()) { // ×¢ÒâÕâÀï£¬ÊÇwhile²»ÊÇif
+		while (m.find()) { // ?????????while????if
 			res = m.group();
 			break;
 		}
@@ -189,7 +189,7 @@ public class Util {
 	}
 
 	/**
-	 * ·µ»Ø¼ÓÉÏ""Ö®ºóµÄ×Ö·û´®
+	 * ???????""?????????
 	 * 
 	 * @param s
 	 * @return
@@ -199,7 +199,7 @@ public class Util {
 	}
 
 	/**
-	 * ÅĞ¶Ïdata×Ö·û´®ÊÇ²»ÊÇJSON¸ñÊ½
+	 * ?Ğ¶?data??????????JSON???
 	 * 
 	 * @param data
 	 * @return
@@ -215,7 +215,7 @@ public class Util {
 	}
 
 	/**
-	 * »ñÈ¡ÊÖ»ú·Ö±æÂÊ
+	 * ???????????
 	 * 
 	 * @param context
 	 * @return
@@ -226,9 +226,9 @@ public class Util {
 	}
 
 	/**
-	 * »ñÈ¡°æ±¾ºÅ
+	 * ????æ±¾??
 	 * 
-	 * @return µ±Ç°Ö¸¶¨packageNameÓ¦ÓÃµÄ°æ±¾ºÅ
+	 * @return ??????packageName????æ±¾??
 	 */
 	public static String getVersion(Context context, String packageName) {
 		try {
@@ -275,7 +275,7 @@ public class Util {
 	}
 
 	/**
-	 * ±£´æ³ÌĞò²¶×½µ½µÄÒì³£
+	 * ??????????????
 	 */
 	public static void saveThrowableInfo(Throwable e) {
 		if (e == null)
@@ -310,7 +310,7 @@ public class Util {
 	}
 
 	/**
-	 * ³£¹æÈÕÖ¾
+	 * ???????
 	 */
 	public static void log(String i) {
 		try {
@@ -336,7 +336,7 @@ public class Util {
 
 	
 	/**
-	 * À­ÈºÈÕÖ¾
+	 * ??????
 	 */
 	public static void inviteQunLog(String i) {
 		try {
@@ -361,7 +361,7 @@ public class Util {
 	}
 	
 	/**
-	 * ¼ÓºÃÓÑÈÕÖ¾£¬¸ñÊ½: {"nickname":"xxxx", "phoneNum":"xxxx"}
+	 * ?????????????: {"nickname":"xxxx", "phoneNum":"xxxx"}
 	 */
 	public static void addFriendsLog(String i) {
 		try {
@@ -388,7 +388,7 @@ public class Util {
 
 
 	/**
-	 * ´ÓÒ»¸öĞòÁĞ»¯ÎÄ¼ş£¬·´ĞòÁĞ»¯obj
+	 * ????????Ğ»???????????Ğ»?obj
 	 * 
 	 * @return
 	 */
@@ -438,7 +438,7 @@ public class Util {
 	}
 
 	/**
-	 * ÔËĞĞscan.shÎÄ¼ş£¬ÓÃÓÚĞŞ¸ÄÖ¸¶¨/data/data/packageNameÏÂËùÓĞÎÄ¼şµÄÓÃ»§×éĞÅÏ¢
+	 * ????scan.sh???????????????/data/data/packageName???????????????????
 	 * @param packageName
 	 * @throws IOException
 	 * @throws InterruptedException 
@@ -446,15 +446,15 @@ public class Util {
 	public static boolean runScanSh(String packageName) throws IOException, InterruptedException {
 		ShellUtils.performSuCommand("chmod -R 777 /data/local/tmp");
 		releaseSh();
-		// È¡µÃÈ¨ÏŞ
+		// ??????
 		ShellUtils.performSuCommand("chmod 777 /data/local/tmp/scanDir.sh");
-		// ÔËĞĞ scan.sh ÎÄ¼ş
+		// ???? scan.sh ???
 		
 		return ShellUtils.performSuCommand("/data/local/tmp/scanDir.sh /data/data/" + packageName + " " + getGroup(packageName));
 	}
 
 	/**
-	 * ÔËĞĞscan.shÎÄ¼ş£¬ÓÃÓÚĞŞ¸ÄÖ¸¶¨pathÏÂËùÓĞÎÄ¼şµÄÓÃ»§×éĞÅÏ¢
+	 * ????scan.sh???????????????path???????????????????
 	 * @param packageName
 	 * @throws IOException
 	 * @throws InterruptedException 
@@ -462,9 +462,9 @@ public class Util {
 	public static boolean runScanSh(String path, String packageName) throws IOException, InterruptedException {
 		ShellUtils.performSuCommand("chmod -R 777 /data/local/tmp");
 		releaseSh();
-		// È¡µÃÈ¨ÏŞ
+		// ??????
 		ShellUtils.performSuCommand("chmod 777 /data/local/tmp/scanDir.sh");
-		// ÔËĞĞ su ÎÄ¼ş
+		// ???? su ???
 		return ShellUtils.performSuCommand("/data/local/tmp/scanDir.sh " + path + " " + getGroup(packageName));
 	}
 
@@ -493,7 +493,7 @@ public class Util {
 	}
 
 	/**
-	 * ·ÅÖÃshÎÄ¼ş
+	 * ????sh???
 	 */
 	private static void releaseSh() throws IOException, InterruptedException {
 		StringBuilder content = new StringBuilder();

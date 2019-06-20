@@ -11,6 +11,11 @@ import java.util.Random;
 
 public class AccessibilityUtils {
 
+    static int KEYCODE_ENTER = 66;
+    static int KEYCODE_GOBACK = 4;
+    static int KEYCODE_TAB = 61;
+    static int KEYCODE_DEL = 67;
+
     /**
      * 打开指定Activity
      */
@@ -46,6 +51,10 @@ public class AccessibilityUtils {
             ShellUtils.CommandResult result = ShellUtils.execCommand(commonds, isRoot);
             Log.d("lqwtest", "result = " + result.toString());
         }
+    }
+
+    public static void goBack() throws InterruptedException {
+        ShellUtils.performSuCommand("input keyevent " + KEYCODE_GOBACK);
     }
 
     /**

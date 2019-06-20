@@ -14,12 +14,13 @@ public class MyApplication extends Application {
     private static Context mContext;//程序上下文
     private static int mMainThreadId;//主线程ID
     private static Handler mHandler;
+    public static MyApplication context;
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext = getApplicationContext();
+        mContext = this;
         mMainThreadId = Process.myTid();
         mHandler = new Handler();
     }

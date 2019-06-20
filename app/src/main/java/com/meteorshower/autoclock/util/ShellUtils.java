@@ -57,7 +57,7 @@ public class ShellUtils {
         return sb.toString().trim();
     }
 
-    // ·µ»ØµÄÊÇListÀàĞÍ
+    // è¿”å›çš„æ˜¯Listç±»å‹
     public static List<String> getShellOut2(Process ps) {
         List<String> list = new ArrayList<>();
         BufferedReader br = shellOut(ps);
@@ -93,7 +93,7 @@ public class ShellUtils {
     }
 
     /**
-     * Ö´ĞĞsuÃüÁî£¬×î¶àÖØ¸´Ö´ĞĞ5´Î
+     * æ‰§è¡Œsuå‘½ä»¤ï¼Œæœ€å¤šé‡å¤æ‰§è¡Œ5æ¬¡
      */
     public static String performSuCommandAndGetRes(String cmd)
             throws InterruptedException {
@@ -155,7 +155,7 @@ public class ShellUtils {
     }
 
     /**
-     * Ö´ĞĞsuÃüÁî£¬×î¶àÖØ¸´Ö´ĞĞ5´Î
+     * æ‰§è¡Œsuå‘½ä»¤ï¼Œæœ€å¤šé‡å¤æ‰§è¡Œ5æ¬¡
      */
     public static boolean performSuCommand(String cmd)
             throws InterruptedException {
@@ -213,7 +213,7 @@ public class ShellUtils {
     }
 
     /**
-     * °²×°APK
+     * å®‰è£…APK
      */
     public static boolean installUseRoot(String filePath)
             throws InterruptedException {
@@ -224,7 +224,7 @@ public class ShellUtils {
     }
 
     /**
-     * ÓÃsuÃüÁî¿½±´ÎÄ¼şµ½Ö¸¶¨ÎÄ¼ş¼Ğ
+     * ç”¨suå‘½ä»¤æ‹·è´æ–‡ä»¶åˆ°æŒ‡å®šæ–‡ä»¶å¤¹
      */
     public static boolean cpFile(String filePath, String targetPath)
             throws InterruptedException {
@@ -239,7 +239,7 @@ public class ShellUtils {
     }
 
     /**
-     * É¾³ıÎÄ¼ş
+     * åˆ é™¤æ–‡ä»¶
      */
     public static boolean rmFile(String path) throws InterruptedException {
         String command = "rm -f " + path;
@@ -247,7 +247,7 @@ public class ShellUtils {
     }
 
     /**
-     * É¾³ıÄ¿Â¼
+     * åˆ é™¤ç›®å½•
      */
     public static boolean rmDir(String path, boolean rmDir)
             throws InterruptedException {

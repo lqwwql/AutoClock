@@ -24,6 +24,8 @@ public abstract class BasicActivity extends Activity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(getLayoutID());
         unbinder = ButterKnife.bind(this);
+        initView();
+        initData();
     }
 
     @Override
@@ -35,4 +37,7 @@ public abstract class BasicActivity extends Activity {
     }
 
     protected abstract int getLayoutID();
+    protected abstract void initView();
+    protected abstract void initData();
+
 }

@@ -4,20 +4,27 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.util.Log;
 
+import com.meteorshower.autoclock.application.MyApplication;
+import com.meteorshower.autoclock.bean.JobData;
+import com.meteorshower.autoclock.bean.PostData;
+import com.meteorshower.autoclock.presenter.JobPresenter;
+import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
 import com.meteorshower.autoclock.util.LogUtils;
 import com.meteorshower.autoclock.util.ToastUtils;
+import com.meteorshower.autoclock.view.JobView;
 
-public class AutoClickJob extends Job {
+public class AutoClickJob extends Job implements JobView.UpdateJobView {
 
     private String JobName = "AutoClickJob";
     private Context context;
-    private int state;//1:上班 2:下班
+    private JobData jobData;
+    private JobPresenter jobPresenter;
 
-    public AutoClickJob(Context context, int state, int task_id) {
-        this.context = context;
-        this.state = state;
-        this.task_id = task_id;
+    public AutoClickJob(JobData jobData) {
+        this.context = MyApplication.getContext();
+        this.jobData = jobData;
+        jobPresenter = new JobPresenterImpl(this);
     }
 
     @Override
@@ -38,33 +45,49 @@ public class AutoClickJob extends Job {
 
             //点击考勤打卡，等待10s刷新
             Thread.sleep(10 * 1000);
-            rect.set(90, 890, 110, 910);//考勤打卡
+            rect.set(100, 700, 120, 720);//考勤打卡
             AccessibilityUtils.clickRect(rect);
 
-            if (state == 1) {
+            if (jobData.getType() == 1) {
                 //点击上班打卡，等到10s检测是否成功
-            /*Thread.sleep(10 * 1000);
-            rect.set(90, 110, 890, 910);//上班打卡
-            AccessibilityUtils.clickRect(rect);*/
-            } else if (state == 2) {
+                Thread.sleep(20 * 1000);
+                rect.set(290, 426, 430, 470);//上班打卡
+                AccessibilityUtils.clickRect(rect);
+            } else if (jobData.getType() == 2) {
                 //点击下班打卡，等到10s检测是否成功
-                Thread.sleep(10 * 1000);
-                rect.set(350, 790, 370, 810);//下班打卡
+                Thread.sleep(20 * 1000);
+                rect.set(290, 778, 430, 822);//下班打卡
                 AccessibilityUtils.clickRect(rect);
             }
             //上传结果到服务器
             Thread.sleep(10 * 1000);
-            ToastUtils.show("完成任务");
+            jobData.setStatus(2);
 
-            //返回桌面
-            AccessibilityUtils.goToHome(context);
+            PostData postData = new PostData();
+            postData.setId(jobData.getId());
+            postData.setJob_name(jobData.getJobName());
+            postData.setJob_time(jobData.getJobTime());
+            postData.setExtra_info(jobData.getExtraInfo());
+            postData.setType(jobData.getType());
+            postData.setStatus(3);
+            jobPresenter.updateCurrentJob(postData);
 
-
-            //返回桌面
-            AccessibilityUtils.goToHome(context);
         } catch (InterruptedException e) {
-            ToastUtils.show("发生错误");
             LogUtils.getInstance().e("doJob error = " + Log.getStackTraceString(e), 1);
+        } finally {
+            goBack();
+            //返回桌面
+            AccessibilityUtils.goToHome(context);
+        }
+    }
+
+    private void goBack() {
+        try {
+            AccessibilityUtils.goBack();
+            Thread.sleep(3 * 1000);
+            AccessibilityUtils.goBack();
+        } catch (InterruptedException e) {
+            Log.d("lqwtest", "goback InterruptedException " + Log.getStackTraceString(e));
         }
     }
 
@@ -73,4 +96,14 @@ public class AutoClickJob extends Job {
         return JobName;
     }
 
+
+    @Override
+    public void updateSuccess() {
+        Log.d("lqwtest", "updateSuccess");
+    }
+
+    @Override
+    public void updateFailure(String message) {
+        Log.d("lqwtest", "updateFailure message: " + message);
+    }
 }

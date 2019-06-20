@@ -15,5 +15,5 @@ public class Constant {
     //Token校验
     public static String TOKEN = "";
     //IP
-    public static String BASE_URL = "";
+    public static String BASE_URL = "http://120.78.179.218:14470";
 }

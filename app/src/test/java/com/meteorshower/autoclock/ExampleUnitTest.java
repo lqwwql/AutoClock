@@ -14,4 +14,11 @@ public class ExampleUnitTest {
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
     }
+    @Test
+    public void testmyown() {
+        String value = "30";
+        float result = Float.parseFloat(value);
+        result = (-result);
+        System.out.println("result = " + result);
+    }
 }

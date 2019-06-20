@@ -13,14 +13,20 @@ public interface ApiService {
     /**
      * 获取任务
      */
-    @POST("Job/getJobInfo")
+    @POST("job/getJob")
     Call<BaseCallBack<JobData>> getJobInfo();
 
     /**
-     * 上传任务
+     * 添加任务
      */
-    @POST("Job/postJobInfo")
-    Call<BaseCallBack<JobData>> postJobInfo(@Body RequestBody requestBody);
+    @POST("job/addJob")
+    Call<BaseCallBack<JobData>> addJobInfo(@Body RequestBody requestBody);
+
+    /**
+     * 更新任务
+     */
+    @POST("job/updateJob")
+    Call<BaseCallBack<JobData>> updateJobInfo(@Body RequestBody requestBody);
 
 }
 
