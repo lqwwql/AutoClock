@@ -70,6 +70,12 @@ public class ControllerAccessibilityService extends AccessibilityService {
     }
 
     @Override
+    public void onDestroy() {
+        mUploadScheduledFuture.cancel(true);
+        super.onDestroy();
+    }
+
+    @Override
     public void onInterrupt() {
 
     }
@@ -102,7 +108,6 @@ public class ControllerAccessibilityService extends AccessibilityService {
                 }
             }
         }, 10, delayTime, TimeUnit.SECONDS);
-        mUploadScheduledFuture.cancel(true);
     }
 
     /**
