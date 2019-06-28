@@ -1,6 +1,7 @@
 package com.meteorshower.autoclock.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.meteorshower.autoclock.bean.BaseCallBack;
 import com.meteorshower.autoclock.bean.JobData;
 import com.meteorshower.autoclock.bean.PostData;
@@ -21,8 +22,12 @@ public class JobModelImpl implements JobModel {
     private List<Call> calllist = new ArrayList<>();
 
     @Override
-    public void getJob(final JobListener.GetJobListener getJobListener) {
-        Call call = RetrofitManager.getInstance().getService(ApiService.class).getJobInfo();
+    public void getJob(int job_type,int status,final JobListener.GetJobListener getJobListener) {
+        JsonObject object = new JsonObject();
+        object.addProperty("job_type",job_type);
+        object.addProperty("status",status);
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), object.toString());
+        Call call = RetrofitManager.getInstance().getService(ApiService.class).getJobInfo(body);
         calllist.add(call);
         call.enqueue(new Callback<BaseCallBack<JobData>>() {
             @Override

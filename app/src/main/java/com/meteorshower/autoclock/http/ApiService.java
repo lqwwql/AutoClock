@@ -14,7 +14,7 @@ public interface ApiService {
      * 获取任务
      */
     @POST("job/getJob")
-    Call<BaseCallBack<JobData>> getJobInfo();
+    Call<BaseCallBack<JobData>> getJobInfo(@Body RequestBody requestBody);
 
     /**
      * 添加任务
@@ -27,6 +27,13 @@ public interface ApiService {
      */
     @POST("job/updateJob")
     Call<BaseCallBack<JobData>> updateJobInfo(@Body RequestBody requestBody);
+
+
+    /**
+     * 上传心跳包
+     */
+    @POST("job/heartbeat")
+    Call<BaseCallBack<Integer>> postHeartBeat(@Body RequestBody requestBody);
 
 }
 

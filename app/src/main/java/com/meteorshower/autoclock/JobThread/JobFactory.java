@@ -43,7 +43,7 @@ public class JobFactory extends Thread implements JobView.GetJobView {
 
                 if (!JobExecutor.getInstance().isDoingJob() && isGetJob) {
                     Log.d("JobFactory", "start get a job ");
-                    jobPresenter.getCurrentJob();
+                    jobPresenter.getCurrentJob(0, 1);
                 }
             } catch (Exception e) {
                 Log.d("JobFactory", "JobFactory run error: " + Log.getStackTraceString(e));

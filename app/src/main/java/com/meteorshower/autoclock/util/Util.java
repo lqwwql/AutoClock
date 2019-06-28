@@ -39,7 +39,7 @@ import java.util.regex.Pattern;
 public class Util {
 
 	static Random random = new Random(System.currentTimeMillis());
-	static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+	static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static String subBytes(String src, int beginIndex, int endIndex) {
 		if(src == null || beginIndex < 0 || endIndex < 0)

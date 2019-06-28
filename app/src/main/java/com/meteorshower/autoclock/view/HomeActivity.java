@@ -1,5 +1,6 @@
 package com.meteorshower.autoclock.view;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -44,7 +45,7 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
 
     }
 
-    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check})
+    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check,R.id.btn_look})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start:
@@ -64,6 +65,9 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
             case R.id.btn_check:
                 JobFactory.getInstance().setRuning(false);
                 JobExecutor.getInstance().setRuning(false);
+                break;
+            case R.id.btn_look:
+                startActivity(new Intent(HomeActivity.this,CheckJobActivity.class));
                 break;
             case R.id.btn_add:
                 try {

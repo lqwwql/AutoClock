@@ -25,8 +25,8 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/icon"
         android:networkSecurityConfig="@xml/network_config"
+        android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".view.HomeActivity">
@@ -53,6 +53,7 @@
         </service>
 
         <activity android:name=".view.BasicActivity" />
+        <activity android:name=".view.CheckJobActivity"></activity>
     </application>
 
 </manifest>

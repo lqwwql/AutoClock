@@ -33,8 +33,8 @@ public class JobPresenterImpl implements JobPresenter {
 
 
     @Override
-    public void getCurrentJob() {
-        jobModel.getJob(new JobListener.GetJobListener() {
+    public void getCurrentJob(int job_type,int status) {
+        jobModel.getJob(job_type,status,new JobListener.GetJobListener() {
             @Override
             public void onSuccess(List<JobData> jobDataList) {
                 getJobView.getSuccess(jobDataList);
