@@ -12,6 +12,7 @@ import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
 import com.meteorshower.autoclock.util.LogUtils;
 import com.meteorshower.autoclock.util.ToastUtils;
+import com.meteorshower.autoclock.view.HomeActivity;
 import com.meteorshower.autoclock.view.JobView;
 
 public class AutoClickJob extends Job implements JobView.UpdateJobView {
@@ -30,6 +31,13 @@ public class AutoClickJob extends Job implements JobView.UpdateJobView {
     @Override
     public void doJob() {
         try {
+            //唤醒屏幕
+            try {
+                AccessibilityUtils.wakeUpAndUnlock(context);
+            } catch (Exception e) {
+                Log.d("lqwtest", "wakeUpAndUnlock error = " + Log.getStackTraceString(e));
+            }
+
             //返回桌面
             AccessibilityUtils.goToHome(context);
             //等待5秒后点击钉钉
