@@ -112,6 +112,14 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_test"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="测试点击" />
+
+        <Button
             android:id="@+id/btn_look"
             android:layout_width="match_parent"
             android:layout_height="50dp"

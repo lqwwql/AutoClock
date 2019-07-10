@@ -86,6 +86,18 @@ public class AutoClickJob extends Job implements JobView.UpdateJobView {
             goBack();
             //返回桌面
             AccessibilityUtils.goToHome(context);
+            clickAutoClock();
+        }
+    }
+
+    private void clickAutoClock(){
+        try {
+            Thread.sleep(5 * 1000);
+            Rect rect = new Rect();
+            rect.set(442, 375, 462, 395);
+            AccessibilityUtils.clickRect(rect);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

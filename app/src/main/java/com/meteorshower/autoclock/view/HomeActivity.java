@@ -11,9 +11,11 @@ import com.meteorshower.autoclock.JobThread.JobExecutor;
 import com.meteorshower.autoclock.JobThread.JobFactory;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.bean.PostData;
+import com.meteorshower.autoclock.constant.Constant;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
+import com.meteorshower.autoclock.util.ShellUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -44,7 +46,7 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
 
     }
 
-    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look})
+    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look, R.id.btn_test})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start:
@@ -89,6 +91,20 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
                 } catch (Exception e) {
                     Log.d("lqwtest", "add error = " + Log.getStackTraceString(e));
                 }
+                break;
+            case R.id.btn_test:
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+//                            boolean result = AccessibilityUtils.openAppByPackageAndName(Constant.TARGET_LAODONGLI_APPNAME, Constant.TARGET_LAODONGLI_ACTIVITY_NAME);
+                            ShellUtils.CommandResult result = AccessibilityUtils.openAppByExeCommand(Constant.TARGET_LAODONGLI_APPNAME, Constant.TARGET_LAODONGLI_ACTIVITY_NAME);
+                            Log.d("lqwtest", "result = " + result.toString());
+                        } catch (Exception e) {
+                            Log.d("lqwtest", "test error = " + Log.getStackTraceString(e));
+                        }
+                    }
+                }, 5 * 1000);
                 break;
             default:
                 break;

@@ -7,6 +7,7 @@ import android.graphics.Rect;
 import android.os.PowerManager;
 import android.util.Log;
 
+import com.meteorshower.autoclock.constant.Constant;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 
 import java.util.Random;
@@ -21,9 +22,20 @@ public class AccessibilityUtils {
     /**
      * 打开指定Activity
      */
-    public static boolean openModifyNameUI() throws InterruptedException {
-        ShellUtils.performSuCommand("am start --activity-clear-top com.alibaba.android.rimet.biz.SplashActivity");
+    public static boolean openAppByName(String activityName) throws InterruptedException {
+        ShellUtils.performSuCommand("am start --activity-clear-top " + activityName);
         return ControllerAccessibilityService.Wait(25 * 100);
+    }
+
+    public static boolean openAppByPackageAndName(String packageName, String activityName) throws InterruptedException {
+        String command = "adb shell am start -n \"" + packageName + "/" + activityName + "\" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER";
+        ShellUtils.performSuCommand(command);
+        return ControllerAccessibilityService.Wait(25 * 100);
+    }
+
+    public static ShellUtils.CommandResult openAppByExeCommand(String packageName, String activityName) throws InterruptedException {
+        String command = "am start -n \"" + packageName + "/" + activityName + "\" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER";
+        return ShellUtils.execCommand(command, false);
     }
 
     /**
@@ -61,7 +73,7 @@ public class AccessibilityUtils {
 
     /**
      * 回到桌面
-     * */
+     */
     public static void goToHome(Context context) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_MAIN);
@@ -72,18 +84,18 @@ public class AccessibilityUtils {
 
     /**
      * 唤醒屏幕
-     * */
-    public static void wakeUpAndUnlock(Context context){
+     */
+    public static void wakeUpAndUnlock(Context context) {
         //屏锁管理器
-        KeyguardManager km= (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
+        KeyguardManager km = (KeyguardManager) context.getSystemService(Context.KEYGUARD_SERVICE);
         KeyguardManager.KeyguardLock kl = km.newKeyguardLock("unLock");
         //解锁
         kl.disableKeyguard();
         //获取电源管理器对象
-        PowerManager pm=(PowerManager) context.getSystemService(Context.POWER_SERVICE);
+        PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         //获取PowerManager.WakeLock对象,后面的参数|表示同时传入两个值,最后的是LogCat里用的Tag
         PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP |
-                PowerManager.SCREEN_DIM_WAKE_LOCK,"bright");
+                PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
         //点亮屏幕
         wl.acquire();
         //释放
