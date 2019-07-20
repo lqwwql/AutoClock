@@ -57,8 +57,8 @@ public class HeartBeatListViewAdapter extends BaseAdapter {
 
         HeatBeat heatBeat = dataList.get(position);
         viewHolder.heatTime.setText("心跳时间：" + heatBeat.getHeart_time());
-        viewHolder.jobDoing.setText("任务执行状态：" + (heatBeat.isIs_doing_job() ? "执行中" : "空闲中"));
-        viewHolder.jobGetting.setText("任务获取状态：" + (heatBeat.isIs_getting_job() ? "可获取" : "不获取"));
+        viewHolder.jobDoing.setText("任务执行状态：" + (heatBeat.getIs_doing_job().equalsIgnoreCase("True") ? "执行中" : "空闲中"));
+        viewHolder.jobGetting.setText("任务获取状态：" + (heatBeat.getIs_getting_job().equalsIgnoreCase("True") ? "可获取" : "不获取"));
 
         return convertView;
     }

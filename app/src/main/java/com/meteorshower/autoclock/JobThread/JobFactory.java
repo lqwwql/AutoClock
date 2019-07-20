@@ -2,6 +2,7 @@ package com.meteorshower.autoclock.JobThread;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.meteorshower.autoclock.Job.AutoClickJob;
@@ -48,8 +49,8 @@ public class JobFactory extends Thread implements JobView.GetJobView {
         while (isRuning) {
             try {
                 //每5分钟请求一次任务
-                Thread.sleep(sleepTime);
                 postToNet();
+                Thread.sleep(sleepTime);
                 Log.d("JobFactory", "isGetJob=" + isGetJob);
                 if (!JobExecutor.getInstance().isDoingJob() && isGetJob) {
                     Log.d("JobFactory", "start get a job ");
@@ -104,10 +105,10 @@ public class JobFactory extends Thread implements JobView.GetJobView {
     private void postToNet() {
         HeatBeat heatBeat = new HeatBeat();
         heatBeat.setHeart_time(StringUtils.getNow());
-        heatBeat.setIs_doing_job(JobExecutor.getInstance().isDoingJob());
-        heatBeat.setIs_getting_job(JobFactory.getInstance().isGetJob());
+        heatBeat.setIs_doing_job(JobExecutor.getInstance().isDoingJob()+"");
+        heatBeat.setIs_getting_job(JobFactory.getInstance().isGetJob()+"");
 
-        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(heatBeat));
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), JSON.toJSONString(heatBeat));
         Call call = RetrofitManager.getInstance().getService(ApiService.class).postHeartBeat(body);
         call.enqueue(new Callback() {
             @Override
