@@ -3,18 +3,29 @@ package com.meteorshower.autoclock.JobThread;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.meteorshower.autoclock.Job.AutoClickJob;
+import com.meteorshower.autoclock.bean.HeatBeat;
 import com.meteorshower.autoclock.bean.JobData;
+import com.meteorshower.autoclock.http.ApiService;
+import com.meteorshower.autoclock.http.RetrofitManager;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
+import com.meteorshower.autoclock.util.StringUtils;
 import com.meteorshower.autoclock.view.JobView;
 
 import java.util.List;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class JobFactory extends Thread implements JobView.GetJobView {
 
     private JobPresenter jobPresenter;
-    private int sleepTime = 60 * 1000;
+    private int sleepTime = 5 * 60 * 1000;
     private boolean isGetJob = false;
     private boolean isRuning = true;
 
@@ -36,11 +47,10 @@ public class JobFactory extends Thread implements JobView.GetJobView {
         jobPresenter = new JobPresenterImpl(this);
         while (isRuning) {
             try {
-                //每1分钟请求一次任务
+                //每5分钟请求一次任务
                 Thread.sleep(sleepTime);
-
+                postToNet();
                 Log.d("JobFactory", "isGetJob=" + isGetJob);
-
                 if (!JobExecutor.getInstance().isDoingJob() && isGetJob) {
                     Log.d("JobFactory", "start get a job ");
                     jobPresenter.getCurrentJob(0, 1);
@@ -89,5 +99,26 @@ public class JobFactory extends Thread implements JobView.GetJobView {
     @Override
     public void getFailure(String message) {
         Log.d("JobFactory", "get job getFailure message=" + message);
+    }
+
+    private void postToNet() {
+        HeatBeat heatBeat = new HeatBeat();
+        heatBeat.setHeart_time(StringUtils.getNow());
+        heatBeat.setIs_doing_job(JobExecutor.getInstance().isDoingJob());
+        heatBeat.setIs_getting_job(JobFactory.getInstance().isGetJob());
+
+        RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(heatBeat));
+        Call call = RetrofitManager.getInstance().getService(ApiService.class).postHeartBeat(body);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                //打印日志
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                //打印日志
+            }
+        });
     }
 }

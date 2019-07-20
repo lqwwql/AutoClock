@@ -1,6 +1,7 @@
 package com.meteorshower.autoclock.http;
 
 import com.meteorshower.autoclock.bean.BaseCallBack;
+import com.meteorshower.autoclock.bean.HeatBeat;
 import com.meteorshower.autoclock.bean.JobData;
 
 import okhttp3.RequestBody;
@@ -34,6 +35,13 @@ public interface ApiService {
      */
     @POST("job/heartbeat")
     Call<BaseCallBack<Integer>> postHeartBeat(@Body RequestBody requestBody);
+
+
+    /**
+     * 查看心跳包
+     */
+    @POST("job/getHeartbeat")
+    Call<BaseCallBack<HeatBeat>> getHeartBeat();
 
 }
 

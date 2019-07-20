@@ -47,7 +47,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         JobFactory.getInstance().start();
         JobExecutor.getInstance().start();
-        postHeartBeat(5 * 60);//每5分钟上传一次心跳包
+//        postHeartBeat(5 * 60);//每5分钟上传一次心跳包
     }
 
     @Override

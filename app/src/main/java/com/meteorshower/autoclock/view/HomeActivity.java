@@ -93,18 +93,7 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
                 }
                 break;
             case R.id.btn_test:
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-//                            boolean result = AccessibilityUtils.openAppByPackageAndName(Constant.TARGET_LAODONGLI_APPNAME, Constant.TARGET_LAODONGLI_ACTIVITY_NAME);
-                            ShellUtils.CommandResult result = AccessibilityUtils.openAppByExeCommand(Constant.TARGET_LAODONGLI_APPNAME, Constant.TARGET_LAODONGLI_ACTIVITY_NAME);
-                            Log.d("lqwtest", "result = " + result.toString());
-                        } catch (Exception e) {
-                            Log.d("lqwtest", "test error = " + Log.getStackTraceString(e));
-                        }
-                    }
-                }, 5 * 1000);
+                startActivity(new Intent(HomeActivity.this, CheckHeartActivity.class));
                 break;
             default:
                 break;

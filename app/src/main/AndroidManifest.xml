@@ -53,7 +53,8 @@
         </service>
 
         <activity android:name=".view.BasicActivity" />
-        <activity android:name=".view.CheckJobActivity"></activity>
+        <activity android:name=".view.CheckJobActivity" />
+        <activity android:name=".view.CheckHeartActivity"></activity>
     </application>
 
 </manifest>
