@@ -32,6 +32,18 @@ public class ControllerAccessibilityService extends AccessibilityService {
     private static AtomicInteger atomicInteger = new AtomicInteger(0);
     private ScheduledExecutorService mScheduledExecutorService;//定时任务的线程池
     private ScheduledFuture mUploadScheduledFuture;
+    private static ControllerAccessibilityService controllerAccessibilityService;
+
+    public static ControllerAccessibilityService getInstance() {
+        if (controllerAccessibilityService == null)
+            Log.i(Constant.TAG, "mAccessibilityServiceTool == null");
+        return controllerAccessibilityService;
+    }
+
+    public ControllerAccessibilityService() {
+        if (controllerAccessibilityService == null)
+            controllerAccessibilityService = ControllerAccessibilityService.this;
+    }
 
     /**
      * 启动辅助功能连接成功时
@@ -39,6 +51,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
+        controllerAccessibilityService = this;
         Log.d(Constant.TAG, "onServiceConnected");
         //辅助功能链接时启动activity
         /*Intent intent = new Intent(this, HomeActivity.class);
@@ -47,7 +60,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         JobFactory.getInstance().start();
         JobExecutor.getInstance().start();
-//        postHeartBeat(5 * 60);//每5分钟上传一次心跳包
+        postHeartBeat(5 * 60);//每5分钟上传一次心跳包
     }
 
     @Override

@@ -5,12 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="5dp"
+    android:background="@color/black"
     tools:context=".view.HomeActivity">
 
     <TextView
         android:text="操作空间"
         android:gravity="center"
         android:textSize="18sp"
+        android:paddingVertical="10dp"
+        android:background="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -133,6 +136,28 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="查看任务" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_test_click"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="测试点击" />
+
+        <Button
+            android:id="@+id/btn_standby"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="待定" />
 
     </LinearLayout>
 </LinearLayout>

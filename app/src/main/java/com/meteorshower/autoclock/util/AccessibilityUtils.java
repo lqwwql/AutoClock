@@ -1,15 +1,19 @@
 package com.meteorshower.autoclock.util;
 
+import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.PowerManager;
 import android.util.Log;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.crash.NodeNoFindException;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 
+import java.util.List;
 import java.util.Random;
 
 public class AccessibilityUtils {
@@ -102,4 +106,108 @@ public class AccessibilityUtils {
         wl.release();
     }
 
+    public static AccessibilityNodeInfo findNodeEqualText(String text) {
+        AccessibilityNodeInfo root = null;
+        try {
+            root = getRootInActiveWindow();
+        } catch (NodeNoFindException e) {
+            e.printStackTrace();
+        }
+
+        if (root == null)
+            return null;
+
+        List<AccessibilityNodeInfo> l = root
+                .findAccessibilityNodeInfosByText(text);
+        for (int i = 0; i < l.size(); i++) {
+            AccessibilityNodeInfo tmp = l.get(i);
+            if (tmp.getText() != null && tmp.getText().toString().equals(text))
+                return tmp;
+        }
+
+        return null;
+    }
+
+    public static AccessibilityNodeInfo findNodeEqualContentDescription(String text) {
+        AccessibilityNodeInfo root = null;
+        try {
+            root = getRootInActiveWindow();
+        } catch (NodeNoFindException e) {
+            e.printStackTrace();
+        }
+
+        if (root == null)
+            return null;
+
+        List<AccessibilityNodeInfo> l = root
+                .findAccessibilityNodeInfosByText(text);
+        for (int i = 0; i < l.size(); i++) {
+            AccessibilityNodeInfo tmp = l.get(i);
+            if (tmp.getText() != null && tmp.getContentDescription().toString().equals(text))
+                return tmp;
+        }
+
+        return null;
+    }
+
+    public static AccessibilityNodeInfo findNode(AccessibilityNodeInfo node,String textOrDescribe, boolean equalOrContains) {
+        if (node == null)
+            return null;
+
+        if (equalOrContains == true) {
+            if ((node.getText() != null && node.getText().toString().equals(textOrDescribe))
+                    || (node.getContentDescription() != null && node.getContentDescription().toString().equals(textOrDescribe))) {
+                return node;
+            }
+        } else {
+            if ((node.getText() != null && node.getText().toString().contains(textOrDescribe))
+                    || (node.getContentDescription() != null && node.getContentDescription().toString().contains(textOrDescribe))) {
+                return node;
+            }
+        }
+
+        AccessibilityNodeInfo target = null;
+        for (int i = 0; i < node.getChildCount(); i++) {
+            target = findNode(node.getChild(i), textOrDescribe, equalOrContains);
+            if (target != null)
+                break;
+        }
+
+        return target;
+    }
+
+
+    public static AccessibilityNodeInfo getRootInActiveWindow()
+            throws NodeNoFindException {
+        return getRootInActiveWindow(null);
+    }
+
+    @SuppressLint("NewApi")
+    public static AccessibilityNodeInfo getRootInActiveWindow(String TAG)
+            throws NodeNoFindException {
+        if (TAG == null) {
+            TAG = "getRoot";
+        }
+        AccessibilityNodeInfo root = null;
+        for (int i = 0; i < 3; i++) {
+            ControllerAccessibilityService mAccessibilityServiceTool = ControllerAccessibilityService.getInstance();
+            Log.i(TAG, "" + mAccessibilityServiceTool);
+            if (mAccessibilityServiceTool != null)
+                root = mAccessibilityServiceTool.getRootInActiveWindow();
+            if (root != null && android.os.Build.VERSION.SDK_INT >= 18)
+                root.refresh();
+            if (root != null) {
+                Log.i(TAG, "root != null, return.");
+                return root;
+            }
+            try {
+                Log.i(TAG, "root == null, sleep 2s.");
+                Thread.sleep(2000);
+            } catch (Exception e) {
+
+            }
+        }
+        throw new NodeNoFindException(
+                "AccessibilityUtil.getRootInActiveWindowroot return null");
+    }
 }

@@ -3,10 +3,13 @@ package com.meteorshower.autoclock.Job;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.Log;
+import android.view.ActionMode;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.meteorshower.autoclock.application.MyApplication;
 import com.meteorshower.autoclock.bean.JobData;
 import com.meteorshower.autoclock.bean.PostData;
+import com.meteorshower.autoclock.crash.NodeNoFindException;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
@@ -90,7 +93,7 @@ public class AutoClickJob extends Job implements JobView.UpdateJobView {
         }
     }
 
-    private void clickAutoClock(){
+    private void clickAutoClock() {
         try {
             Thread.sleep(5 * 1000);
             Rect rect = new Rect();
@@ -125,5 +128,20 @@ public class AutoClickJob extends Job implements JobView.UpdateJobView {
     @Override
     public void updateFailure(String message) {
         Log.d("lqwtest", "updateFailure message: " + message);
+    }
+
+    private void doAnotherJob() {
+        try {
+            AccessibilityNodeInfo node = AccessibilityUtils.findNode(AccessibilityUtils.getRootInActiveWindow(), "工作台", true);
+            if (node != null) {
+                Thread.sleep(5 * 1000);
+                node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                Log.d("lqwtest", "performAction ACTION_CLICK: ");
+            } else {
+                Log.d("lqwtest", "node is null");
+            }
+        } catch (Exception e) {
+            Log.d("lqwtest", "doAnotherJob error: " + Log.getStackTraceString(e));
+        }
     }
 }

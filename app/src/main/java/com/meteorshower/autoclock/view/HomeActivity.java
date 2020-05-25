@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.meteorshower.autoclock.Job.TestClickJob;
 import com.meteorshower.autoclock.JobThread.JobExecutor;
 import com.meteorshower.autoclock.JobThread.JobFactory;
 import com.meteorshower.autoclock.R;
@@ -46,7 +47,7 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
 
     }
 
-    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look, R.id.btn_test})
+    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look, R.id.btn_test, R.id.btn_test_click})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start:
@@ -94,6 +95,14 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
                 break;
             case R.id.btn_test:
                 startActivity(new Intent(HomeActivity.this, CheckHeartActivity.class));
+                break;
+            case R.id.btn_test_click:
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        new TestClickJob(null).doJob();
+                    }
+                }).start();
                 break;
             default:
                 break;
