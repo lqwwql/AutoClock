@@ -26,4 +26,25 @@ public class Constant {
     public static String TOKEN = "";
     //IP
     public static String BASE_URL = "http://120.78.179.218:14470";
+
+    public static boolean MAIN_THREAD_RUNNING = true;
+    public static final int SOCKET_PORT = 4344;
+    public static final String THREAD_IS_START_COMMAND = "THREAD_IS_START_COMMAND";
+    public static final String THREAD_IS_READY = "THREAD_IS_READY";
+    public static final String MAIN_THREAD_RUNNING_CHANGE = "MAIN_THREAD_RUNNING_CHANGE";
+    public static final String MAIN_THREAD_RUNNING_STOP = "MAIN_THREAD_RUNNING_STOP";
+    public static final String COMMAND_EXC_SUCCESS = "COMMAND_EXC_SUCCESS";
+    public static final String COMMAND_EXC_FAILURE = "COMMAND_EXC_FAILURE";
+    public static final String COMMAND_EXC_ERROR = "COMMAND_EXC_ERROR";
+    public static final String SOCKET_URL = "127.0.0.1";
+
+    public static final String JOP_TYPE_0 = "0";//所有
+    public static final String JOP_TYPE_1 = "1";//上班
+    public static final String JOP_TYPE_2 = "2";//下班
+
+    public static final String JOP_STATUS_0 = "0";//所有
+    public static final String JOP_STATUS_1 = "1";//未开始
+    public static final String JOP_STATUS_2 = "2";//已下发
+    public static final String JOP_STATUS_3 = "3";//已成功
+
 }

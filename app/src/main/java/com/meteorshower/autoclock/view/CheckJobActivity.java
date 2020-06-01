@@ -10,6 +10,7 @@ import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.adapter.JobListViewAdapter;
 import com.meteorshower.autoclock.bean.JobData;
 import com.meteorshower.autoclock.bean.SpinnerOption;
+import com.meteorshower.autoclock.constant.Constant;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.ToastUtils;
@@ -60,15 +61,15 @@ public class CheckJobActivity extends BasicActivity implements JobView.GetJobVie
 
     private void initSpinner() {
         List<SpinnerOption> typeList = new ArrayList<>();
-        typeList.add(new SpinnerOption("0", "所有"));
-        typeList.add(new SpinnerOption("1", "上班"));
-        typeList.add(new SpinnerOption("2", "下班"));
+        typeList.add(new SpinnerOption(Constant.JOP_TYPE_0, "所有"));
+        typeList.add(new SpinnerOption(Constant.JOP_TYPE_1, "上班"));
+        typeList.add(new SpinnerOption(Constant.JOP_TYPE_2, "下班"));
 
         List<SpinnerOption> statusList = new ArrayList<>();
-        statusList.add(new SpinnerOption("0", "所有"));
-        statusList.add(new SpinnerOption("1", "未开始"));
-        statusList.add(new SpinnerOption("2", "已下发"));
-        statusList.add(new SpinnerOption("3", "已成功"));
+        statusList.add(new SpinnerOption(Constant.JOP_STATUS_0, "所有"));
+        statusList.add(new SpinnerOption(Constant.JOP_STATUS_1, "未开始"));
+        statusList.add(new SpinnerOption(Constant.JOP_STATUS_2, "已下发"));
+        statusList.add(new SpinnerOption(Constant.JOP_STATUS_3, "已成功"));
 
         ArrayAdapter typeAdapter = new ArrayAdapter<SpinnerOption>(this, android.R.layout.simple_spinner_dropdown_item, typeList);
         ArrayAdapter statusAdapter = new ArrayAdapter<SpinnerOption>(this, android.R.layout.simple_spinner_dropdown_item, statusList);

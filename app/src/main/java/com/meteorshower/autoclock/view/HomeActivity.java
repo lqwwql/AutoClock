@@ -1,7 +1,6 @@
 package com.meteorshower.autoclock.view;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -12,11 +11,8 @@ import com.meteorshower.autoclock.JobThread.JobExecutor;
 import com.meteorshower.autoclock.JobThread.JobFactory;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.bean.PostData;
-import com.meteorshower.autoclock.constant.Constant;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
-import com.meteorshower.autoclock.util.AccessibilityUtils;
-import com.meteorshower.autoclock.util.ShellUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +43,7 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
 
     }
 
-    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look, R.id.btn_test, R.id.btn_test_click})
+    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look, R.id.btn_test, R.id.btn_test_click, R.id.btn_exc_cmd})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start:
@@ -63,12 +59,6 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
                 break;
             case R.id.btn_end:
                 JobFactory.getInstance().setGetJob(false);
-                /*new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-
-                    }
-                }, 5 * 1000);*/
                 break;
             case R.id.btn_check:
                 JobFactory.getInstance().setRuning(false);
@@ -103,6 +93,9 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
                         new TestClickJob(null).doJob();
                     }
                 }).start();
+                break;
+            case R.id.btn_exc_cmd:
+                startActivity(new Intent(HomeActivity.this, CommandExecuteActivity.class));
                 break;
             default:
                 break;

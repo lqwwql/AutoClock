@@ -55,7 +55,6 @@ public class AccessibilityUtils {
         ShellUtils.performSuCommand("input tap " + x + " " + y);
     }
 
-
     public static void clickRect(Rect outBounds) {
         boolean isRoot = ShellUtils.checkRootPermission();
         Log.d("lqwtest", "isroot = " + isRoot);
@@ -71,8 +70,27 @@ public class AccessibilityUtils {
         }
     }
 
+    public static String getClickCommand(Rect outBounds) {
+        Random random = new Random(System.currentTimeMillis());
+        int x = (outBounds.left + 1)
+                + random.nextInt(outBounds.right - outBounds.left - 2);
+        int y = (outBounds.top + 1)
+                + random.nextInt(outBounds.bottom - outBounds.top - 2);
+        return "input tap " + x + " " + y;
+    }
+
+    public static Rect getClickRect(int x, int y,int offSet) {
+        Rect rect = new Rect();
+        rect.set(x - offSet, y - offSet, x + offSet, y + offSet);
+        return rect;
+    }
+
     public static void goBack() throws InterruptedException {
         ShellUtils.performSuCommand("input keyevent " + KEYCODE_GOBACK);
+    }
+
+    public static String getGoBackCommand(){
+        return "input keyevent " + KEYCODE_GOBACK;
     }
 
     /**
@@ -150,7 +168,7 @@ public class AccessibilityUtils {
         return null;
     }
 
-    public static AccessibilityNodeInfo findNode(AccessibilityNodeInfo node,String textOrDescribe, boolean equalOrContains) {
+    public static AccessibilityNodeInfo findNode(AccessibilityNodeInfo node, String textOrDescribe, boolean equalOrContains) {
         if (node == null)
             return null;
 
