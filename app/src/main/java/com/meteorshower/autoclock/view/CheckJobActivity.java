@@ -62,8 +62,8 @@ public class CheckJobActivity extends BasicActivity implements JobView.GetJobVie
     private void initSpinner() {
         List<SpinnerOption> typeList = new ArrayList<>();
         typeList.add(new SpinnerOption(Constant.JOP_TYPE_0, "所有"));
-        typeList.add(new SpinnerOption(Constant.JOP_TYPE_1, "上班"));
-        typeList.add(new SpinnerOption(Constant.JOP_TYPE_2, "下班"));
+        typeList.add(new SpinnerOption(Constant.JOP_TYPE_1, "早上"));
+        typeList.add(new SpinnerOption(Constant.JOP_TYPE_2, "晚上"));
 
         List<SpinnerOption> statusList = new ArrayList<>();
         statusList.add(new SpinnerOption(Constant.JOP_STATUS_0, "所有"));

@@ -89,16 +89,17 @@ public class ShellClickJob extends Job implements JobView.UpdateJobView {
         } catch (Exception e) {
             LogUtils.getInstance().e("doJob error = " + Log.getStackTraceString(e), 1);
         } finally {
-            //返回桌面
-            AccessibilityUtils.goToHome(context);
-
             try {
                 Thread.sleep(10 * 1000);
-            } catch (Exception e) { }
+                //返回桌面
+                AccessibilityUtils.goToHome(context);
 
-            //打开操作APP
-            String startCommand = AccessibilityUtils.getCommand("10");
-            excCommand(startCommand);
+                Thread.sleep(10 * 1000);
+                //打开操作APP
+                String startCommand = AccessibilityUtils.getCommand("10");
+                excCommand(startCommand);
+            } catch (Exception e) {
+            }
         }
     }
 
