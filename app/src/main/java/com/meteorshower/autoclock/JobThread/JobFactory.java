@@ -6,8 +6,10 @@ import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.meteorshower.autoclock.Job.AutoClickJob;
+import com.meteorshower.autoclock.Job.ShellClickJob;
 import com.meteorshower.autoclock.bean.HeatBeat;
 import com.meteorshower.autoclock.bean.JobData;
+import com.meteorshower.autoclock.constant.Constant;
 import com.meteorshower.autoclock.http.ApiService;
 import com.meteorshower.autoclock.http.RetrofitManager;
 import com.meteorshower.autoclock.presenter.JobPresenter;
@@ -26,9 +28,9 @@ import retrofit2.Response;
 public class JobFactory extends Thread implements JobView.GetJobView {
 
     private JobPresenter jobPresenter;
-    private int sleepTime = 5 * 60 * 1000;
+    private int sleepTime = Constant.GET_JOP_SLEEP_TIME;
     private boolean isGetJob = false;
-    private boolean isRuning = true;
+    private boolean isRunning = true;
 
     private JobFactory() {
     }
@@ -46,7 +48,7 @@ public class JobFactory extends Thread implements JobView.GetJobView {
     public void run() {
         Log.d("JobFactory", "JobFactory start -------------------------------- ");
         jobPresenter = new JobPresenterImpl(this);
-        while (isRuning) {
+        while (isRunning) {
             try {
                 //每5分钟请求一次任务
                 postToNet();
@@ -64,12 +66,12 @@ public class JobFactory extends Thread implements JobView.GetJobView {
         Log.d("JobFactory", "JobFactory stop -------------------------------- ");
     }
 
-    public boolean isRuning() {
-        return isRuning;
+    public boolean isRunning() {
+        return isRunning;
     }
 
-    public void setRuning(boolean runing) {
-        isRuning = runing;
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 
     public boolean isGetJob() {
@@ -83,15 +85,15 @@ public class JobFactory extends Thread implements JobView.GetJobView {
     @Override
     public void getSuccess(List<JobData> jobList) {
         Log.d("JobFactory", "get job success " + new Gson().toJson(jobList));
-        //获取到一次任务则睡眠5分钟
-        sleepTime = 5 * 60 * 1000;
+        sleepTime = Constant.GETED_JOP_SLEEP_TIME;
         try {
             if (jobList == null || jobList.size() <= 0) {
                 return;
             }
             JobData jobData = jobList.get(0);
-            AutoClickJob autoClickJob = new AutoClickJob(jobData);
-            JobExecutor.getInstance().addJob(autoClickJob);
+//            AutoClickJob autoClickJob = new AutoClickJob(jobData);
+            ShellClickJob shellClickJob = new ShellClickJob(jobData);
+            JobExecutor.getInstance().addJob(shellClickJob);
         } catch (Exception e) {
             Log.d("JobFactory", "JobFactory getSuccess error = " + Log.getStackTraceString(e));
         }

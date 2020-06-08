@@ -47,4 +47,9 @@ public class Constant {
     public static final String JOP_STATUS_2 = "2";//已下发
     public static final String JOP_STATUS_3 = "3";//已成功
 
+    public static final int GET_JOP_SLEEP_TIME = 60 * 1000;
+    public static final int GETED_JOP_SLEEP_TIME = 5 * 60 * 1000;
+    public static final int EXC_JOP_SLEEP_TIME = 10 * 1000;
+
+
 }

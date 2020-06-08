@@ -79,7 +79,7 @@ public class AccessibilityUtils {
         return "input tap " + x + " " + y;
     }
 
-    public static Rect getClickRect(int x, int y,int offSet) {
+    public static Rect getClickRect(int x, int y, int offSet) {
         Rect rect = new Rect();
         rect.set(x - offSet, y - offSet, x + offSet, y + offSet);
         return rect;
@@ -89,7 +89,7 @@ public class AccessibilityUtils {
         ShellUtils.performSuCommand("input keyevent " + KEYCODE_GOBACK);
     }
 
-    public static String getGoBackCommand(){
+    public static String getGoBackCommand() {
         return "input keyevent " + KEYCODE_GOBACK;
     }
 
@@ -227,5 +227,76 @@ public class AccessibilityUtils {
         }
         throw new NodeNoFindException(
                 "AccessibilityUtil.getRootInActiveWindowroot return null");
+    }
+
+    public static String getCommand(String input) {
+        Log.d(Constant.TAG, "input = " + input);
+        String command = "";
+        switch (input) {
+            case "1":
+                command = Constant.THREAD_IS_START_COMMAND;
+                break;
+            case "2":
+                command = Constant.MAIN_THREAD_RUNNING_CHANGE;
+                break;
+            case "3":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(152, 1043, 10));
+                break;
+            case "4":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(550, 1716, 10));
+                break;
+            case "5":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(142, 1295, 10));
+                break;
+            case "6":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(540, 709, 10));
+                break;
+            case "7":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getGoBackCommand();
+                break;
+            case "8":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(113, 1717, 10));
+                break;
+            case "9":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(554, 1043, 10));
+                break;
+            case "10":
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(946, 1070, 10));
+                break;
+        }
+        Log.d(Constant.TAG, "command = " + command);
+        return command;
     }
 }

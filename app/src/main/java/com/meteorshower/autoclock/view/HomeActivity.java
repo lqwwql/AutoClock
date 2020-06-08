@@ -47,12 +47,12 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start:
-                if (!JobExecutor.getInstance().isRuning()) {
-                    JobExecutor.getInstance().setRuning(true);
+                if (!JobExecutor.getInstance().isRunning()) {
+                    JobExecutor.getInstance().setRunning(true);
                     JobExecutor.getInstance().start();
                 }
-                if (!JobFactory.getInstance().isRuning()) {
-                    JobFactory.getInstance().setRuning(true);
+                if (!JobFactory.getInstance().isRunning()) {
+                    JobFactory.getInstance().setRunning(true);
                     JobFactory.getInstance().start();
                 }
                 JobFactory.getInstance().setGetJob(true);
@@ -61,8 +61,8 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
                 JobFactory.getInstance().setGetJob(false);
                 break;
             case R.id.btn_check:
-                JobFactory.getInstance().setRuning(false);
-                JobExecutor.getInstance().setRuning(false);
+                JobFactory.getInstance().setRunning(false);
+                JobExecutor.getInstance().setRunning(false);
                 break;
             case R.id.btn_look:
                 startActivity(new Intent(HomeActivity.this, CheckJobActivity.class));
@@ -104,6 +104,9 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
 
     @Override
     public void addSuccess() {
+        jobName.setText("");
+        jobType.setText("");
+        jobRemark.setText("");
         Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
     }
 

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.meteorshower.autoclock.Job.Job;
 import com.meteorshower.autoclock.bean.JobData;
+import com.meteorshower.autoclock.constant.Constant;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.view.JobView;
@@ -15,7 +16,7 @@ public class JobExecutor extends Thread {
     private boolean isDoingJob = false;
     public static ArrayBlockingQueue<Job> jobQueue = new ArrayBlockingQueue<>(4);
     private JobPresenter jobPresenter;
-    private boolean isRuning = true;
+    private boolean isRunning = true;
 
     private JobExecutor() {
     }
@@ -30,11 +31,11 @@ public class JobExecutor extends Thread {
 
     @Override
     public void run() {
-        Log.d("JobExecutor","JobExecutor start -------------------------------- ");
+        Log.d("JobExecutor", "JobExecutor start -------------------------------- ");
         Job job = null;
-        while (isRuning) {
+        while (isRunning) {
             try {
-                Thread.sleep(10 * 1000);
+                Thread.sleep(Constant.EXC_JOP_SLEEP_TIME);
                 job = jobQueue.take();
                 if (job == null) {
                     Log.d("JobExecutor", "start get a job ");
@@ -49,21 +50,21 @@ public class JobExecutor extends Thread {
                 Log.d("JobExecutor", "JobExecutor addJob error: " + Log.getStackTraceString(e));
             }
         }
-        Log.d("JobExecutor","JobExecutor stop -------------------------------- ");
+        Log.d("JobExecutor", "JobExecutor stop -------------------------------- ");
     }
 
-    public boolean isRuning() {
-        return isRuning;
+    public boolean isRunning() {
+        return isRunning;
     }
 
-    public void setRuning(boolean runing) {
-        isRuning = runing;
+    public void setRunning(boolean running) {
+        isRunning = running;
     }
 
     public void addJob(Job job) {
         try {
             if (!isDoingJob) {
-                Log.d("JobExecutor","add a job to queue");
+                Log.d("JobExecutor", "add a job to queue");
                 jobQueue.add(job);
             }
         } catch (Exception e) {

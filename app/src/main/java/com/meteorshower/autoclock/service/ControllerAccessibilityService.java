@@ -60,7 +60,6 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
         JobFactory.getInstance().start();
         JobExecutor.getInstance().start();
-        postHeartBeat(5 * 60);//每5分钟上传一次心跳包
     }
 
     @Override
@@ -91,36 +90,6 @@ public class ControllerAccessibilityService extends AccessibilityService {
     @Override
     public void onInterrupt() {
 
-    }
-
-    private void postHeartBeat(int delayTime) {
-        mScheduledExecutorService = Executors.newScheduledThreadPool(5);//线程池
-        mUploadScheduledFuture = mScheduledExecutorService.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    JsonObject object = new JsonObject();
-                    object.addProperty("heart_time", StringUtils.getNow());
-                    object.addProperty("is_doing_job", "" + JobExecutor.getInstance().isDoingJob());
-                    object.addProperty("is_getting_job", "" + JobFactory.getInstance().isGetJob());
-                    RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), object.toString());
-                    Call call = RetrofitManager.getInstance().getService(ApiService.class).postHeartBeat(body);
-                    call.enqueue(new Callback() {
-                        @Override
-                        public void onResponse(Call call, Response response) {
-                            //打印日志
-                        }
-
-                        @Override
-                        public void onFailure(Call call, Throwable t) {
-                            //打印日志
-                        }
-                    });
-                } catch (Exception e) {
-                    //打印日志
-                }
-            }
-        }, 10, delayTime, TimeUnit.SECONDS);
     }
 
     /**
