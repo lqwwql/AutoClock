@@ -58,8 +58,29 @@ public class JobListViewAdapter extends BaseAdapter {
         viewHolder.jobName.setText("任务名称：" + job.getJobName());
         viewHolder.jobTime.setText("任务时间：" + job.getJobTime());
         viewHolder.jobRemark.setText("任务备注：" + job.getExtraInfo());
-        viewHolder.jobType.setText("任务类型：" + job.getType());
-        viewHolder.jobStatus.setText("任务状态：" + job.getStatus());
+        String typeStr = "";
+        switch (job.getType()){
+            case 1:
+                typeStr = "早上";
+                break;
+            case 2:
+                typeStr = "晚上";
+                break;
+        }
+        viewHolder.jobType.setText("任务类型：" + typeStr);
+        String statusStr = "";
+        switch (job.getStatus()){
+            case 1:
+                statusStr = "未开始";
+                break;
+            case 2:
+                statusStr = "已下发";
+                break;
+            case 3:
+                statusStr = "已成功";
+                break;
+        }
+        viewHolder.jobStatus.setText("任务状态：" + statusStr);
 
         return convertView;
     }

@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         ownkey {
-            keyAlias 'ownkey'
-            keyPassword 'lqwjy.'
-            storeFile file('E:/mykey/ownkey.jks')
-            storePassword 'lqwjy.'
+            keyAlias 'xflyer'
+            keyPassword 'xflyer'
+            storeFile file('xflyer.jks')
+            storePassword 'xflyer'
         }
     }
     compileSdkVersion 28
@@ -27,6 +27,10 @@ android {
         debug {
             signingConfig signingConfigs.ownkey
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     android.applicationVariants.all {
         variant ->

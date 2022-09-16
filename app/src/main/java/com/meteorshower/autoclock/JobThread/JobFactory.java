@@ -71,6 +71,9 @@ public class JobFactory extends Thread implements JobView.GetJobView {
     }
 
     public void setRunning(boolean running) {
+        if(!isRunning && running){
+            run();
+        }
         isRunning = running;
     }
 

@@ -17,16 +17,7 @@ import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeActivity extends BasicActivity implements JobView.AddJobView {
-
-    @BindView(R.id.et_jobName)
-    EditText jobName;
-    @BindView(R.id.et_jobRemark)
-    EditText jobRemark;
-    @BindView(R.id.et_jobType)
-    EditText jobType;
-
-    private JobPresenter jobPresenter;
+public class HomeActivity extends BaseActivity{
 
     @Override
     protected int getLayoutID() {
@@ -35,7 +26,6 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
 
     @Override
     protected void initView() {
-        jobPresenter = new JobPresenterImpl(this);
     }
 
     @Override
@@ -43,7 +33,7 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
 
     }
 
-    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look, R.id.btn_test, R.id.btn_test_click, R.id.btn_exc_cmd})
+    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look, R.id.btn_test, R.id.btn_reset, R.id.btn_exc_cmd})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start:
@@ -68,25 +58,12 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
                 startActivity(new Intent(HomeActivity.this, CheckJobActivity.class));
                 break;
             case R.id.btn_add:
-                try {
-                    String sJobName = jobName.getText().toString();
-                    String sJobRemark = jobRemark.getText().toString();
-                    String sJobType = jobType.getText().toString();
-                    int type = Integer.parseInt(sJobType);
-
-                    PostData jobData = new PostData();
-                    jobData.setJob_name(sJobName);
-                    jobData.setExtra_info(sJobRemark);
-                    jobData.setType(type);
-                    jobPresenter.addNewJob(jobData);
-                } catch (Exception e) {
-                    Log.d("lqwtest", "add error = " + Log.getStackTraceString(e));
-                }
+                startActivity(new Intent(HomeActivity.this, AddJobActivity.class));
                 break;
             case R.id.btn_test:
                 startActivity(new Intent(HomeActivity.this, CheckHeartActivity.class));
                 break;
-            case R.id.btn_test_click:
+            case R.id.btn_reset:
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
@@ -100,19 +77,5 @@ public class HomeActivity extends BasicActivity implements JobView.AddJobView {
             default:
                 break;
         }
-    }
-
-    @Override
-    public void addSuccess() {
-        jobName.setText("");
-        jobType.setText("");
-        jobRemark.setText("");
-        Toast.makeText(this, "添加成功", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void addFailure(String message) {
-        Log.d("lqwtest", "addFailure message=" + message);
-        Toast.makeText(this, "添加失败", Toast.LENGTH_SHORT).show();
     }
 }

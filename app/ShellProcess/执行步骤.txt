@@ -1,0 +1,3 @@
+ * 通过adb复制到手机：adb push classes.dex /data/local/tmp
+ * 通过 adb shell 进入手机linux系统
+ * 通过adb安装命令：app_process -Djava.class.path=/data/local/tmp/classes.dex /system/bin com.sftech.shellprocess.ShellMain &

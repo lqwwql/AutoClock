@@ -1,6 +1,7 @@
 package com.meteorshower.autoclock.view;
 
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.view.View;
 import android.widget.ListView;
 
 import com.meteorshower.autoclock.R;
@@ -14,11 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CheckHeartActivity extends BasicActivity {
+public class CheckHeartActivity extends BaseActivity {
 
     @BindView(R.id.srl_check_heart)
     SwipeRefreshLayout swipeRefreshLayout;
@@ -59,7 +61,7 @@ public class CheckHeartActivity extends BasicActivity {
         call.enqueue(new Callback<BaseCallBack<HeatBeat>>() {
             @Override
             public void onResponse(Call<BaseCallBack<HeatBeat>> call, Response<BaseCallBack<HeatBeat>> response) {
-                if (swipeRefreshLayout != null & swipeRefreshLayout.isRefreshing()) {
+                if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
                 if (response != null && response.body() != null && response.body().getResult() == 1 && response.body().getData_list() != null) {
@@ -72,7 +74,7 @@ public class CheckHeartActivity extends BasicActivity {
 
             @Override
             public void onFailure(Call<BaseCallBack<HeatBeat>> call, Throwable t) {
-                if (swipeRefreshLayout != null & swipeRefreshLayout.isRefreshing()) {
+                if (swipeRefreshLayout != null && swipeRefreshLayout.isRefreshing()) {
                     swipeRefreshLayout.setRefreshing(false);
                 }
                 String message = "";
@@ -81,6 +83,16 @@ public class CheckHeartActivity extends BasicActivity {
                 }
             }
         });
+    }
+
+    @OnClick({R.id.tv_back})
+    public void doClick(View view){
+        switch (view.getId()){
+            case R.id.tv_back:
+                onBackPressed();
+                break;
+        }
+
     }
 
 }

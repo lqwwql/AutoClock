@@ -26,6 +26,9 @@ import retrofit2.Response;
 
 /**
  * 辅助功能类
+ * 手机设置里无障碍打开开关后
+ * 重新打开软件即可连上服务
+ * 连上服务才会启动心跳包
  */
 public class ControllerAccessibilityService extends AccessibilityService {
 

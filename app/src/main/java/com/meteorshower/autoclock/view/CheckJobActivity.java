@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class CheckJobActivity extends BasicActivity implements JobView.GetJobView {
+public class CheckJobActivity extends BaseActivity implements JobView.GetJobView {
 
     @BindView(R.id.sp_job_status)
     Spinner spJobStatus;
@@ -78,7 +78,7 @@ public class CheckJobActivity extends BasicActivity implements JobView.GetJobVie
         spJobStatus.setAdapter(statusAdapter);
     }
 
-    @OnClick(R.id.btn_check_job)
+    @OnClick({R.id.btn_check_job,R.id.tv_back})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_check_job:
@@ -86,6 +86,9 @@ public class CheckJobActivity extends BasicActivity implements JobView.GetJobVie
                 String status = ((SpinnerOption) spJobStatus.getSelectedItem()).getValue();
                 Log.d("lqwtest", "type=" + type + " status=" + status);
                 jobPresenter.getCurrentJob(Integer.parseInt(type), Integer.parseInt(status));
+                break;
+            case R.id.tv_back:
+                onBackPressed();
                 break;
             default:
                 break;

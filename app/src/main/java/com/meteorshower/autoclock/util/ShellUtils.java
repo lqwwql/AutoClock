@@ -119,26 +119,25 @@ public class ShellUtils {
                 }
                 p.waitFor();
             } catch (Exception e) {
-                Util.saveThrowableInfo(e);
-                e.printStackTrace();
+                Log.d(Constant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
             } finally {
                 if (dos != null) {
                     try {
                         dos.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log.d(Constant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
                     }
                 }
                 if (dis != null) {
                     try {
                         dis.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log.d(Constant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
                     }
                 }
             }
 
-            Log.i("sudo", cmd + " = " + result);
+            Log.i(Constant.TAG, cmd + " = " + result);
             if (result != null && result.contains("suCmdRes") == true) {
                 for (int j = -5; j < 5; j++) {
                     result = result.replace("suCmdRes=" + j, "");
@@ -393,8 +392,6 @@ public class ShellUtils {
                 if (command == null) {
                     continue;
                 }
-
-                // donnot use os.writeBytes(commmand), avoid chinese charset error
                 os.write(command.getBytes());
                 os.writeBytes(COMMAND_LINE_END);
                 os.flush();
@@ -403,7 +400,6 @@ public class ShellUtils {
             os.flush();
 
             result = process.waitFor();
-            // get command result
             if (isNeedResultMsg) {
                 successMsg = new StringBuilder();
                 errorMsg = new StringBuilder();

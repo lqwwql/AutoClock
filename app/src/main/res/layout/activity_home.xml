@@ -24,64 +24,6 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_marginTop="50dp"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="任务名称：" />
-
-            <EditText
-                android:id="@+id/et_jobName"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="任务备注：" />
-
-            <EditText
-                android:id="@+id/et_jobRemark"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="任务类型：" />
-
-            <EditText
-                android:id="@+id/et_jobType"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -155,12 +97,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_test_click"
+            android:id="@+id/btn_reset"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="测试点击" />
+            android:text="重置状态" />
 
         <Button
             android:id="@+id/btn_exc_cmd"

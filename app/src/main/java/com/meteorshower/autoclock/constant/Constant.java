@@ -25,7 +25,7 @@ public class Constant {
     //Token校验
     public static String TOKEN = "";
     //IP
-    public static String BASE_URL = "http://120.78.179.218:14470";
+    public static String BASE_URL = "http://1.12.59.45:8870";
 
     public static boolean MAIN_THREAD_RUNNING = true;
     public static final int SOCKET_PORT = 4344;
@@ -52,4 +52,24 @@ public class Constant {
     public static final int EXC_JOP_SLEEP_TIME = 10 * 1000;
 
 
+    public static final int[] DESKTOP_DD_8 = {1,3};
+    public static final int[] DESKTOP_AU_8 = {1,3};
+    public static final int[] DD_NEWS_8 = {1,3};
+    public static final int[] DD_WORK_8 = {1,3};
+    public static final int[] DD_KAO_8 = {1,3};
+    public static final int[] DD_UP_8 = {1,3};
+    public static final int[] DD_DOWN_8 = {1,3};
+
+    public static final int[] DESKTOP_DD_LT = {78,952};
+    public static final int[] DESKTOP_AU_LT = {636,966};
+    public static final int[] DD_NEWS_LT = {70,1234};
+    public static final int[] DD_WORK_LT = {355,1234};
+//    public static final int[] DD_KAO_LT = {88,840};
+    public static final int[] DD_KAO_LT = {92,722};
+//    public static final int[] DD_UP_LT = {357,375};
+    public static final int[] DD_UP_LT = {370,725};
+//    public static final int[] DD_DOWN_LT = {368,656};
+    public static final int[] DD_DOWN_LT = {370,725};
+
+    public static final int[] ZFB_QJ =  {550,745};
 }

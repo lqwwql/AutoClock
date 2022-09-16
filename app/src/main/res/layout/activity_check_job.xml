@@ -12,6 +12,17 @@
         android:layout_height="40dp">
 
         <TextView
+            android:id="@+id/tv_back"
+            android:text="返回"
+            android:textColor="#ffffff"
+            android:layout_marginLeft="5dp"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+
+        <TextView
             android:text="任务查看"
             android:textColor="#fff"
             android:textSize="18sp"

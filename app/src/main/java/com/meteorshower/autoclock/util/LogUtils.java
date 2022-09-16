@@ -15,9 +15,6 @@ import java.util.Locale;
 
 /**
  * 打印log文件
- * mLogUtils.e("string"+"\n",2);
- * <p>
- * Created by TonyChen on 2014/11/18.
  */
 public class LogUtils {
     private Context mContext = null;
