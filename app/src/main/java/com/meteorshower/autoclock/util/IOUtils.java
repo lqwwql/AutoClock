@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.text.format.Formatter;
 import android.util.Log;
 
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,7 +30,7 @@ public class IOUtils {
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
             String savePath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + File.separator + Constant.APP_PATH + File.separator;
+                    + File.separator + AppConstant.APP_PATH + File.separator;
             File file = new File(savePath);
             if (!file.exists()) {
                 boolean bResult = file.mkdirs();

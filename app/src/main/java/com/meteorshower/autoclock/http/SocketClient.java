@@ -2,7 +2,7 @@ package com.meteorshower.autoclock.http;
 
 import android.util.Log;
 
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.util.LogUtils;
 
 import java.io.BufferedReader;
@@ -34,16 +34,16 @@ public class SocketClient {
 
     private void connectSocket() {
         try {
-            Log.d(Constant.TAG, "connectSocket---------------");
+            Log.d(AppConstant.TAG, "connectSocket---------------");
             Socket socket = new Socket();
-            socket.connect(new InetSocketAddress(Constant.SOCKET_URL, Constant.SOCKET_PORT));
+            socket.connect(new InetSocketAddress(AppConstant.SOCKET_URL, AppConstant.SOCKET_PORT));
             socket.setSoTimeout(3000);
             printWriter = new PrintWriter(socket.getOutputStream(), true);
             bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             new SocketClientThread(socket);
             sendCmd(cmd);
         } catch (Exception e) {
-            Log.d(Constant.TAG, "connectSocket error :" + Log.getStackTraceString(e));
+            Log.d(AppConstant.TAG, "connectSocket error :" + Log.getStackTraceString(e));
             cmdExcSendListener.getExcResult("connectSocket error :" + Log.getStackTraceString(e));
             LogUtils.getInstance().e("connectSocket error :" + Log.getStackTraceString(e), 1);
         }
@@ -84,7 +84,7 @@ public class SocketClient {
                     }
                 }
             } catch (Exception e) {
-                Log.d(Constant.TAG, "SocketClientThread run error : " + Log.getStackTraceString(e));
+                Log.d(AppConstant.TAG, "SocketClientThread run error : " + Log.getStackTraceString(e));
                 LogUtils.getInstance().e("SocketClientThread run error : " + Log.getStackTraceString(e), 1);
             } finally {
                 try {
@@ -92,7 +92,7 @@ public class SocketClient {
                     printWriter.close();
                     socket.close();
                 } catch (IOException e) {
-                    Log.d(Constant.TAG, "SocketClientThread run error : " + Log.getStackTraceString(e));
+                    Log.d(AppConstant.TAG, "SocketClientThread run error : " + Log.getStackTraceString(e));
                     LogUtils.getInstance().e("SocketClientThread run close error : " + Log.getStackTraceString(e), 1);
                 }
             }

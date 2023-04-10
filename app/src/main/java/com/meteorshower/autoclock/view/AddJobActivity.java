@@ -4,12 +4,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.bean.PostData;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.StringUtils;
-import com.meteorshower.autoclock.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -57,15 +57,15 @@ public class AddJobActivity extends BaseActivity implements JobView.AddJobView {
             String sJobRemark = jobRemark.getText().toString();
             String sJobType = jobType.getText().toString();
             if (StringUtils.isEmptyOrNull(sJobName)) {
-                ToastUtils.show("请输入任务名称");
+                Toaster.show("请输入任务名称");
                 return;
             }
             if (StringUtils.isEmptyOrNull(sJobRemark)) {
-                ToastUtils.show("请输入任务备注");
+                Toaster.show("请输入任务备注");
                 return;
             }
             if (StringUtils.isEmptyOrNull(sJobType)) {
-                ToastUtils.show("请输入任务类型");
+                Toaster.show("请输入任务类型");
                 return;
             }
             int type = Integer.parseInt(sJobType);
@@ -84,11 +84,11 @@ public class AddJobActivity extends BaseActivity implements JobView.AddJobView {
         jobName.setText("");
         jobType.setText("");
         jobRemark.setText("");
-        ToastUtils.show("添加任务成功");
+        Toaster.show("添加任务成功");
     }
 
     @Override
     public void addFailure(String message) {
-        ToastUtils.show(message);
+        Toaster.show(message);
     }
 }

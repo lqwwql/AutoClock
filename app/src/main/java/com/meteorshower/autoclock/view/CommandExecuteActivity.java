@@ -11,11 +11,10 @@ import com.google.gson.Gson;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.bean.SpinnerOption;
 import com.meteorshower.autoclock.http.SocketClient;
+import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
-import com.meteorshower.autoclock.util.LogUtils;
 import com.meteorshower.autoclock.util.ShellUtils;
 import com.meteorshower.autoclock.util.StringUtils;
-import com.meteorshower.autoclock.util.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +37,8 @@ public class CommandExecuteActivity extends BaseActivity {
     TextView tvExcResult;
     @BindView(R.id.sp_command)
     Spinner spCommand;
-    private String[] commands = new String[]{"进程存活查询", "进程停止", "点击钉钉", "工作台点击", "考勤打卡点击", "上班点击", "消息点击", "下班点击", "点击AC","启动进程"};
+    private String[] commands = new String[]{"进程存活查询", "进程停止", "点击钉钉", "工作台点击",
+            "考勤打卡点击", "上班点击", "消息点击", "下班点击", "点击AC","启动进程","启动滑动"};
 
     @Override
     protected int getLayoutID() {
@@ -80,6 +80,11 @@ public class CommandExecuteActivity extends BaseActivity {
             if(commands.equals("10")){
                 ShellUtils.CommandResult result = ShellUtils.execCommand(AccessibilityUtils.getCommand("12"),false);
                 tvExcResult.setText(new Gson().toJson(result));
+                return;
+            }
+            if(commands.equals("11")){
+                ControllerAccessibilityService service = ControllerAccessibilityService.getInstance();
+                service.execScrollGesture(300,300,380,380,3000L,1000L);
                 return;
             }
 

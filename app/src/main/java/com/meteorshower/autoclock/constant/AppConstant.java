@@ -1,6 +1,9 @@
 package com.meteorshower.autoclock.constant;
 
-public class Constant {
+public class AppConstant {
+
+    public static int ScreenWidth = 0;
+    public static int ScreenHeight = 0;
 
     //自身
     public static String LOCAL_APPNAME = "com.meteorshower.autoclock";

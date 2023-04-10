@@ -2,7 +2,7 @@ package com.meteorshower.autoclock.http;
 
 import android.util.Log;
 
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -29,9 +29,9 @@ public class RetrofitManager {
                 if (!isEffected) {
                 }
                 Request origin = chain.request();
-                mToken = Constant.TOKEN;
+                mToken = AppConstant.TOKEN;
                 Request request = origin.newBuilder()
-                        .addHeader("Authorization", Constant.TOKEN)
+                        .addHeader("Authorization", AppConstant.TOKEN)
                         .build();
                 return chain.proceed(request);
             }
@@ -48,7 +48,7 @@ public class RetrofitManager {
         mRetrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//添加rxjava转换器
-                .baseUrl(Constant.BASE_URL)
+                .baseUrl(AppConstant.BASE_URL)
                 .client(client)
                 .build();
     }

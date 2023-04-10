@@ -1,28 +1,18 @@
 package com.meteorshower.autoclock.service;
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.GestureDescription;
+import android.graphics.Path;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
-import com.google.gson.JsonObject;
 import com.meteorshower.autoclock.JobThread.JobExecutor;
 import com.meteorshower.autoclock.JobThread.JobFactory;
-import com.meteorshower.autoclock.constant.Constant;
-import com.meteorshower.autoclock.http.ApiService;
-import com.meteorshower.autoclock.http.RetrofitManager;
-import com.meteorshower.autoclock.util.StringUtils;
+import com.meteorshower.autoclock.constant.AppConstant;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 辅助功能类
@@ -33,13 +23,12 @@ import retrofit2.Response;
 public class ControllerAccessibilityService extends AccessibilityService {
 
     private static AtomicInteger atomicInteger = new AtomicInteger(0);
-    private ScheduledExecutorService mScheduledExecutorService;//定时任务的线程池
-    private ScheduledFuture mUploadScheduledFuture;
+
     private static ControllerAccessibilityService controllerAccessibilityService;
 
     public static ControllerAccessibilityService getInstance() {
         if (controllerAccessibilityService == null)
-            Log.i(Constant.TAG, "mAccessibilityServiceTool == null");
+            Log.i(AppConstant.TAG, "mAccessibilityServiceTool == null");
         return controllerAccessibilityService;
     }
 
@@ -55,7 +44,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
     protected void onServiceConnected() {
         super.onServiceConnected();
         controllerAccessibilityService = this;
-        Log.d(Constant.TAG, "onServiceConnected");
+        Log.d(AppConstant.TAG, "onServiceConnected");
         //辅助功能链接时启动activity
         /*Intent intent = new Intent(this, HomeActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -86,7 +75,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
     @Override
     public void onDestroy() {
-        mUploadScheduledFuture.cancel(true);
+
         super.onDestroy();
     }
 
@@ -125,6 +114,41 @@ public class ControllerAccessibilityService extends AccessibilityService {
         }
         Thread.sleep(500);
         return true;
+    }
+
+    /**
+     * 执行滑动命令
+     */
+    public void execScrollGesture(int startX, int startY, int endX, int endY, long startTime, long durationTime) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            Path path = new Path();
+            path.moveTo(startX, startY);//滑动起点
+            path.lineTo(endX, endY);//滑动终点
+            GestureDescription.Builder builder = new GestureDescription.Builder();
+            //100L 第一个是开始的时间，第二个是持续时间
+            GestureDescription description = builder.addStroke(new GestureDescription.StrokeDescription(path, startTime, durationTime)).build();
+            dispatchGesture(description, new MyCallBack(), null);
+        }
+    }
+
+    //模拟手势的监听
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private class MyCallBack extends GestureResultCallback {
+        public MyCallBack() {
+            super();
+        }
+
+        @Override
+        public void onCompleted(GestureDescription gestureDescription) {
+            super.onCompleted(gestureDescription);
+            Log.d(AppConstant.TAG, "onCompleted = " + (gestureDescription==null?"":gestureDescription));
+        }
+
+        @Override
+        public void onCancelled(GestureDescription gestureDescription) {
+            super.onCancelled(gestureDescription);
+            Log.d(AppConstant.TAG, "onCancelled = " + (gestureDescription==null?"":gestureDescription));
+        }
     }
 
 }

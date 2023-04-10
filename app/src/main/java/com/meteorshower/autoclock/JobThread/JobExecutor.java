@@ -3,11 +3,8 @@ package com.meteorshower.autoclock.JobThread;
 import android.util.Log;
 
 import com.meteorshower.autoclock.Job.Job;
-import com.meteorshower.autoclock.bean.JobData;
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.presenter.JobPresenter;
-import com.meteorshower.autoclock.presenter.JobPresenterImpl;
-import com.meteorshower.autoclock.view.JobView;
 
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -35,7 +32,7 @@ public class JobExecutor extends Thread {
         Job job = null;
         while (isRunning) {
             try {
-                Thread.sleep(Constant.EXC_JOP_SLEEP_TIME);
+                Thread.sleep(AppConstant.EXC_JOP_SLEEP_TIME);
                 job = jobQueue.take();
                 if (job == null) {
                     Log.d("JobExecutor", "start get a job ");

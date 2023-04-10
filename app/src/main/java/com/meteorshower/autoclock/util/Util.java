@@ -1,16 +1,14 @@
 package com.meteorshower.autoclock.util;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.accessibility.AccessibilityNodeInfo;
-import com.meteorshower.autoclock.constant.Constant;
+
+import com.meteorshower.autoclock.constant.AppConstant;
 
 import org.apache.commons.io.FileUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -18,7 +16,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -28,10 +25,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -295,7 +290,7 @@ public class Util {
 		String result = writer.toString();
 		sb.append(time + "\n" + result + "\n");
 		String fileName = "catch.log";
-		String path = Constant.ERROR;
+		String path = AppConstant.ERROR;
 		File dir = new File(path);
 		if (dir.exists() == false) {
 			dir.mkdirs();
@@ -319,7 +314,7 @@ public class Util {
 
 			String time = formatter.format(new Date());
 			String fileName = "log.txt";
-			String path = Constant.ERROR;
+			String path = AppConstant.ERROR;
 			File dir = new File(path);
 			if (dir.exists() == false)
 				dir.mkdirs();
@@ -345,7 +340,7 @@ public class Util {
 
 			String time = formatter.format(new Date());
 			String fileName = "inviteQunLog.txt";
-			String path = Constant.ERROR;
+			String path = AppConstant.ERROR;
 			File dir = new File(path);
 			if (dir.exists() == false)
 				dir.mkdirs();
@@ -370,7 +365,7 @@ public class Util {
 
 			String time = formatter.format(new Date());
 			String fileName = "addFriendsLog.txt";
-			String path = Constant.ERROR;
+			String path = AppConstant.ERROR;
 			File dir = new File(path);
 			if (dir.exists() == false)
 				dir.mkdirs();

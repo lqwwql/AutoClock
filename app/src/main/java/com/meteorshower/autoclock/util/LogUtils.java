@@ -3,7 +3,7 @@ package com.meteorshower.autoclock.util;
 import android.content.Context;
 import android.util.Log;
 import com.meteorshower.autoclock.application.MyApplication;
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,7 +31,7 @@ public class LogUtils {
 
     private LogUtils(Context context) {
         mContext = context;
-        logPath = IOUtils.getRootStoragePath(mContext) + Constant.LOG + File.separator;
+        logPath = IOUtils.getRootStoragePath(mContext) + AppConstant.LOG + File.separator;
         String path1 = logPath + "info";
         String path2 = logPath + "error";
         File file1 = new File(path1);

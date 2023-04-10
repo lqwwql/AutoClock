@@ -29,8 +29,11 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".view.AddJobActivity"></activity>
+
         <activity android:name=".view.CommandExecuteActivity" />
+
         <activity android:name=".view.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,8 +58,13 @@
         </service>
 
         <activity android:name=".view.BaseActivity" />
+
         <activity android:name=".view.CheckJobActivity" />
+
         <activity android:name=".view.CheckHeartActivity" />
+
+        <activity android:name=".view.ScrollSettingActivity" />
+
     </application>
 
 </manifest>

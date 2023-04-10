@@ -6,6 +6,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
 
+import com.hjq.toast.Toaster;
+
 /**
  * 程序application
  */
@@ -23,6 +25,8 @@ public class MyApplication extends Application {
         mContext = this;
         mMainThreadId = Process.myTid();
         mHandler = new Handler();
+        // 初始化 Toast 框架
+        Toaster.init(this);
     }
 
     public static Context getContext() {

@@ -9,7 +9,7 @@ import android.os.PowerManager;
 import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.crash.NodeNoFindException;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 
@@ -116,7 +116,7 @@ public class AccessibilityUtils {
         //获取电源管理器对象
         PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
         //获取PowerManager.WakeLock对象,后面的参数|表示同时传入两个值,最后的是LogCat里用的Tag
-        PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP |
+        @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP |
                 PowerManager.SCREEN_DIM_WAKE_LOCK, "bright");
         //点亮屏幕
         wl.acquire();
@@ -230,42 +230,42 @@ public class AccessibilityUtils {
     }
 
     public static String getCommand(String input) {
-        Log.d(Constant.TAG, "input = " + input);
+        Log.d(AppConstant.TAG, "input = " + input);
         String command = "";
         switch (input) {
             case "1":
-                command = Constant.THREAD_IS_START_COMMAND;
+                command = AppConstant.THREAD_IS_START_COMMAND;
                 break;
             case "2":
-                command = Constant.MAIN_THREAD_RUNNING_CHANGE;
+                command = AppConstant.MAIN_THREAD_RUNNING_CHANGE;
                 break;
             case "3":
                 try {
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                 }
-                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(152, 1043, 10));
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.DESKTOP_DD_LT[0], AppConstant.DESKTOP_DD_LT[1], 10));
                 break;
             case "4":
                 try {
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                 }
-                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(550, 1716, 10));
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.DD_WORK_LT[0], AppConstant.DD_WORK_LT[1], 10));
                 break;
             case "5":
                 try {
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                 }
-                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(142, 1295, 10));
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.DD_KAO_LT[0], AppConstant.DD_KAO_LT[1], 10));
                 break;
             case "6":
                 try {
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                 }
-                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(540, 709, 10));
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.DD_UP_LT[0], AppConstant.DD_UP_LT[1], 10));
                 break;
             case "7":
                 try {
@@ -279,24 +279,34 @@ public class AccessibilityUtils {
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                 }
-                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(113, 1717, 10));
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.DD_NEWS_LT[0], AppConstant.DD_NEWS_LT[1], 10));
                 break;
             case "9":
                 try {
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                 }
-                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(554, 1043, 10));
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.DD_DOWN_LT[0], AppConstant.DD_DOWN_LT[1], 10));
                 break;
             case "10":
                 try {
                     Thread.sleep(5 * 1000);
                 } catch (InterruptedException e) {
                 }
-                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(946, 1070, 10));
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.DESKTOP_AU_LT[0], AppConstant.DESKTOP_AU_LT[1], 10));
+                break;
+            case "11":
+                try {
+                    Thread.sleep(8 * 1000);
+                } catch (InterruptedException e) {
+                }
+                command = AccessibilityUtils.getClickCommand(AccessibilityUtils.getClickRect(AppConstant.ZFB_QJ[0], AppConstant.ZFB_QJ[1], 10));
+                break;
+            case "12":
+                command = "nohup app_process -Djava.class.path=/data/local/tmp/classes.dex /system/bin com.sftech.shellprocess.ShellMain & ";
                 break;
         }
-        Log.d(Constant.TAG, "command = " + command);
+        Log.d(AppConstant.TAG, "command = " + command);
         return command;
     }
 }

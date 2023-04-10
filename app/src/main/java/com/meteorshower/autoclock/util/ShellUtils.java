@@ -3,7 +3,7 @@ package com.meteorshower.autoclock.util;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 
 import org.apache.commons.io.FileUtils;
 
@@ -119,25 +119,25 @@ public class ShellUtils {
                 }
                 p.waitFor();
             } catch (Exception e) {
-                Log.d(Constant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
+                Log.d(AppConstant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
             } finally {
                 if (dos != null) {
                     try {
                         dos.close();
                     } catch (IOException e) {
-                        Log.d(Constant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
+                        Log.d(AppConstant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
                     }
                 }
                 if (dis != null) {
                     try {
                         dis.close();
                     } catch (IOException e) {
-                        Log.d(Constant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
+                        Log.d(AppConstant.TAG,"performSuCommandAndGetRes error:"+Log.getStackTraceString(e));
                     }
                 }
             }
 
-            Log.i(Constant.TAG, cmd + " = " + result);
+            Log.i(AppConstant.TAG, cmd + " = " + result);
             if (result != null && result.contains("suCmdRes") == true) {
                 for (int j = -5; j < 5; j++) {
                     result = result.replace("suCmdRes=" + j, "");
@@ -180,25 +180,25 @@ public class ShellUtils {
                 }
                 p.waitFor();
             } catch (Exception e) {
-                Log.d(Constant.TAG, "performSuCommand error = ", e);
+                Log.d(AppConstant.TAG, "performSuCommand error = ", e);
             } finally {
                 if (dos != null) {
                     try {
                         dos.close();
                     } catch (IOException e) {
-                        Log.d(Constant.TAG, "performSuCommand error = ", e);
+                        Log.d(AppConstant.TAG, "performSuCommand error = ", e);
                     }
                 }
                 if (dis != null) {
                     try {
                         dis.close();
                     } catch (IOException e) {
-                        Log.d(Constant.TAG, "performSuCommand error = ", e);
+                        Log.d(AppConstant.TAG, "performSuCommand error = ", e);
                     }
                 }
             }
 
-            Log.d(Constant.TAG, cmd + " = " + result);
+            Log.d(AppConstant.TAG, cmd + " = " + result);
             if (result != null && result.contains("suCmdRes=0") == true) {
                 return true;
             } else {

@@ -66,4 +66,8 @@ dependencies {
     androidTestImplementation 'junit:junit:4.12'
     //json框架
     implementation 'com.alibaba:fastjson:1.2.41'
+    // 吐司框架：https://github.com/getActivity/Toaster
+    implementation 'com.github.getActivity:Toaster:12.2'
+    // 手机显示logcat
+//    debugImplementation 'com.github.getActivity:Logcat:10.6'
 }

@@ -4,12 +4,10 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.meteorshower.autoclock.Job.AutoClickJob;
 import com.meteorshower.autoclock.Job.ShellClickJob;
 import com.meteorshower.autoclock.bean.HeatBeat;
 import com.meteorshower.autoclock.bean.JobData;
-import com.meteorshower.autoclock.constant.Constant;
+import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.http.ApiService;
 import com.meteorshower.autoclock.http.RetrofitManager;
 import com.meteorshower.autoclock.presenter.JobPresenter;
@@ -28,7 +26,7 @@ import retrofit2.Response;
 public class JobFactory extends Thread implements JobView.GetJobView {
 
     private JobPresenter jobPresenter;
-    private int sleepTime = Constant.GET_JOP_SLEEP_TIME;
+    private int sleepTime = AppConstant.GET_JOP_SLEEP_TIME;
     private boolean isGetJob = false;
     private boolean isRunning = true;
 
@@ -88,7 +86,7 @@ public class JobFactory extends Thread implements JobView.GetJobView {
     @Override
     public void getSuccess(List<JobData> jobList) {
         Log.d("JobFactory", "get job success " + new Gson().toJson(jobList));
-        sleepTime = Constant.GETED_JOP_SLEEP_TIME;
+        sleepTime = AppConstant.GETED_JOP_SLEEP_TIME;
         try {
             if (jobList == null || jobList.size() <= 0) {
                 return;

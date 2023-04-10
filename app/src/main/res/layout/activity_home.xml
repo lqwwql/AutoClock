@@ -30,6 +30,31 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_setting"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="无障碍设置" />
+
+        <Button
+            android:id="@+id/btn_scroll_setting"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="滑动设置" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="10dp"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
             android:id="@+id/btn_check"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -47,6 +72,7 @@
 
     <LinearLayout
         android:layout_margin="10dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -69,6 +95,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_margin="10dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -92,6 +119,7 @@
     </LinearLayout>
     <LinearLayout
         android:layout_margin="10dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

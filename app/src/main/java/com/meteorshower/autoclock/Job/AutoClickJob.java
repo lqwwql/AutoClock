@@ -3,19 +3,15 @@ package com.meteorshower.autoclock.Job;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.meteorshower.autoclock.application.MyApplication;
 import com.meteorshower.autoclock.bean.JobData;
 import com.meteorshower.autoclock.bean.PostData;
-import com.meteorshower.autoclock.crash.NodeNoFindException;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
 import com.meteorshower.autoclock.util.LogUtils;
-import com.meteorshower.autoclock.util.ToastUtils;
-import com.meteorshower.autoclock.view.HomeActivity;
 import com.meteorshower.autoclock.view.JobView;
 
 public class AutoClickJob extends Job implements JobView.UpdateJobView {
