@@ -75,4 +75,5 @@ public class AppConstant {
     public static final int[] DD_DOWN_LT = {370,725};
 
     public static final int[] ZFB_QJ =  {550,745};
+
 }

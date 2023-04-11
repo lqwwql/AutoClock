@@ -4,14 +4,18 @@ import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.GestureDescription;
 import android.graphics.Path;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
+import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.JobThread.JobExecutor;
 import com.meteorshower.autoclock.JobThread.JobFactory;
 import com.meteorshower.autoclock.constant.AppConstant;
 
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -23,6 +27,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ControllerAccessibilityService extends AccessibilityService {
 
     private static AtomicInteger atomicInteger = new AtomicInteger(0);
+    private static final int SCROLL_WHAT = 1001;
+    private int scrollTimes = 0;
+    private int scrollDuration = 0;
+    private int slideDuration = 0;
+    private boolean isRunning = false;
+    private boolean isStop = false;
 
     private static ControllerAccessibilityService controllerAccessibilityService;
 
@@ -75,13 +85,71 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
     @Override
     public void onDestroy() {
-
         super.onDestroy();
     }
 
     @Override
     public void onInterrupt() {
 
+    }
+
+    private Handler scrollHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case SCROLL_WHAT:
+                    executeScrollView();
+                    break;
+            }
+        }
+    };
+
+    public void setScrollParam(int scrollTimes, int scrollDuration, int slideDuration,boolean isRunning) {
+        this.scrollTimes = scrollTimes;
+        this.scrollDuration = scrollDuration;
+        this.slideDuration = slideDuration;
+        this.isRunning = isRunning;
+    }
+
+
+    public void executeScrollView() {
+        if (!isRunning) {
+            return;
+        }
+        if (scrollTimes == 0) {
+            Toaster.show("滑动程序次数已执行完毕");
+            scrollHandler.removeMessages(SCROLL_WHAT);
+            isRunning = !isRunning;
+            return;
+        }
+        scrollTimes--;
+        Toaster.show("执行滑动,间隔:" + scrollDuration + ",剩余次数:" + scrollTimes);
+        int startX = 260, startY = 820, endX = 260, endY = 260;
+        if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
+            startX = AppConstant.ScreenWidth / 2;
+            startY = AppConstant.ScreenHeight * 6 / 7;
+            endX = AppConstant.ScreenWidth / 2;
+            endY = AppConstant.ScreenHeight / 7;
+        }
+        execScrollGesture(startX + getRandomXY(), startY + getRandomXY(), endX + getRandomXY(), endY + getRandomXY(), 100, slideDuration);
+        sendDelayMessage();
+    }
+
+    public int getRandomXY() {
+        return (new Random().nextInt(5) + 1) * 10;
+    }
+
+    public int getRandomSeconds() {
+        return (new Random().nextInt(5) + 1);
+    }
+
+    public void sendDelayMessage() {
+        scrollHandler.sendEmptyMessageDelayed(SCROLL_WHAT, (scrollDuration + getRandomSeconds()) * 1000);
+    }
+
+    public boolean isRunning() {
+        return isRunning;
     }
 
     /**
@@ -141,13 +209,13 @@ public class ControllerAccessibilityService extends AccessibilityService {
         @Override
         public void onCompleted(GestureDescription gestureDescription) {
             super.onCompleted(gestureDescription);
-            Log.d(AppConstant.TAG, "onCompleted = " + (gestureDescription==null?"":gestureDescription));
+            Log.d(AppConstant.TAG, "onCompleted = " + (gestureDescription == null ? "" : gestureDescription));
         }
 
         @Override
         public void onCancelled(GestureDescription gestureDescription) {
             super.onCancelled(gestureDescription);
-            Log.d(AppConstant.TAG, "onCancelled = " + (gestureDescription==null?"":gestureDescription));
+            Log.d(AppConstant.TAG, "onCancelled = " + (gestureDescription == null ? "" : gestureDescription));
         }
     }
 

@@ -26,12 +26,15 @@ public class ScrollSettingActivity extends BaseActivity {
     EditText etTimes;
     @BindView(R.id.et_scroll_duration)
     EditText etDurations;
+    @BindView(R.id.et_slide_duration)
+    EditText etSlideDurations;
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
 
     private int scrollTimes = 0;
     private int scrollDuration = 0;
+    private int slideDuration = 0;
     private static final int SCROLL_WHAT = 1001;
     private boolean isRunning = false;
     private boolean isStop = false;
@@ -60,16 +63,21 @@ public class ScrollSettingActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        scrollTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, 100*1000, SharedPreferencesUtil.SCROLL_CONFIG);
+        scrollTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, 100 * 1000, SharedPreferencesUtil.SCROLL_CONFIG);
         scrollDuration = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, 10, SharedPreferencesUtil.SCROLL_CONFIG);
+        slideDuration = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, 500, SharedPreferencesUtil.SCROLL_CONFIG);
         etTimes.setText(scrollTimes + "");
         etDurations.setText(scrollDuration + "");
+        etSlideDurations.setText(slideDuration + "");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         isStop = false;
+        if (ControllerAccessibilityService.getInstance() != null) {
+            isRunning = ControllerAccessibilityService.getInstance().isRunning();
+        }
         if (isRunning) {
             btnOperation.setText("关闭");
         } else {
@@ -106,6 +114,7 @@ public class ScrollSettingActivity extends BaseActivity {
         }
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, scrollTimes, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, scrollDuration, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, slideDuration, SharedPreferencesUtil.SCROLL_CONFIG);
 
         if (ControllerAccessibilityService.getInstance() == null) {
             Toaster.show("无障碍服务未启动");
@@ -119,7 +128,9 @@ public class ScrollSettingActivity extends BaseActivity {
         } else {
             btnOperation.setText("关闭");
             Toaster.show("滑动程序将在" + scrollDuration + "秒后启动");
-            sendDelayMessage();
+            ControllerAccessibilityService.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration, true);
+            ControllerAccessibilityService.getInstance().sendDelayMessage();
+//            sendDelayMessage();
         }
         isRunning = !isRunning;
     }
@@ -147,14 +158,14 @@ public class ScrollSettingActivity extends BaseActivity {
         int randleValueY = (new Random().nextInt(5) + 1) * 10;
         int startX = 260, startY = 820, endX = 260, endY = 260;
         if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-            Log.d(AppConstant.TAG,"AppConstant.ScreenHeight="+AppConstant.ScreenHeight+" AppConstant.ScreenWidth="+AppConstant.ScreenWidth);
+            Log.d(AppConstant.TAG, "AppConstant.ScreenHeight=" + AppConstant.ScreenHeight + " AppConstant.ScreenWidth=" + AppConstant.ScreenWidth);
             startX = AppConstant.ScreenWidth / 2;
-            startY = AppConstant.ScreenHeight * 4 / 5;
+            startY = AppConstant.ScreenHeight * 6 / 7;
             endX = AppConstant.ScreenWidth / 2;
-            endY = AppConstant.ScreenHeight / 5;
+            endY = AppConstant.ScreenHeight / 7;
         }
-        Log.d(AppConstant.TAG,"startX="+startX+" startY="+startY+" endX="+endX+" endY="+endY);
-        ControllerAccessibilityService.getInstance().execScrollGesture(startX + randleValueX, startY + randleValueY, endX + randleValueX, endY + randleValueY, 100, 500);
+        Log.d(AppConstant.TAG, "startX=" + startX + " startY=" + startY + " endX=" + endX + " endY=" + endY);
+        ControllerAccessibilityService.getInstance().execScrollGesture(startX + randleValueX, startY + randleValueY, endX + randleValueX, endY + randleValueY, 100, slideDuration);
         sendDelayMessage();
     }
 

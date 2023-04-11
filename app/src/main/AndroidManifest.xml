@@ -34,7 +34,10 @@
 
         <activity android:name=".view.CommandExecuteActivity" />
 
-        <activity android:name=".view.HomeActivity">
+        <activity
+            android:name=".view.HomeActivity"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
