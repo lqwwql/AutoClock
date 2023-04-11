@@ -13,6 +13,9 @@ public class SharedPreferencesUtil {
     public static final String SCROLL_TIME_KEY = "SCROLL_TIME_KEY";
     public static final String SCROLL_DURATION_KEY = "SCROLL_DURATION_KEY";
     public static final String SLIDE_DURATION_KEY = "SLIDE_DURATION_KEY";
+    public static final String IS_RANDOM_TIME_KEY = "IS_RANDOM_TIME_KEY";
+    public static final String SCROLL_DIRECTION_KEY = "SCROLL_DIRECTION_KEY";
+    public static final String FINISH_OP_KEY = "FINISH_OP_KEY";
 
     //String的保存及获取
     public static void saveDataToSharedPreferences(Context context,

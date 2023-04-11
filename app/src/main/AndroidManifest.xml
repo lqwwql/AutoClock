@@ -23,10 +23,11 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_config"
-        android:roundIcon="@drawable/icon"
+        android:roundIcon="@drawable/logo"
+
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -66,7 +67,10 @@
 
         <activity android:name=".view.CheckHeartActivity" />
 
-        <activity android:name=".view.ScrollSettingActivity" />
+        <activity
+            android:name=".view.ScrollSettingActivity"
+            android:launchMode="singleTop"
+            />
 
     </application>
 

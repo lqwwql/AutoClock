@@ -12,6 +12,7 @@ import com.meteorshower.autoclock.JobThread.JobFactory;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
+import com.meteorshower.autoclock.util.AccessibilityUtils;
 
 import butterknife.OnClick;
 
@@ -86,8 +87,7 @@ public class HomeActivity extends BaseActivity {
                 startActivity(new Intent(HomeActivity.this, CommandExecuteActivity.class));
                 break;
             case R.id.btn_setting:
-                Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-                startActivity(intent);
+                AccessibilityUtils.goToAccessibilitySetting(HomeActivity.this);
                 break;
             case R.id.btn_scroll_setting:
                 startActivity(new Intent(HomeActivity.this, ScrollSettingActivity.class));

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.PowerManager;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.accessibility.AccessibilityNodeInfo;
 
@@ -101,6 +102,11 @@ public class AccessibilityUtils {
         intent.setAction(Intent.ACTION_MAIN);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK); //如果是服务里调用，必须加入new task标识
         intent.addCategory(Intent.CATEGORY_HOME);
+        context.startActivity(intent);
+    }
+
+    public static void goToAccessibilitySetting(Context context){
+        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
         context.startActivity(intent);
     }
 

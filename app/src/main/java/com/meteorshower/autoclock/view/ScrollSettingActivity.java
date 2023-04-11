@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
@@ -28,6 +29,12 @@ public class ScrollSettingActivity extends BaseActivity {
     EditText etDurations;
     @BindView(R.id.et_slide_duration)
     EditText etSlideDurations;
+    @BindView(R.id.rg_random_time)
+    RadioGroup rgRandomTime;
+    @BindView(R.id.rg_direction)
+    RadioGroup rgDirection;
+    @BindView(R.id.rg_finish_op)
+    RadioGroup rgFinishOp;
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
@@ -38,6 +45,9 @@ public class ScrollSettingActivity extends BaseActivity {
     private static final int SCROLL_WHAT = 1001;
     private boolean isRunning = false;
     private boolean isStop = false;
+    private boolean isRandomTime = false;
+    private int direction = 1;//1-上滑，2-下滑，3-左滑，4-右滑
+    private int finishOp = 1;
 
     private Handler scrollHandler = new Handler() {
         @Override
@@ -66,9 +76,84 @@ public class ScrollSettingActivity extends BaseActivity {
         scrollTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, 100 * 1000, SharedPreferencesUtil.SCROLL_CONFIG);
         scrollDuration = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, 10, SharedPreferencesUtil.SCROLL_CONFIG);
         slideDuration = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, 500, SharedPreferencesUtil.SCROLL_CONFIG);
+        isRandomTime = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_RANDOM_TIME_KEY, false, SharedPreferencesUtil.SCROLL_CONFIG);
+        direction = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
+        finishOp = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
+
         etTimes.setText(scrollTimes + "");
         etDurations.setText(scrollDuration + "");
         etSlideDurations.setText(slideDuration + "");
+        rgRandomTime.check(isRandomTime ? R.id.rb_yes : R.id.rb_no);
+        rgRandomTime.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                isRandomTime = checkedId == R.id.rb_yes;
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_RANDOM_TIME_KEY, isRandomTime, SharedPreferencesUtil.SCROLL_CONFIG);
+            }
+        });
+        switch (direction) {
+            case 1:
+                rgDirection.check(R.id.rb_up);
+                break;
+            case 2:
+                rgDirection.check(R.id.rb_down);
+                break;
+            case 3:
+                rgDirection.check(R.id.rb_left);
+                break;
+            case 4:
+                rgDirection.check(R.id.rb_right);
+                break;
+        }
+        rgDirection.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_up:
+                        direction = 1;
+                        break;
+                    case R.id.rb_down:
+                        direction = 2;
+                        break;
+                    case R.id.rb_left:
+                        direction = 3;
+                        break;
+                    case R.id.rb_right:
+                        direction = 4;
+                        break;
+                }
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, direction, SharedPreferencesUtil.SCROLL_CONFIG);
+            }
+        });
+
+        switch (finishOp) {
+            case 1:
+                rgFinishOp.check(R.id.rb_nothing);
+                break;
+            case 2:
+                rgFinishOp.check(R.id.rb_our_app);
+                break;
+            case 3:
+                rgFinishOp.check(R.id.rb_home_page);
+                break;
+        }
+        rgFinishOp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_nothing:
+                        finishOp = 1;
+                        break;
+                    case R.id.rb_our_app:
+                        finishOp = 2;
+                        break;
+                    case R.id.rb_home_page:
+                        finishOp = 3;
+                        break;
+                }
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, finishOp, SharedPreferencesUtil.SCROLL_CONFIG);
+            }
+        });
     }
 
     @Override
@@ -115,6 +200,9 @@ public class ScrollSettingActivity extends BaseActivity {
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, scrollTimes, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, scrollDuration, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, slideDuration, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_RANDOM_TIME_KEY, isRandomTime, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, direction, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, finishOp, SharedPreferencesUtil.SCROLL_CONFIG);
 
         if (ControllerAccessibilityService.getInstance() == null) {
             Toaster.show("无障碍服务未启动");
@@ -125,11 +213,12 @@ public class ScrollSettingActivity extends BaseActivity {
             btnOperation.setText("启动");
             Toaster.show("滑动程序已关闭");
             scrollHandler.removeMessages(SCROLL_WHAT);
+            ControllerAccessibilityService.getInstance().stopRunning();
         } else {
             btnOperation.setText("关闭");
             Toaster.show("滑动程序将在" + scrollDuration + "秒后启动");
-            ControllerAccessibilityService.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration, true);
-            ControllerAccessibilityService.getInstance().sendDelayMessage();
+            ControllerAccessibilityService.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration, direction, finishOp, true, isRandomTime);
+            ControllerAccessibilityService.getInstance().startRunning();
 //            sendDelayMessage();
         }
         isRunning = !isRunning;
