@@ -28,7 +28,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(AppConstant.ALARM_RECEIVER_ACTION)) {
-            Toaster.show("Receiver 收到广播");
             if (mHandler != null) {
                 mHandler.sendEmptyMessage(ControllerAccessibilityService.SCROLL_WHAT);
             }

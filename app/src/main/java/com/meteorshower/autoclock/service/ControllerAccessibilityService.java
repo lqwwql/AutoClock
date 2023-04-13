@@ -120,9 +120,11 @@ public class ControllerAccessibilityService extends AccessibilityService {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            if (!isRunning) {
+                return;
+            }
             switch (msg.what) {
                 case SCROLL_WHAT:
-                    Toaster.show("Handler处理定时消息");
                     executeScrollView();
                     break;
             }
@@ -152,9 +154,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
             Toaster.show("滑动程序次数已执行完毕");
             stopRunning();
             if (finishOp == 2) {
-                startActivity(new Intent(this, ScrollSettingActivity.class));
-            } else if (finishOp == 3) {
                 performGlobalAction(GLOBAL_ACTION_BACK);
+            } else if (finishOp == 3) {
+                startActivity(new Intent(this, ScrollSettingActivity.class));
             } else if (finishOp == 4) {
                 performGlobalAction(GLOBAL_ACTION_HOME);
             }
@@ -178,26 +180,26 @@ public class ControllerAccessibilityService extends AccessibilityService {
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
                     startX = AppConstant.ScreenWidth * 6 / 8;
                     startY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
+                    endX = AppConstant.ScreenWidth * 6 / 8;
+                    endY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
                 }
                 directionStr = "向下";
-                endX = AppConstant.ScreenWidth * 6 / 8;
-                endY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
                 break;
             case 3:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    startY = AppConstant.ScreenWidth / 2;
-                    startX = AppConstant.ScreenHeight * 6 / 7;
-                    endY = AppConstant.ScreenWidth / 2;
-                    endX = AppConstant.ScreenHeight / 7;
+                    startX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
+                    startY = AppConstant.ScreenHeight / 2;
+                    endX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
+                    endY = AppConstant.ScreenHeight / 2;
                 }
                 directionStr = "向左";
                 break;
             case 4:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    endY = AppConstant.ScreenWidth / 2;
-                    endX = AppConstant.ScreenHeight * 6 / 7;
-                    startY = AppConstant.ScreenWidth / 2;
-                    startX = AppConstant.ScreenHeight / 7;
+                    startX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
+                    startY = AppConstant.ScreenHeight / 2;
+                    endX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
+                    endY = AppConstant.ScreenHeight / 2;
                 }
                 directionStr = "向右";
                 break;
@@ -207,6 +209,8 @@ public class ControllerAccessibilityService extends AccessibilityService {
         mockSwipe(startX + randomX, startY + getRandomXY(), endX + randomX, endY + getRandomXY(), 0, slideDuration);
         if (timerType == 1) {
             sendDelayMessage();
+        } else {
+            sendDelayIntent();
         }
     }
 
@@ -232,8 +236,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
         Intent intent2 = new Intent(AppConstant.ALARM_RECEIVER_ACTION);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent2, 0);
         long triggerTime = (scrollDuration + (isRandomSeconds ? getRandomSeconds() : 0)) * 1000;
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + triggerTime, triggerTime, pendingIntent);
-        Toaster.show("发送定时Intent:" + triggerTime);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + triggerTime, pendingIntent);
     }
 
     public void startRunning() {
