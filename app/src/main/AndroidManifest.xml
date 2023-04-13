@@ -37,8 +37,7 @@
 
         <activity
             android:name=".view.HomeActivity"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -69,8 +68,14 @@
 
         <activity
             android:name=".view.ScrollSettingActivity"
-            android:launchMode="singleTop"
-            />
+            android:launchMode="singleTop" />
+
+        <!--<receiver
+            android:name=".receiver.AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.meteorshower.autoclock.receiver.AlarmReceiver.ALARM_RECEIVER_ACTION" />
+            </intent-filter>
+        </receiver>-->
 
     </application>
 

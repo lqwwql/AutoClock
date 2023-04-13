@@ -76,4 +76,7 @@ public class AppConstant {
 
     public static final int[] ZFB_QJ =  {550,745};
 
+    public static final String ALARM_RECEIVER_ACTION =  "com.meteorshower.autoclock.receiver.AlarmReceiver.ALARM_RECEIVER_ACTION";
+
+
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
+import android.view.Gravity;
 
 import com.hjq.toast.Toaster;
 

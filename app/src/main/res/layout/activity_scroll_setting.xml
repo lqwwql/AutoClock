@@ -33,14 +33,67 @@
 
     <LinearLayout
         android:layout_marginTop="50dp"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_height="0dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="滑动次数：" />
+
+            <EditText
+                android:id="@+id/et_scroll_time"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="滑动间隔(秒)：" />
+
+            <EditText
+                android:id="@+id/et_scroll_duration"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="持续时间(毫秒)：" />
+
+            <EditText
+                android:id="@+id/et_slide_duration"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -89,59 +142,42 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="滑动次数：" />
+                android:text="滑动距离：" />
 
-            <EditText
-                android:id="@+id/et_scroll_time"
-                android:inputType="number"
+            <RadioGroup
+                android:id="@+id/rg_scroll_distance"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="滑动间隔(秒)：" />
+                <RadioButton
+                    android:id="@+id/rb_big"
+                    android:text="大幅度"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
 
-            <EditText
-                android:id="@+id/et_scroll_duration"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/rb_small"
+                    android:text="小幅度"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="持续时间(毫秒)：" />
-
-            <EditText
-                android:id="@+id/et_slide_duration"
-                android:inputType="number"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+            </RadioGroup>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -176,7 +212,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -200,6 +236,14 @@
                 </RadioButton>
 
                 <RadioButton
+                    android:id="@+id/rb_goback"
+                    android:text="返回键"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
+
+                <RadioButton
                     android:id="@+id/rb_our_app"
                     android:text="本程序"
                     android:layout_width="wrap_content"
@@ -213,6 +257,40 @@
                     android:layout_height="wrap_content">
                 </RadioButton>
 
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="定时方式：" />
+
+            <RadioGroup
+                android:id="@+id/rg_timer_type"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rb_handler"
+                    android:text="Handler"
+                    android:checked="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/rb_alarm"
+                    android:text="系统闹钟"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
             </RadioGroup>
         </LinearLayout>
 

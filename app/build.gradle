@@ -70,4 +70,5 @@ dependencies {
     implementation 'com.github.getActivity:Toaster:12.2'
     // 手机显示logcat
 //    debugImplementation 'com.github.getActivity:Logcat:10.6'
+    implementation("org.greenrobot:eventbus:3.3.1")
 }

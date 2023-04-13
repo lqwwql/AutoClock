@@ -82,11 +82,6 @@ public class CommandExecuteActivity extends BaseActivity {
                 tvExcResult.setText(new Gson().toJson(result));
                 return;
             }
-            if(commands.equals("11")){
-                ControllerAccessibilityService service = ControllerAccessibilityService.getInstance();
-                service.execScrollGesture(300,300,380,380,3000L,1000L);
-                return;
-            }
 
             final int excTimes;
             final int excInterval;
