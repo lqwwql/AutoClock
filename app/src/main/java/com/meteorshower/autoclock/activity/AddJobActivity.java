@@ -1,4 +1,4 @@
-package com.meteorshower.autoclock.view;
+package com.meteorshower.autoclock.activity;
 
 import android.util.Log;
 import android.view.View;
@@ -10,6 +10,7 @@ import com.meteorshower.autoclock.bean.PostData;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 import com.meteorshower.autoclock.presenter.JobPresenterImpl;
 import com.meteorshower.autoclock.util.StringUtils;
+import com.meteorshower.autoclock.view.JobView;
 
 import butterknife.BindView;
 import butterknife.OnClick;

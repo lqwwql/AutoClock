@@ -80,7 +80,7 @@ public class AutoClickJob extends Job implements JobView.UpdateJobView {
             jobPresenter.updateCurrentJob(postData);
 
         } catch (InterruptedException e) {
-            LogUtils.getInstance().e("doJob error = " + Log.getStackTraceString(e), 1);
+            LogUtils.getInstance().e("doJob error = " + Log.getStackTraceString(e));
         } finally {
             goBack();
             //返回桌面

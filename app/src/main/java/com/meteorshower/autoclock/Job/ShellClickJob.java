@@ -87,7 +87,7 @@ public class ShellClickJob extends Job implements JobView.UpdateJobView {
             jobPresenter.updateCurrentJob(postData);
 
         } catch (Exception e) {
-            LogUtils.getInstance().e("doJob error = " + Log.getStackTraceString(e), 1);
+            LogUtils.getInstance().e("doJob error = " + Log.getStackTraceString(e));
         } finally {
             try {
                 Thread.sleep(10 * 1000);

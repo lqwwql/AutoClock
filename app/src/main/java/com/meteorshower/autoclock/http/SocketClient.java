@@ -45,7 +45,7 @@ public class SocketClient {
         } catch (Exception e) {
             Log.d(AppConstant.TAG, "connectSocket error :" + Log.getStackTraceString(e));
             cmdExcSendListener.getExcResult("connectSocket error :" + Log.getStackTraceString(e));
-            LogUtils.getInstance().e("connectSocket error :" + Log.getStackTraceString(e), 1);
+            LogUtils.getInstance().e("connectSocket error :" + Log.getStackTraceString(e));
         }
     }
 
@@ -85,7 +85,7 @@ public class SocketClient {
                 }
             } catch (Exception e) {
                 Log.d(AppConstant.TAG, "SocketClientThread run error : " + Log.getStackTraceString(e));
-                LogUtils.getInstance().e("SocketClientThread run error : " + Log.getStackTraceString(e), 1);
+                LogUtils.getInstance().e("SocketClientThread run error : " + Log.getStackTraceString(e));
             } finally {
                 try {
                     bufferedReader.close();
@@ -93,7 +93,7 @@ public class SocketClient {
                     socket.close();
                 } catch (IOException e) {
                     Log.d(AppConstant.TAG, "SocketClientThread run error : " + Log.getStackTraceString(e));
-                    LogUtils.getInstance().e("SocketClientThread run close error : " + Log.getStackTraceString(e), 1);
+                    LogUtils.getInstance().e("SocketClientThread run close error : " + Log.getStackTraceString(e));
                 }
             }
         }

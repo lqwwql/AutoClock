@@ -1,8 +1,9 @@
-package com.meteorshower.autoclock.view;
+package com.meteorshower.autoclock.activity;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.widget.ListView;
+
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.adapter.HeartBeatListViewAdapter;

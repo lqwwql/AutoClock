@@ -10,8 +10,6 @@ import android.graphics.Path;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.os.SystemClock;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 
@@ -20,9 +18,8 @@ import com.meteorshower.autoclock.JobThread.JobExecutor;
 import com.meteorshower.autoclock.JobThread.JobFactory;
 import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.receiver.AlarmReceiver;
-import com.meteorshower.autoclock.util.AccessibilityUtils;
-import com.meteorshower.autoclock.view.HomeActivity;
-import com.meteorshower.autoclock.view.ScrollSettingActivity;
+import com.meteorshower.autoclock.activity.ScrollSettingActivity;
+import com.meteorshower.autoclock.util.LogUtils;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -72,9 +69,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
         super.onServiceConnected();
         Toaster.show("无障碍服务已启动");
         controllerAccessibilityService = this;
-        Log.d(AppConstant.TAG, "onServiceConnected");
-        JobFactory.getInstance().start();
-        JobExecutor.getInstance().start();
+//        JobFactory.getInstance().start();
+//        JobExecutor.getInstance().start();
+
         alarmReceiver = new AlarmReceiver(scrollHandler);
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(AppConstant.ALARM_RECEIVER_ACTION);
@@ -116,7 +113,6 @@ public class ControllerAccessibilityService extends AccessibilityService {
     }
 
     private Handler scrollHandler = new Handler() {
-        @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -125,6 +121,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
             }
             switch (msg.what) {
                 case SCROLL_WHAT:
+//                    ControllerAccessibilityService.getInstance().mockSwipe(AppConstant.ScreenWidth / 2, AppConstant.ScreenHeight * 2 / 3, AppConstant.ScreenWidth / 2, 0, 0, 100);
                     executeScrollView();
                     break;
             }
@@ -144,7 +141,6 @@ public class ControllerAccessibilityService extends AccessibilityService {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void executeScrollView() {
         if (!isRunning) {
             return;
@@ -294,8 +290,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
     }
 
     //滑动
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void mockSwipe(int fromX, int fromY, int toX, int toY, long startTime, long duration) {
+    public void mockSwipe(int fromX, int fromY, int toX, int toY, long startTime, long duration) {
         Log.d(AppConstant.TAG, "mockSwipe fromX=" + fromX + " fromY=" + fromY + " toX=" + toX + " toY=" + toY + " startTime=" + startTime + " duration=" + duration);
         final Path path = new Path();
         //滑动的起始位置，例如屏幕的中心点X、Y
@@ -324,9 +319,53 @@ public class ControllerAccessibilityService extends AccessibilityService {
         }, null); //handler为空即可
     }
 
+    //滑动
+    public void mockSwipeSpeedUp(int fromX, int fromY, int toX, int toY, long startTime, long duration) {
+        Log.d(AppConstant.TAG, "mockSwipeSpeedUp fromX=" + fromX + " fromY=" + fromY + " toX=" + toX + " toY=" + toY + " startTime=" + startTime + " duration=" + duration);
+        final Path path = new Path();
+        //滑动的起始位置，例如屏幕的中心点X、Y
+        path.moveTo(fromX, fromY);
+        //需要滑动的位置，如从中心点滑到屏幕的顶部
+        path.lineTo(fromX, fromY - 100);
+
+        final Path path1 = new Path();
+        //滑动的起始位置，例如屏幕的中心点X、Y
+        path1.moveTo(fromX, fromY - 100);
+        //需要滑动的位置，如从中心点滑到屏幕的顶部
+        path1.lineTo(fromX, fromY - 400);
+
+
+        final Path path2 = new Path();
+        //滑动的起始位置，例如屏幕的中心点X、Y
+        path2.moveTo(fromX, fromY - 400);
+        //需要滑动的位置，如从中心点滑到屏幕的顶部
+        path2.lineTo(fromX, 0);
+
+        GestureDescription.Builder builder = new GestureDescription.Builder();
+        builder.addStroke(new GestureDescription.StrokeDescription(path, startTime, duration));
+        builder.addStroke(new GestureDescription.StrokeDescription(path1, startTime, duration));
+        builder.addStroke(new GestureDescription.StrokeDescription(path2, startTime, duration));
+
+        GestureDescription gestureDescription = builder.build();
+        //移动到中心点，100ms后开始滑动，滑动的时间持续400ms，可以调整
+        //如果滑动成功，会回调如下函数，可以在下面记录是否滑动成功，滑动成功或失败都要关闭该路径笔
+        dispatchGesture(gestureDescription, new GestureResultCallback() {
+            @Override
+            public void onCompleted(GestureDescription gestureDescription) {
+                super.onCompleted(gestureDescription);
+                path.close();
+            }
+
+            @Override
+            public void onCancelled(GestureDescription gestureDescription) {
+                super.onCancelled(gestureDescription);
+                path.close();
+            }
+        }, null); //handler为空即可
+    }
+
     //双击
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void mockDoubleClick(int X, int Y, long startTime, long duration) {
+    public void mockDoubleClick(int X, int Y, long startTime, long duration) {
         final Path path = new Path();
         path.moveTo(X, Y);
         //X和Y是需要双击的按钮坐标

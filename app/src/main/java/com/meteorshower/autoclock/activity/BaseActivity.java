@@ -1,17 +1,14 @@
-package com.meteorshower.autoclock.view;
+package com.meteorshower.autoclock.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.view.Window;
 import android.view.WindowManager;
-
-import com.meteorshower.autoclock.R;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BasicActivity extends Activity {
+public abstract class BaseActivity extends Activity {
 
     private Unbinder unbinder;
 
@@ -38,7 +35,9 @@ public abstract class BasicActivity extends Activity {
     }
 
     protected abstract int getLayoutID();
+
     protected abstract void initView();
+
     protected abstract void initData();
 
 }

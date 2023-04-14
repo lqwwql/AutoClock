@@ -1,4 +1,4 @@
-package com.meteorshower.autoclock.view;
+package com.meteorshower.autoclock.activity;
 
 import android.util.Log;
 import android.view.View;
@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.bean.SpinnerOption;
 import com.meteorshower.autoclock.http.SocketClient;
-import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
 import com.meteorshower.autoclock.util.ShellUtils;
 import com.meteorshower.autoclock.util.StringUtils;
@@ -56,7 +55,7 @@ public class CommandExecuteActivity extends BaseActivity {
         for (int i = 0; i < commands.length; i++) {
             commandList.add(new SpinnerOption(String.valueOf(i + 1), commands[i]));
         }
-        spCommand.setAdapter(new ArrayAdapter<SpinnerOption>(this, R.layout.support_simple_spinner_dropdown_item, commandList));
+        spCommand.setAdapter(new ArrayAdapter<SpinnerOption>(this, android.R.layout.simple_spinner_dropdown_item, commandList));
     }
 
     @OnClick({R.id.btn_exc_command})

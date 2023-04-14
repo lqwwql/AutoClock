@@ -116,7 +116,7 @@
 //                        _gestureResultCallback,
 //                        null
 //                    )
-//                    L.w("派发手势:$_isDispatched")
+//                    //L.w("派发手势:$_isDispatched")
 //                    _isDispatched
 //                } else {
 //                    MainExecutor.execute {
@@ -125,7 +125,7 @@
 //                            _gestureResultCallback,
 //                            null
 //                        )
-//                        L.w("派发手势:$_isDispatched")
+//                        //L.w("派发手势:$_isDispatched")
 //                    }
 //                    _countDownLatch = CountDownLatch(1)
 //                    _countDownLatch?.await()
@@ -136,13 +136,13 @@
 //                //设备不支持手势
 //                gestureResult?.invoke(null, false, true)
 //                //AutoParseInterceptor.log("设备不支持手势")
-//                L.w("设备不支持手势")
+//                //L.w("设备不支持手势")
 //                return true
 //            }
 //        } catch (e: Exception) {
 //            clear()
 //            e.printStackTrace()
-//            L.w("手势异常${e.stackTraceToString()}")
+//            //L.w("手势异常${e.stackTraceToString()}")
 //            return false
 //        }
 //    }
@@ -267,9 +267,9 @@
 //        willContinue: Boolean = this.willContinue
 //    ) {
 //        if (_isDo) {
-//            L.w("$path ignore touch stroke.".apply {
-//                //AutoParseInterceptor.log(this)
-//            })
+////            L.w("$path ignore touch stroke.".apply {
+////                //AutoParseInterceptor.log(this)
+////            })
 //            return
 //        }
 //        ensureBuilder {

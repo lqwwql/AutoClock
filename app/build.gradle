@@ -9,11 +9,11 @@ android {
             storePassword 'xflyer'
         }
     }
-    compileSdkVersion 28
+    compileSdkVersion 31
     defaultConfig {
         applicationId "com.meteorshower.autoclock"
-        minSdkVersion 21
-        targetSdkVersion 28
+        minSdkVersion 24
+        targetSdkVersion 31
         versionCode 2
         versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -43,14 +43,22 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+//    implementation 'com.android.support:appcompat-v7:31.0.0'
+//    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0-rc01'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0-rc01"
+
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+
     //注解控件框架
-    implementation 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.jakewharton:butterknife:10.2.3'
     // https://mvnrepository.com/artifact/commons-io/commons-io
     implementation 'commons-io:commons-io:2.5'
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
@@ -63,7 +71,6 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.1'
     implementation 'org.greenrobot:greendao:3.2.0'
     implementation 'org.greenrobot:greendao-generator:3.2.0'
-    androidTestImplementation 'junit:junit:4.12'
     //json框架
     implementation 'com.alibaba:fastjson:1.2.41'
     // 吐司框架：https://github.com/getActivity/Toaster
@@ -71,4 +78,6 @@ dependencies {
     // 手机显示logcat
 //    debugImplementation 'com.github.getActivity:Logcat:10.6'
     implementation("org.greenrobot:eventbus:3.3.1")
+    //权限申请  https://github.com/getActivity/XXPermissions
+    implementation 'com.hjq:xxpermissions:9.8'
 }

@@ -1,5 +1,7 @@
 package com.meteorshower.autoclock.constant;
 
+import java.io.File;
+
 public class AppConstant {
 
     public static int ScreenWidth = 0;
@@ -7,22 +9,22 @@ public class AppConstant {
 
     //自身
     public static String LOCAL_APPNAME = "com.meteorshower.autoclock";
-    public static String LOCAL_ACTIVITY_NAME = "com.meteorshower.autoclock.view.HomeActivity";
+    public static String LOCAL_ACTIVITY_NAME = "com.meteorshower.autoclock.activity.HomeActivity";
 
     //钉钉
     public static String TARGET_APPNAME = "com.alibaba.android.rimet";
     public static String TARGET_APP_ACTIVITY_NAME = "com.alibaba.android.rimet.biz.SplashActivity";
 
-    //劳动力管理
-    public static String TARGET_LAODONGLI_APPNAME = "com.gaiaworkforce.mobile";
-    public static String TARGET_LAODONGLI_ACTIVITY_NAME = "com.gaiaworkforce.mobile.MainActivity";
-
     //APP文件目录
-    public static String APP_PATH = "/storage/emulated/0/AutoClock/";
+    public static String APP_PATH = "辅助程序";
+    public static final String DIR_LOG = "Log";
     //异常捕获保存路径
     public static String ERROR = APP_PATH + "ERROR/";
-    //log文件保存路径
-    public static String LOG = "LOG";
+    /**
+     * 系统用到的文件目录
+     */
+    public static final String[] DIRECTORYS = new String[]{DIR_LOG};
+
     //TAG
     public static String TAG = "lqwtest";
     //Token校验

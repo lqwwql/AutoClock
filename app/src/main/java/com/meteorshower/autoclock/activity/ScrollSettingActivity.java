@@ -1,8 +1,6 @@
-package com.meteorshower.autoclock.view;
+package com.meteorshower.autoclock.activity;
 
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,12 +9,9 @@ import android.widget.RadioGroup;
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.application.MyApplication;
-import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.SharedPreferencesUtil;
 import com.meteorshower.autoclock.util.StringUtils;
-
-import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.OnClick;
