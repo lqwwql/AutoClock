@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#60BAED</color>
     <color name="black">#98000000</color>
+    <color name="btn_click">#CDF4B6</color>
+    <color name="btn_normal">#EEEEEE</color>
     <color name="action_bar_background">#50B154</color>
 </resources>

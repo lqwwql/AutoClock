@@ -7,7 +7,9 @@ import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.presenter.JobPresenter;
 
 import java.util.concurrent.ArrayBlockingQueue;
-
+/**
+ * 每10秒执行一次任务
+ * */
 public class JobExecutor extends Thread {
 
     private boolean isDoingJob = false;

@@ -1,15 +1,14 @@
 package com.meteorshower.autoclock.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.fragment.app.FragmentActivity;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public abstract class BaseActivity extends FragmentActivity {
+public abstract class BaseActivity extends Activity {
 
     private Unbinder unbinder;
 

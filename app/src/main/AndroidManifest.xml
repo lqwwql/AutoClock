@@ -31,19 +31,18 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/logo"
         android:label="@string/app_name"
-        android:networkSecurityConfig="@xml/network_config"
-        android:roundIcon="@drawable/logo"
         android:largeHeap="true"
-        android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_config"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@drawable/logo"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".activity.AddJobActivity"></activity>
-
+        <activity android:name=".activity.HomeActivity"></activity>
+        <activity android:name=".activity.AddJobActivity" />
         <activity android:name=".activity.CommandExecuteActivity" />
 
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.StartActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -68,11 +67,8 @@
         </service>
 
         <activity android:name=".activity.BaseActivity" />
-
         <activity android:name=".activity.CheckJobActivity" />
-
         <activity android:name=".activity.CheckHeartActivity" />
-
         <activity
             android:name=".activity.ScrollSettingActivity"
             android:launchMode="singleTop" />
@@ -87,14 +83,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-        <!--<receiver
-            android:name=".receiver.AlarmReceiver">
-            <intent-filter>
-                <action android:name="com.meteorshower.autoclock.receiver.AlarmReceiver.ALARM_RECEIVER_ACTION" />
-            </intent-filter>
-        </receiver>-->
-
     </application>
 
 </manifest>

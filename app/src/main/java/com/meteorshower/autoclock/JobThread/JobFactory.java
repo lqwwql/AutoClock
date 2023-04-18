@@ -48,7 +48,7 @@ public class JobFactory extends Thread implements JobView.GetJobView {
         jobPresenter = new JobPresenterImpl(this);
         while (isRunning) {
             try {
-                //每5分钟请求一次任务
+                //每1分钟发送一次心跳
                 postToNet();
                 Thread.sleep(sleepTime);
                 Log.d("JobFactory", "isGetJob=" + isGetJob);

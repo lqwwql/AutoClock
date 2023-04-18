@@ -37,7 +37,6 @@ public class ScrollSettingActivity extends BaseActivity {
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
-
     private int scrollTimes = 0;
     private int scrollDuration = 0;
     private int slideDuration = 0;
