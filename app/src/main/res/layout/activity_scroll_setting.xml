@@ -355,14 +355,35 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_operation"
-            android:text="启动"
-            android:gravity="center"
-            android:textSize="14sp"
-            android:background="@drawable/btn_click_selector"
+        <RelativeLayout
+            android:layout_weight="1"
+            android:padding="3dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_save"
+                android:text="保存"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:background="@drawable/btn_click_selector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:padding="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_operation"
+                android:text="启动"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:background="@drawable/btn_click_selector"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

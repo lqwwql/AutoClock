@@ -242,7 +242,7 @@ public class ScrollSettingActivity extends BaseActivity {
         isStop = true;
     }
 
-    @OnClick({R.id.btn_operation, R.id.tv_back})
+    @OnClick({R.id.btn_operation, R.id.tv_back,R.id.btn_save})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_operation:
@@ -250,6 +250,9 @@ public class ScrollSettingActivity extends BaseActivity {
                 break;
             case R.id.tv_back:
                 onBackPressed();
+                break;
+                case R.id.btn_save:
+                saveValue();
                 break;
         }
     }
@@ -318,6 +321,30 @@ public class ScrollSettingActivity extends BaseActivity {
         }
         isRunning = !isRunning;
         FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewState(isRunning);
+    }
+
+    private void saveValue(){
+        if (!StringUtils.isEmptyOrNull(etTimes.getText().toString())) {
+            scrollTimes = Integer.parseInt(etTimes.getText().toString());
+        }
+
+        if (!StringUtils.isEmptyOrNull(etDurations.getText().toString())) {
+            scrollDuration = Integer.parseInt(etDurations.getText().toString());
+        }
+
+        if (!StringUtils.isEmptyOrNull(etSlideDurations.getText().toString())) {
+            slideDuration = Integer.parseInt(etSlideDurations.getText().toString());
+        }
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, scrollTimes, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, scrollDuration, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, slideDuration, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_RANDOM_TIME_KEY, isRandomTime, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, direction, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, finishOp, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.TIMER_TYPE_KEY, timerType, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_RANGE_KEY, range, SharedPreferencesUtil.SCROLL_CONFIG);
+
+        Toaster.show("保存成功");
     }
 
 }
