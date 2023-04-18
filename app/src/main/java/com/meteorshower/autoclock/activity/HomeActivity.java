@@ -73,7 +73,7 @@ public class HomeActivity extends BaseActivity {
         checkPermissions();
     }
 
-    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_check, R.id.btn_look,
+    @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_stop_running, R.id.btn_look,
             R.id.btn_test, R.id.btn_reset, R.id.btn_exc_cmd, R.id.btn_setting, R.id.btn_scroll_setting})
     public void doClick(View view) {
         switch (view.getId()) {
@@ -91,7 +91,7 @@ public class HomeActivity extends BaseActivity {
             case R.id.btn_end:
                 JobFactory.getInstance().setGetJob(false);
                 break;
-            case R.id.btn_check:
+            case R.id.btn_stop_running:
                 JobFactory.getInstance().setRunning(false);
                 JobExecutor.getInstance().setRunning(false);
                 break;
@@ -105,12 +105,7 @@ public class HomeActivity extends BaseActivity {
                 startActivity(new Intent(HomeActivity.this, CheckHeartActivity.class));
                 break;
             case R.id.btn_reset:
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new TestClickJob(null).doJob();
-                    }
-                }).start();
+
                 break;
             case R.id.btn_exc_cmd:
                 startActivity(new Intent(HomeActivity.this, CommandExecuteActivity.class));
@@ -167,11 +162,13 @@ public class HomeActivity extends BaseActivity {
      * 申请权限
      */
     private void applyPermission(String[] permissions) {
+        XXPermissions.setDebugMode(true);
         XXPermissions.with(HomeActivity.this)
                 .permission(permissions)
                 .request(new OnPermissionCallback() {
                              @Override
                              public void onGranted(List<String> permissions, boolean all) {
+                                 Log.d(AppConstant.TAG,"onGranted permissions="+permissions);
                                  if (permissions.size() > 0) {
                                      if (all) {
                                          normalPermission = true;
@@ -186,6 +183,7 @@ public class HomeActivity extends BaseActivity {
 
                              @Override
                              public void onDenied(List<String> permissions, boolean never) {
+                                 Log.d(AppConstant.TAG,"onGranted permissions="+permissions);
                                  String deniedStr = getDeniedPermissionsName(permissions);
                                  showSystemPermissionSettingDialog(permissions, deniedStr);
                              }
