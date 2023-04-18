@@ -2,16 +2,25 @@ package com.meteorshower.autoclock.activity;
 
 import android.os.Build;
 import android.view.View;
+import android.view.ViewManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.application.MyApplication;
+import com.meteorshower.autoclock.event.FloatingViewClickEvent;
+import com.meteorshower.autoclock.event.ScrollFinishEvent;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.SharedPreferencesUtil;
 import com.meteorshower.autoclock.util.StringUtils;
+import com.meteorshower.autoclock.view.FloatingViewManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -34,6 +43,8 @@ public class ScrollSettingActivity extends BaseActivity {
     RadioGroup rgTimerType;
     @BindView(R.id.rg_scroll_distance)
     RadioGroup rgScrollDistance;
+    @BindView(R.id.sw_floating_view)
+    Switch swFloatingView;
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
@@ -56,7 +67,7 @@ public class ScrollSettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -196,6 +207,19 @@ public class ScrollSettingActivity extends BaseActivity {
                 SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_RANGE_KEY, range, SharedPreferencesUtil.SCROLL_CONFIG);
             }
         });
+
+        swFloatingView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    swFloatingView.setText("开");
+                    FloatingViewManager.getInstance(ScrollSettingActivity.this).showFloatingBall();
+                } else {
+                    FloatingViewManager.getInstance(ScrollSettingActivity.this).hideFloatingBall();
+                    swFloatingView.setText("关");
+                }
+            }
+        });
     }
 
     @Override
@@ -227,6 +251,30 @@ public class ScrollSettingActivity extends BaseActivity {
             case R.id.tv_back:
                 onBackPressed();
                 break;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FloatingViewManager.getInstance(ScrollSettingActivity.this).hideFloatingBall();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void doFloatingViewClickEvent(FloatingViewClickEvent event) {
+        if (event != null && event.getType() == 1) {
+            runScroll();
+        } else if (event != null && event.getType() == 2) {
+
+        }
+    }
+
+    @Subscribe
+    public void doScrollFinishEvent(ScrollFinishEvent event) {
+        if (event != null) {
+            isRunning = !isRunning;
+            FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewState(isRunning);
         }
     }
 
@@ -269,6 +317,7 @@ public class ScrollSettingActivity extends BaseActivity {
             ControllerAccessibilityService.getInstance().startRunning();
         }
         isRunning = !isRunning;
+        FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewState(isRunning);
     }
 
 }

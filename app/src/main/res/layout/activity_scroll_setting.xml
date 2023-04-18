@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="#ffffff"
     android:layout_height="match_parent">
 
 
@@ -39,6 +40,27 @@
         android:layout_height="0dp"
         android:orientation="vertical">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tv_floating"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="悬浮窗：" />
+
+            <Switch
+                android:layout_toRightOf="@id/tv_floating"
+                android:layout_marginLeft="5dp"
+                android:text="关"
+                android:layout_centerVertical="true"
+                android:id="@+id/sw_floating_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -47,6 +69,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:text="滑动次数：" />
 
@@ -64,6 +87,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:text="滑动间隔(秒)：" />
 
@@ -81,6 +105,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:text="持续时间(毫秒)：" />
 
@@ -99,6 +124,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:text="滑动方向：" />
 
@@ -111,6 +137,8 @@
                 <RadioButton
                     android:id="@+id/rb_up"
                     android:text="上滑"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="5dp"
                     android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -118,6 +146,7 @@
 
                 <RadioButton
                     android:id="@+id/rb_down"
+                    android:textSize="14sp"
                     android:text="下滑"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -125,13 +154,17 @@
 
                 <RadioButton
                     android:id="@+id/rb_left"
+                    android:textSize="14sp"
                     android:text="左滑"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
 
                 <RadioButton
                     android:id="@+id/rb_right"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="14sp"
                     android:text="右滑"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -148,6 +181,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:text="滑动距离：" />
 
@@ -160,6 +194,7 @@
                 <RadioButton
                     android:id="@+id/rb_big"
                     android:text="大幅度"
+                    android:textSize="14sp"
                     android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -168,6 +203,8 @@
                 <RadioButton
                     android:id="@+id/rb_small"
                     android:text="小幅度"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -183,8 +220,9 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
-                android:text="是否增加随机时间：" />
+                android:text="增加随机时间：" />
 
             <RadioGroup
                 android:id="@+id/rg_random_time"
@@ -195,6 +233,7 @@
                 <RadioButton
                     android:id="@+id/rb_yes"
                     android:text="是"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -202,6 +241,8 @@
                 <RadioButton
                     android:id="@+id/rb_no"
                     android:text="否"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="5dp"
                     android:checked="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
@@ -218,6 +259,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:text="结束后动作：" />
 
@@ -231,6 +273,7 @@
                     android:id="@+id/rb_nothing"
                     android:text="无"
                     android:checked="true"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -238,7 +281,9 @@
                 <RadioButton
                     android:id="@+id/rb_goback"
                     android:text="返回键"
+                    android:layout_marginLeft="5dp"
                     android:checked="true"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -246,6 +291,8 @@
                 <RadioButton
                     android:id="@+id/rb_our_app"
                     android:text="本程序"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -253,6 +300,8 @@
                 <RadioButton
                     android:id="@+id/rb_home_page"
                     android:text="桌面"
+                    android:textSize="14sp"
+                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -268,6 +317,7 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:textSize="14sp"
                 android:layout_height="wrap_content"
                 android:text="定时方式：" />
 
@@ -281,6 +331,7 @@
                     android:id="@+id/rb_handler"
                     android:text="Handler"
                     android:checked="true"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -288,6 +339,8 @@
                 <RadioButton
                     android:id="@+id/rb_alarm"
                     android:text="系统闹钟"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="14sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </RadioButton>
@@ -305,6 +358,9 @@
         <Button
             android:id="@+id/btn_operation"
             android:text="启动"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:background="@drawable/btn_click_selector"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

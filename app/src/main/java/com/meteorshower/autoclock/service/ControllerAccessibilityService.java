@@ -17,9 +17,12 @@ import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.JobThread.JobExecutor;
 import com.meteorshower.autoclock.JobThread.JobFactory;
 import com.meteorshower.autoclock.constant.AppConstant;
+import com.meteorshower.autoclock.event.ScrollFinishEvent;
 import com.meteorshower.autoclock.receiver.AlarmReceiver;
 import com.meteorshower.autoclock.activity.ScrollSettingActivity;
 import com.meteorshower.autoclock.util.LogUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -140,22 +143,26 @@ public class ControllerAccessibilityService extends AccessibilityService {
         this.range = range;
     }
 
-
     public void executeScrollView() {
         if (!isRunning) {
             return;
         }
         Log.d(AppConstant.TAG, "range=" + range);
         if (scrollTimes == 0) {
-            Toaster.show("滑动程序次数已执行完毕");
             stopRunning();
             if (finishOp == 2) {
+                Toaster.show("滑动执行完毕,返回上一页");
                 performGlobalAction(GLOBAL_ACTION_BACK);
             } else if (finishOp == 3) {
+                Toaster.show("滑动执行完毕,返回程序");
                 startActivity(new Intent(this, ScrollSettingActivity.class));
             } else if (finishOp == 4) {
+                Toaster.show("滑动执行完毕,返回桌面");
                 performGlobalAction(GLOBAL_ACTION_HOME);
+            } else {
+                Toaster.show("滑动执行完毕,无操作");
             }
+            EventBus.getDefault().post(new ScrollFinishEvent());
             return;
         }
         scrollTimes--;
