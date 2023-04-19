@@ -36,9 +36,9 @@ public class FloatingViewManager {
         return manager;
     }
 
-    public void showFloatingBall() {
+    public void showFloatingBall(int floatingViewSize) {
         try {
-            floatBall = new FloatingView(context);
+            floatBall = new FloatingView(context, floatingViewSize, floatingViewSize);
             windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             if (floatBallParams == null) {
                 floatBallParams = new WindowManager.LayoutParams();
@@ -146,6 +146,12 @@ public class FloatingViewManager {
     public void changeFloatingViewState(boolean isRunning) {
         if (floatBall != null) {
             floatBall.changeState(isRunning);
+        }
+    }
+
+    public void changeFloatingViewSize(int size) {
+        if (floatBall != null) {
+            floatBall.changeSize(size);
         }
     }
 

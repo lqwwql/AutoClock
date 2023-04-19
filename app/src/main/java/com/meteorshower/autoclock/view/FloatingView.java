@@ -7,17 +7,25 @@ import android.graphics.Paint;
 import android.view.View;
 
 import com.meteorshower.autoclock.R;
+import com.meteorshower.autoclock.constant.AppConstant;
 
 public class FloatingView extends View {
 
-    public int height = 100;
-    public int width = 100;
+    public int height = AppConstant.FloatingViewSize;
+    public int width = AppConstant.FloatingViewSize;
     private Paint paint;
     private boolean isRunning = false;
 
     public FloatingView(Context context) {
         super(context);
         paint = new Paint();
+    }
+
+    public FloatingView(Context context, int height, int width) {
+        super(context);
+        paint = new Paint();
+        this.height = height;
+        this.width = width;
     }
 
     @Override
@@ -48,6 +56,12 @@ public class FloatingView extends View {
 
     public void changeState(boolean isRunning) {
         this.isRunning = isRunning;
+        invalidate();
+    }
+
+    public void changeSize(int size) {
+        this.height = size;
+        this.width = size;
         invalidate();
     }
 

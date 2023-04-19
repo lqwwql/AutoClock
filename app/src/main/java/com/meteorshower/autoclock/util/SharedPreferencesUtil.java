@@ -18,6 +18,8 @@ public class SharedPreferencesUtil {
     public static final String FINISH_OP_KEY = "FINISH_OP_KEY";
     public static final String TIMER_TYPE_KEY = "TIMER_TYPE_KEY";
     public static final String SCROLL_RANGE_KEY = "SCROLL_RANGE_KEY";
+    public static final String FLOATING_VIEW_FUNCTION_KEY = "FLOATING_VIEW_FUNCTION_KEY";
+    public static final String FLOATING_VIEW_SIZE_KEY = "FLOATING_VIEW_SIZE_KEY";
 
     //String的保存及获取
     public static void saveDataToSharedPreferences(Context context,

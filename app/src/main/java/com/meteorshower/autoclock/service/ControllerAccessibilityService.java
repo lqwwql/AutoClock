@@ -171,6 +171,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
         String directionStr = "";
         switch (direction) {
             case 1:
+            case 5:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
                     startX = AppConstant.ScreenWidth * 6 / 8;
                     startY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
@@ -178,8 +179,12 @@ public class ControllerAccessibilityService extends AccessibilityService {
                     endY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
                 }
                 directionStr = "向上";
+                if (direction == 5) {
+                    direction = 6;
+                }
                 break;
             case 2:
+            case 6:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
                     startX = AppConstant.ScreenWidth * 6 / 8;
                     startY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
@@ -187,6 +192,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
                     endY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
                 }
                 directionStr = "向下";
+                if (direction == 6) {
+                    direction = 5;
+                }
                 break;
             case 3:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {

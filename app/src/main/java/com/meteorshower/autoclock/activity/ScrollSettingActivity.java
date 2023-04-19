@@ -1,17 +1,18 @@
 package com.meteorshower.autoclock.activity;
 
-import android.os.Build;
+import android.content.Intent;
 import android.view.View;
-import android.view.ViewManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.application.MyApplication;
+import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
 import com.meteorshower.autoclock.event.ScrollFinishEvent;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
@@ -25,6 +26,12 @@ import org.greenrobot.eventbus.Subscribe;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;
+import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_HOME;
+
+/**
+ * 滑动相关设置类
+ */
 public class ScrollSettingActivity extends BaseActivity {
 
     @BindView(R.id.et_scroll_time)
@@ -45,6 +52,14 @@ public class ScrollSettingActivity extends BaseActivity {
     RadioGroup rgScrollDistance;
     @BindView(R.id.sw_floating_view)
     Switch swFloatingView;
+    @BindView(R.id.ll_floating_fun)
+    LinearLayout llFloatingFun;
+    @BindView(R.id.rg_floating_fun)
+    RadioGroup rgFloatingFun;
+    @BindView(R.id.ll_floating_size)
+    LinearLayout llFloatingSize;
+    @BindView(R.id.et_floating_size)
+    EditText etFloatingSize;
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
@@ -59,6 +74,8 @@ public class ScrollSettingActivity extends BaseActivity {
     private int finishOp = 1;
     private int timerType = 1;
     private int range = 1;
+    private int floatingViewFun = 2;//1-系统导航 点击返回上一页，长按返回桌面 2-滑动开关
+    private int floatingViewSize = AppConstant.FloatingViewSize;//悬浮窗按钮大小
 
     @Override
     protected int getLayoutID() {
@@ -80,10 +97,13 @@ public class ScrollSettingActivity extends BaseActivity {
         finishOp = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
         timerType = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.TIMER_TYPE_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
         range = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_RANGE_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
+        floatingViewFun = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_FUNCTION_KEY, 2, SharedPreferencesUtil.SCROLL_CONFIG);
+        floatingViewSize = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_SIZE_KEY, AppConstant.FloatingViewSize, SharedPreferencesUtil.SCROLL_CONFIG);
 
         etTimes.setText(scrollTimes + "");
         etDurations.setText(scrollDuration + "");
         etSlideDurations.setText(slideDuration + "");
+        etFloatingSize.setText(floatingViewSize + "");
         rgRandomTime.check(isRandomTime ? R.id.rb_yes : R.id.rb_no);
         rgRandomTime.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -105,6 +125,9 @@ public class ScrollSettingActivity extends BaseActivity {
             case 4:
                 rgDirection.check(R.id.rb_right);
                 break;
+            case 5:
+                rgDirection.check(R.id.rb_up_down);
+                break;
         }
         rgDirection.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -121,6 +144,9 @@ public class ScrollSettingActivity extends BaseActivity {
                         break;
                     case R.id.rb_right:
                         direction = 4;
+                        break;
+                    case R.id.rb_up_down:
+                        direction = 5;
                         break;
                 }
                 SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, direction, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -208,15 +234,42 @@ public class ScrollSettingActivity extends BaseActivity {
             }
         });
 
+        switch (floatingViewFun) {
+            case 1:
+                rgFloatingFun.check(R.id.rb_navi);
+                break;
+            case 2:
+                rgFloatingFun.check(R.id.rb_scroll);
+                break;
+        }
+        rgFloatingFun.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_navi:
+                        floatingViewFun = 1;
+                        break;
+                    case R.id.rb_scroll:
+                        floatingViewFun = 2;
+                        break;
+                }
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_FUNCTION_KEY, floatingViewFun, SharedPreferencesUtil.SCROLL_CONFIG);
+            }
+        });
+
         swFloatingView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     swFloatingView.setText("开");
-                    FloatingViewManager.getInstance(ScrollSettingActivity.this).showFloatingBall();
+                    FloatingViewManager.getInstance(ScrollSettingActivity.this).showFloatingBall(floatingViewSize);
+                    llFloatingFun.setVisibility(View.VISIBLE);
+                    llFloatingSize.setVisibility(View.VISIBLE);
                 } else {
                     FloatingViewManager.getInstance(ScrollSettingActivity.this).hideFloatingBall();
                     swFloatingView.setText("关");
+                    llFloatingFun.setVisibility(View.GONE);
+                    llFloatingSize.setVisibility(View.GONE);
                 }
             }
         });
@@ -242,7 +295,7 @@ public class ScrollSettingActivity extends BaseActivity {
         isStop = true;
     }
 
-    @OnClick({R.id.btn_operation, R.id.tv_back,R.id.btn_save})
+    @OnClick({R.id.btn_operation, R.id.tv_back, R.id.btn_save})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_operation:
@@ -251,8 +304,8 @@ public class ScrollSettingActivity extends BaseActivity {
             case R.id.tv_back:
                 onBackPressed();
                 break;
-                case R.id.btn_save:
-                saveValue();
+            case R.id.btn_save:
+                saveValue(true);
                 break;
         }
     }
@@ -267,9 +320,18 @@ public class ScrollSettingActivity extends BaseActivity {
     @Subscribe
     public void doFloatingViewClickEvent(FloatingViewClickEvent event) {
         if (event != null && event.getType() == 1) {
-            runScroll();
+            if (floatingViewFun == 1) {
+                ControllerAccessibilityService.getInstance().performGlobalAction(GLOBAL_ACTION_BACK);
+            } else {
+                runScroll();
+            }
         } else if (event != null && event.getType() == 2) {
-
+            if (floatingViewFun == 1) {
+                ControllerAccessibilityService.getInstance().performGlobalAction(GLOBAL_ACTION_HOME);
+            } else {
+//                runScroll();
+                startActivity(new Intent(this, ScrollSettingActivity.class));
+            }
         }
     }
 
@@ -283,25 +345,7 @@ public class ScrollSettingActivity extends BaseActivity {
 
 
     private void runScroll() {
-        if (!StringUtils.isEmptyOrNull(etTimes.getText().toString())) {
-            scrollTimes = Integer.parseInt(etTimes.getText().toString());
-        }
-
-        if (!StringUtils.isEmptyOrNull(etDurations.getText().toString())) {
-            scrollDuration = Integer.parseInt(etDurations.getText().toString());
-        }
-
-        if (!StringUtils.isEmptyOrNull(etSlideDurations.getText().toString())) {
-            slideDuration = Integer.parseInt(etSlideDurations.getText().toString());
-        }
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, scrollTimes, SharedPreferencesUtil.SCROLL_CONFIG);
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, scrollDuration, SharedPreferencesUtil.SCROLL_CONFIG);
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, slideDuration, SharedPreferencesUtil.SCROLL_CONFIG);
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_RANDOM_TIME_KEY, isRandomTime, SharedPreferencesUtil.SCROLL_CONFIG);
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, direction, SharedPreferencesUtil.SCROLL_CONFIG);
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, finishOp, SharedPreferencesUtil.SCROLL_CONFIG);
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.TIMER_TYPE_KEY, timerType, SharedPreferencesUtil.SCROLL_CONFIG);
-        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_RANGE_KEY, range, SharedPreferencesUtil.SCROLL_CONFIG);
+        saveValue(false);
 
         if (ControllerAccessibilityService.getInstance() == null) {
             Toaster.show("无障碍服务未启动");
@@ -323,7 +367,7 @@ public class ScrollSettingActivity extends BaseActivity {
         FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewState(isRunning);
     }
 
-    private void saveValue(){
+    private void saveValue(boolean isShow) {
         if (!StringUtils.isEmptyOrNull(etTimes.getText().toString())) {
             scrollTimes = Integer.parseInt(etTimes.getText().toString());
         }
@@ -335,6 +379,11 @@ public class ScrollSettingActivity extends BaseActivity {
         if (!StringUtils.isEmptyOrNull(etSlideDurations.getText().toString())) {
             slideDuration = Integer.parseInt(etSlideDurations.getText().toString());
         }
+
+        if (!StringUtils.isEmptyOrNull(etFloatingSize.getText().toString())) {
+            floatingViewSize = Integer.parseInt(etFloatingSize.getText().toString());
+        }
+
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, scrollTimes, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, scrollDuration, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, slideDuration, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -343,8 +392,16 @@ public class ScrollSettingActivity extends BaseActivity {
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, finishOp, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.TIMER_TYPE_KEY, timerType, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_RANGE_KEY, range, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_FUNCTION_KEY, floatingViewFun, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_SIZE_KEY, floatingViewSize, SharedPreferencesUtil.SCROLL_CONFIG);
 
-        Toaster.show("保存成功");
+        if (swFloatingView.isChecked()) {
+            FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewSize(floatingViewSize);
+        }
+
+        if (isShow) {
+            Toaster.show("保存成功");
+        }
     }
 
 }

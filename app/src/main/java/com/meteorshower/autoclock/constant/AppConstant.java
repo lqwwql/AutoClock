@@ -7,6 +7,8 @@ public class AppConstant {
     public static int ScreenWidth = 0;
     public static int ScreenHeight = 0;
 
+    public static int FloatingViewSize = 100;
+
     //自身
     public static String LOCAL_APPNAME = "com.meteorshower.autoclock";
     public static String LOCAL_ACTIVITY_NAME = "com.meteorshower.autoclock.activity.HomeActivity";
