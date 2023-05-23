@@ -1,6 +1,7 @@
 package com.meteorshower.autoclock.service;
 
 import android.accessibilityservice.AccessibilityService;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.accessibilityservice.GestureDescription;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityNodeInfo;
 
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.JobThread.JobExecutor;
@@ -20,10 +22,12 @@ import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.ScrollFinishEvent;
 import com.meteorshower.autoclock.receiver.AlarmReceiver;
 import com.meteorshower.autoclock.activity.ScrollSettingActivity;
+import com.meteorshower.autoclock.util.AccessibilityUtils;
 import com.meteorshower.autoclock.util.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -82,20 +86,29 @@ public class ControllerAccessibilityService extends AccessibilityService {
         if (alarmManager == null) {
             alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         }
+
+//        AccessibilityServiceInfo info = new AccessibilityServiceInfo();
+//
+//        setServiceInfo(info);
     }
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         String className = event.getClassName().toString();
-//        Log.d(AppConstant.TAG, "className = " + className);
-
         int eventType = event.getEventType();
-//        Log.d(AppConstant.TAG, "eventType = " + eventType);
+        Log.d(AppConstant.TAG, "eventType = " + eventType + " className = " + className);
 
         switch (eventType) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-//                Log.d(AppConstant.TAG, "TYPE_WINDOW_STATE_CHANGED");
-//                atomicInteger.getAndIncrement();
+                Log.d("nodes","onAccessibilityEvent "+"eventType = " + eventType + " className = " + className);
+                showNodes();
+                clickJump();
+                break;
+            case AccessibilityEvent.WINDOWS_CHANGE_ADDED:
+//                showNodes();
+                break;
+            case AccessibilityEvent.TYPE_WINDOW_CONTENT_CHANGED:
+//                showNodes();
                 break;
             default:
                 break;
@@ -408,4 +421,71 @@ public class ControllerAccessibilityService extends AccessibilityService {
             }
         }, null);
     }
+
+    public void showNodes() {
+        try {
+            AccessibilityNodeInfo root = getRootInActiveWindow();
+            if (root == null) {
+                Log.d("nodes", "root == null");
+                return;
+            }
+            showChildNodes(root);
+        } catch (Exception e) {
+            Log.d("nodes", "showNodes error = " + Log.getStackTraceString(e));
+        }
+    }
+
+    private void showChildNodes(AccessibilityNodeInfo parent) {
+        try {
+            if (parent == null) {
+                Log.d("nodes", "parent == null");
+                return;
+            }
+            int childCount = parent.getChildCount();
+            Log.d("nodes", "childCount = " + childCount);
+            for (int i = 0; i < childCount; i++) {
+                AccessibilityNodeInfo child = parent.getChild(i);
+                if (child == null) {
+                    continue;
+                }
+                if (child.getChildCount() > 1) {
+                    showChildNodes(child);
+                } else {
+                    Log.e("nodes", " ClassName=" + child.getClassName()
+                            + " Text=" + child.getText()
+                            + " ContentDescription=" + child.getContentDescription()
+                            + " WindowId=" + child.getWindowId()
+                            + " child=" + child);
+                    LogUtils.getInstance().i("ControllerAccessibilityService ClassName=" + child.getClassName()
+                            + " Text=" + child.getText()
+                            + " ContentDescription=" + child.getContentDescription()
+                            + " WindowId=" + child.getWindowId()
+                            + " child=" + child);
+                }
+            }
+        } catch (Exception e) {
+            Log.d("nodes", "showChildNodes error = " + Log.getStackTraceString(e));
+        }
+    }
+
+    public void clickJump() {
+        try {
+            AccessibilityNodeInfo root = getRootInActiveWindow();
+            if (root == null) {
+                Log.d("nodes", "root == null");
+                return;
+            }
+            AccessibilityNodeInfo jumpNode = AccessibilityUtils.findNode(root, "跳过", false);
+            if (jumpNode == null) {
+                Log.d("nodes", "jumpNode == null");
+                return;
+            }
+            jumpNode.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+            LogUtils.getInstance().e("ControllerAccessibilityService clickJump 点击跳过 jumpNode="+jumpNode);
+            Toaster.show("点击跳过");
+        } catch (Exception e) {
+            LogUtils.getInstance().e("clickJump error = " + Log.getStackTraceString(e));
+        }
+    }
+
 }

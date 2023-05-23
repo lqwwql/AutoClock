@@ -32,395 +32,410 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:layout_marginTop="50dp"
-        android:layout_margin="5dp"
-        android:layout_width="match_parent"
+    <ScrollView
         android:layout_weight="1"
-        android:layout_height="0dp"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_floating"
-                android:layout_centerVertical="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:text="悬浮窗：" />
-
-            <Switch
-                android:layout_toRightOf="@id/tv_floating"
-                android:layout_marginLeft="5dp"
-                android:text="关"
-                android:layout_centerVertical="true"
-                android:id="@+id/sw_floating_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
-
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
         <LinearLayout
-            android:id="@+id/ll_floating_fun"
-            android:visibility="gone"
+            android:layout_marginTop="50dp"
+            android:layout_margin="5dp"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="悬浮窗功能：" />
-
-            <RadioGroup
-                android:id="@+id/rg_floating_fun"
-                android:orientation="horizontal"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rb_navi"
-                    android:text="系统导航"
-                    android:textSize="14sp"
+                <TextView
+                    android:id="@+id/tv_floating"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/rb_scroll"
+                    android:layout_height="wrap_content"
                     android:textSize="14sp"
+                    android:text="悬浮窗：" />
+
+                <Switch
+                    android:layout_toRightOf="@id/tv_floating"
                     android:layout_marginLeft="5dp"
-                    android:checked="true"
-                    android:text="滑动开关"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-            </RadioGroup>
-        </LinearLayout>
+                    android:text="关"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/sw_floating_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_floating_size"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="悬浮窗大小：" />
-
-            <EditText
-                android:id="@+id/et_floating_size"
-                android:inputType="number"
+            <LinearLayout
+                android:id="@+id/ll_floating_fun"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="悬浮窗功能：" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="滑动次数：" />
+                <RadioGroup
+                    android:id="@+id/rg_floating_fun"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/et_scroll_time"
-                android:inputType="number"
+                    <RadioButton
+                        android:id="@+id/rb_navi"
+                        android:text="系统导航"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_scroll"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:checked="true"
+                        android:text="滑动开关"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_fun"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:text="功能键"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_floating_size"
+                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="悬浮窗大小：" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="滑动间隔(秒)：" />
+                <EditText
+                    android:id="@+id/et_floating_size"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
 
-            <EditText
-                android:id="@+id/et_scroll_duration"
-                android:inputType="number"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="持续时间(毫秒)：" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="滑动次数：" />
 
-            <EditText
-                android:id="@+id/et_slide_duration"
-                android:inputType="number"
+                <EditText
+                    android:id="@+id/et_scroll_time"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-        </LinearLayout>
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="滑动间隔(秒)：" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="滑动方向：" />
-
-            <RadioGroup
-                android:id="@+id/rg_direction"
-                android:orientation="horizontal"
+                <EditText
+                    android:id="@+id/et_scroll_duration"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/rb_up"
-                    android:text="上滑"
-                    android:textSize="14sp"
-                    android:checked="true"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/rb_down"
                     android:textSize="14sp"
-                    android:layout_marginLeft="5dp"
-                    android:text="下滑"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
+                    android:layout_height="wrap_content"
+                    android:text="持续时间(毫秒)：" />
 
-                <RadioButton
-                    android:id="@+id/rb_left"
-                    android:visibility="gone"
-                    android:textSize="14sp"
-                    android:text="左滑"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
+                <EditText
+                    android:id="@+id/et_slide_duration"
+                    android:inputType="number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
 
-                <RadioButton
-                    android:id="@+id/rb_right"
-                    android:visibility="gone"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14sp"
-                    android:text="右滑"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/rb_up_down"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14sp"
-                    android:text="上下"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="滑动距离：" />
-
-            <RadioGroup
-                android:id="@+id/rg_scroll_distance"
-                android:orientation="horizontal"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rb_big"
-                    android:text="大幅度"
-                    android:textSize="14sp"
-                    android:checked="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/rb_small"
-                    android:text="小幅度"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-            </RadioGroup>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
                 android:layout_height="wrap_content"
-                android:text="增加随机时间：" />
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/rg_random_time"
-                android:orientation="horizontal"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="滑动方向：" />
+
+                <RadioGroup
+                    android:id="@+id/rg_direction"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_up"
+                        android:text="上滑"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_down"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:text="下滑"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_left"
+                        android:textSize="14sp"
+                        android:text="左滑"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_right"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:text="右滑"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_up_down"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:text="上下"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/rb_yes"
-                    android:text="是"
-                    android:textSize="14sp"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/rb_no"
-                    android:text="否"
                     android:textSize="14sp"
-                    android:layout_marginLeft="5dp"
-                    android:checked="true"
-                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="滑动距离：" />
+
+                <RadioGroup
+                    android:id="@+id/rg_scroll_distance"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                </RadioButton>
 
-            </RadioGroup>
-        </LinearLayout>
+                    <RadioButton
+                        android:id="@+id/rb_big"
+                        android:text="大幅度"
+                        android:textSize="14sp"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/rb_small"
+                        android:text="小幅度"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="增加随机时间：" />
+
+                <RadioGroup
+                    android:id="@+id/rg_random_time"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_yes"
+                        android:text="是"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_no"
+                        android:text="否"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="结束后动作：" />
+                android:gravity="center"
+                android:orientation="horizontal">
 
-            <RadioGroup
-                android:id="@+id/rg_finish_op"
-                android:orientation="horizontal"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="结束后动作：" />
+
+                <RadioGroup
+                    android:id="@+id/rg_finish_op"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_nothing"
+                        android:text="无"
+                        android:layout_marginLeft="5dp"
+                        android:checked="true"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_goback"
+                        android:text="返回键"
+                        android:layout_marginLeft="5dp"
+                        android:checked="true"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_our_app"
+                        android:text="本程序"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_home_page"
+                        android:text="桌面"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <RadioButton
-                    android:id="@+id/rb_nothing"
-                    android:text="无"
-                    android:checked="true"
-                    android:textSize="14sp"
+                <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/rb_goback"
-                    android:text="返回键"
-                    android:layout_marginLeft="5dp"
-                    android:checked="true"
                     android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
+                    android:layout_height="wrap_content"
+                    android:text="定时方式：" />
 
-                <RadioButton
-                    android:id="@+id/rb_our_app"
-                    android:text="本程序"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
+                <RadioGroup
+                    android:id="@+id/rg_timer_type"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                </RadioButton>
 
-                <RadioButton
-                    android:id="@+id/rb_home_page"
-                    android:text="桌面"
-                    android:textSize="14sp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
+                    <RadioButton
+                        android:id="@+id/rb_handler"
+                        android:text="Handler"
+                        android:checked="true"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
 
-            </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/rb_alarm"
+                        android:text="系统闹钟"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+                </RadioGroup>
+            </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="14sp"
-                android:layout_height="wrap_content"
-                android:text="定时方式：" />
-
-            <RadioGroup
-                android:id="@+id/rg_timer_type"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RadioButton
-                    android:id="@+id/rb_handler"
-                    android:text="Handler"
-                    android:checked="true"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-
-                <RadioButton
-                    android:id="@+id/rb_alarm"
-                    android:text="系统闹钟"
-                    android:layout_marginLeft="5dp"
-                    android:textSize="14sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-                </RadioButton>
-            </RadioGroup>
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

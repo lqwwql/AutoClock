@@ -261,7 +261,7 @@ public class StartActivity extends FragmentActivity {
                     }
                 });
             }
-        },3 * 1000);
+        },500);
     }
 
 }

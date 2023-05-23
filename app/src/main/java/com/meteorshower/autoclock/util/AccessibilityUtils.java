@@ -167,7 +167,7 @@ public class AccessibilityUtils {
                 .findAccessibilityNodeInfosByText(text);
         for (int i = 0; i < l.size(); i++) {
             AccessibilityNodeInfo tmp = l.get(i);
-            if (tmp.getText() != null && tmp.getContentDescription().toString().equals(text))
+            if (tmp.getContentDescription() != null && tmp.getContentDescription().toString().equals(text))
                 return tmp;
         }
 
