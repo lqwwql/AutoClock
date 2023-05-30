@@ -5,7 +5,7 @@
     <color name="colorAccent">#60BAED</color>
     <color name="black">#98000000</color>
     <color name="btn_click">#CDF4B6</color>
-    <color name="btn_normal">#EEEEEE</color>
+    <color name="btn_normal">#D3DBDA</color>
     <color name="action_bar_background">#50B154</color>
     <color name="floating_view">#E4E4E4</color>
 </resources>

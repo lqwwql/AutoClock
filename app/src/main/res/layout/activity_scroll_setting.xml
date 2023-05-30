@@ -203,59 +203,74 @@
                     android:layout_height="wrap_content"
                     android:text="滑动方向：" />
 
-                <RadioGroup
-                    android:id="@+id/rg_direction"
-                    android:orientation="vertical"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <RadioButton
-                        android:id="@+id/rb_up"
-                        android:text="上滑"
-                        android:layout_marginLeft="5dp"
-                        android:textSize="14sp"
-                        android:checked="true"
-                        android:layout_width="wrap_content"
+                    <com.meteorshower.autoclock.view.FlowRadioGroup
+                        android:id="@+id/rg_direction"
+                        android:layout_centerInParent="true"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                    </RadioButton>
 
-                    <RadioButton
-                        android:id="@+id/rb_down"
-                        android:textSize="14sp"
-                        android:layout_marginLeft="5dp"
-                        android:text="下滑"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </RadioButton>
+                        <RadioButton
+                            android:id="@+id/rb_up"
+                            android:text="上滑"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="14sp"
+                            android:checked="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </RadioButton>
 
-                    <RadioButton
-                        android:id="@+id/rb_left"
-                        android:textSize="14sp"
-                        android:text="左滑"
-                        android:layout_marginLeft="5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </RadioButton>
+                        <RadioButton
+                            android:id="@+id/rb_down"
+                            android:textSize="14sp"
+                            android:layout_marginLeft="5dp"
+                            android:text="下滑"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </RadioButton>
 
-                    <RadioButton
-                        android:id="@+id/rb_right"
-                        android:layout_marginLeft="5dp"
-                        android:textSize="14sp"
-                        android:text="右滑"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </RadioButton>
+                        <RadioButton
+                            android:id="@+id/rb_left"
+                            android:textSize="14sp"
+                            android:text="左滑"
+                            android:layout_marginLeft="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </RadioButton>
 
-                    <RadioButton
-                        android:id="@+id/rb_up_down"
-                        android:layout_marginLeft="5dp"
-                        android:textSize="14sp"
-                        android:text="上下"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                    </RadioButton>
+                        <RadioButton
+                            android:id="@+id/rb_right"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="14sp"
+                            android:text="右滑"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </RadioButton>
 
-                </RadioGroup>
+                        <RadioButton
+                            android:id="@+id/rb_up_down"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="14sp"
+                            android:text="上下"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </RadioButton>
+
+                        <RadioButton
+                            android:id="@+id/rb_left_right"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="14sp"
+                            android:text="左右"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </RadioButton>
+
+                    </com.meteorshower.autoclock.view.FlowRadioGroup>
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -348,7 +363,7 @@
                     android:layout_height="wrap_content"
                     android:text="结束后动作：" />
 
-                <RadioGroup
+                <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_finish_op"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
@@ -392,7 +407,7 @@
                         android:layout_height="wrap_content">
                     </RadioButton>
 
-                </RadioGroup>
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -430,6 +445,45 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     </RadioButton>
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
+                    android:text="检测跳过：" />
+
+                <RadioGroup
+                    android:id="@+id/rg_jump"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_jump_yes"
+                        android:text="是"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_jump_no"
+                        android:text="否"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
                 </RadioGroup>
             </LinearLayout>
 

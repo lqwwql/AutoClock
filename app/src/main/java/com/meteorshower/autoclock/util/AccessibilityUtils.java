@@ -174,11 +174,11 @@ public class AccessibilityUtils {
         return null;
     }
 
-    public static AccessibilityNodeInfo findNode(AccessibilityNodeInfo node, String textOrDescribe, boolean equalOrContains) {
+    public static AccessibilityNodeInfo findNode(AccessibilityNodeInfo node, String textOrDescribe, boolean isEqual) {
         if (node == null)
             return null;
 
-        if (equalOrContains == true) {
+        if (isEqual) {
             if ((node.getText() != null && node.getText().toString().equals(textOrDescribe))
                     || (node.getContentDescription() != null && node.getContentDescription().toString().equals(textOrDescribe))) {
                 return node;
@@ -192,7 +192,7 @@ public class AccessibilityUtils {
 
         AccessibilityNodeInfo target = null;
         for (int i = 0; i < node.getChildCount(); i++) {
-            target = findNode(node.getChild(i), textOrDescribe, equalOrContains);
+            target = findNode(node.getChild(i), textOrDescribe, isEqual);
             if (target != null)
                 break;
         }

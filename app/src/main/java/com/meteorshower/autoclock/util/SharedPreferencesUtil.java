@@ -20,6 +20,7 @@ public class SharedPreferencesUtil {
     public static final String SCROLL_RANGE_KEY = "SCROLL_RANGE_KEY";
     public static final String FLOATING_VIEW_FUNCTION_KEY = "FLOATING_VIEW_FUNCTION_KEY";
     public static final String FLOATING_VIEW_SIZE_KEY = "FLOATING_VIEW_SIZE_KEY";
+    public static final String CHECK_JUMP_KEY = "CHECK_JUMP_KEY";
 
     //String的保存及获取
     public static void saveDataToSharedPreferences(Context context,

@@ -8,6 +8,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Path;
+import android.graphics.Rect;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
@@ -47,6 +48,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
     private boolean isRunning = false;
     private boolean isStop = false;
     private boolean isRandomSeconds = false;
+    private boolean isCheckJump = false;
     private int direction = 1;
     private int finishOp = 1;
     private int range = 1;//1-大幅度,2-小幅度
@@ -94,15 +96,14 @@ public class ControllerAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        String className = event.getClassName().toString();
         int eventType = event.getEventType();
-        Log.d(AppConstant.TAG, "eventType = " + eventType + " className = " + className);
 
         switch (eventType) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
-                Log.d("nodes","onAccessibilityEvent "+"eventType = " + eventType + " className = " + className);
-                showNodes();
-                clickJump();
+                if (isCheckJump) {
+//                    showNodes();
+                    clickJump();
+                }
                 break;
             case AccessibilityEvent.WINDOWS_CHANGE_ADDED:
 //                showNodes();
@@ -144,7 +145,9 @@ public class ControllerAccessibilityService extends AccessibilityService {
         }
     };
 
-    public void setScrollParam(int scrollTimes, int scrollDuration, int slideDuration, int direction, int finishOp, int timerType, int range, boolean isRunning, boolean isRandomSeconds) {
+    public void setScrollParam(int scrollTimes, int scrollDuration, int slideDuration, int direction,
+                               int finishOp, int timerType, int range,
+                               boolean isRunning, boolean isRandomSeconds, boolean isCheckJump) {
         this.scrollTimes = scrollTimes;
         this.scrollDuration = scrollDuration;
         this.slideDuration = slideDuration;
@@ -154,6 +157,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
         this.finishOp = finishOp;
         this.timerType = timerType;
         this.range = range;
+        this.isCheckJump = isCheckJump;
     }
 
     public void executeScrollView() {
@@ -480,8 +484,27 @@ public class ControllerAccessibilityService extends AccessibilityService {
                 Log.d("nodes", "jumpNode == null");
                 return;
             }
+            Log.d("nodes", "find jumpNode ="+jumpNode);
+            Rect outRect = new Rect();
+            jumpNode.getBoundsInScreen(outRect);
+            Log.d("nodes", "find jumpNode outRect="+outRect);
+            if (outRect.left <= 0 || outRect.top <= 0 || outRect.right <= 0 | outRect.bottom <= 0) {
+                Log.d("nodes", "jumpNode outRect is empty ");
+                return;
+            }
+
+            //非右侧
+            if (outRect.left < (AppConstant.ScreenWidth * 2 / 3) || outRect.right < (AppConstant.ScreenWidth * 2 / 3)) {
+                Log.d("nodes", "jumpNode outRect is not in available ");
+                return;
+            }
+            //非右上角或右下角
+            else if (outRect.top > (AppConstant.ScreenHeight / 5) || outRect.top < (AppConstant.ScreenHeight * 4 / 5)) {
+                Log.d("nodes", "jumpNode outRect is not in available ");
+                return;
+            }
             jumpNode.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-            LogUtils.getInstance().e("ControllerAccessibilityService clickJump 点击跳过 jumpNode="+jumpNode);
+            LogUtils.getInstance().e("ControllerAccessibilityService clickJump 点击跳过 jumpNode=" + jumpNode);
             Toaster.show("点击跳过");
         } catch (Exception e) {
             LogUtils.getInstance().e("clickJump error = " + Log.getStackTraceString(e));
