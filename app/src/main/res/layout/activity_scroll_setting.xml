@@ -45,6 +45,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
@@ -68,8 +69,9 @@
             <LinearLayout
                 android:id="@+id/ll_floating_fun"
                 android:visibility="gone"
+                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -125,8 +127,9 @@
             <LinearLayout
                 android:id="@+id/ll_floating_size"
                 android:visibility="gone"
+                android:paddingVertical="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -139,13 +142,17 @@
                 <EditText
                     android:id="@+id/et_floating_size"
                     android:inputType="number"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:padding="2dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="40dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -158,13 +165,17 @@
                 <EditText
                     android:id="@+id/et_scroll_time"
                     android:inputType="number"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:padding="2dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="40dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -177,12 +188,16 @@
                 <EditText
                     android:id="@+id/et_scroll_duration"
                     android:inputType="number"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:padding="2dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="40dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -195,12 +210,16 @@
                 <EditText
                     android:id="@+id/et_slide_duration"
                     android:inputType="number"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:padding="2dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="40dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:paddingVertical="10dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -283,7 +302,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -322,7 +342,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -361,6 +382,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
+                android:paddingVertical="10dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -420,7 +442,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -458,7 +481,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -497,7 +521,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -536,7 +561,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -549,13 +575,17 @@
                 <EditText
                     android:id="@+id/et_continue_times"
                     android:inputType="number"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:padding="2dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="40dp"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:paddingVertical="10dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -574,9 +604,12 @@
                 <EditText
                     android:id="@+id/et_continue_x"
                     android:inputType="number"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:padding="2dp"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="40dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -587,9 +620,12 @@
                 <EditText
                     android:id="@+id/et_continue_y"
                     android:inputType="number"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:padding="2dp"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
+                    android:layout_height="40dp"/>
             </LinearLayout>
 
         </LinearLayout>

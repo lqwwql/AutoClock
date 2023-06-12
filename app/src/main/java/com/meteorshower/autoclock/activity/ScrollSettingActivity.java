@@ -13,8 +13,10 @@ import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.application.MyApplication;
 import com.meteorshower.autoclock.constant.AppConstant;
+import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
 import com.meteorshower.autoclock.event.ScrollFinishEvent;
+import com.meteorshower.autoclock.event.ScrollMenuEvent;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AutoClickUtil;
 import com.meteorshower.autoclock.util.SharedPreferencesUtil;
@@ -397,7 +399,7 @@ public class ScrollSettingActivity extends BaseActivity {
                 runScroll();
             } else if (floatingViewFun == 3) {
                 AutoClickUtil.getInstance().showNodes();
-            } else if(floatingViewFun == 4){
+            } else if (floatingViewFun == 4) {
                 FloatingViewManager.getInstance(ScrollSettingActivity.this).showFloatingMenu();
             }
         } else if (event != null && event.getType() == 2) {
@@ -410,10 +412,26 @@ public class ScrollSettingActivity extends BaseActivity {
     }
 
     @Subscribe
+    public void doScrollEvent(ScrollMenuEvent event) {
+        if (event != null) {
+            runScroll();
+        }
+    }
+
+    @Subscribe
     public void doScrollFinishEvent(ScrollFinishEvent event) {
         if (event != null) {
             isRunning = !isRunning;
             FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewState(isRunning);
+        }
+    }
+
+    @Subscribe
+    public void doCollectXYEvent(CollectMenuEvent event) {
+        if (event != null) {
+            etContinueX.setText(event.getClickX() + "");
+            etContinueY.setText(event.getClickY() + "");
+            saveValue(false);
         }
     }
 
@@ -486,10 +504,8 @@ public class ScrollSettingActivity extends BaseActivity {
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_X_KEY, clickX, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_Y_KEY, clickY, SharedPreferencesUtil.SCROLL_CONFIG);
 
-        if (ControllerAccessibilityService.getInstance() != null) {
-            AutoClickUtil.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
-                    direction, finishOp, timerType, range, true, isRandomTime, isCheckJump, isContinue, clickTimes, clickX, clickY);
-        }
+        AutoClickUtil.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
+                direction, finishOp, timerType, range, true, isRandomTime, isCheckJump, isContinue, clickTimes, clickX, clickY);
 
         if (swFloatingView.isChecked()) {
             FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewSize(floatingViewSize);

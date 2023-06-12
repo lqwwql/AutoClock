@@ -25,11 +25,13 @@ public class FloatingViewManager {
 
     private FloatingView floatBall;
     private View floatingMenu;
+    private View floatingPanel;
     private WindowManager windowManager;
     public static FloatingViewManager manager;
     private Context context;
     private WindowManager.LayoutParams floatBallParams;
     private WindowManager.LayoutParams floatMenuParams;
+    private WindowManager.LayoutParams floatPanelParams;
 
     private FloatingViewManager(Context context) {
         this.context = context;
@@ -180,9 +182,9 @@ public class FloatingViewManager {
             floatingMenu.findViewById(R.id.rl_collect).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EventBus.getDefault().post(new CollectMenuEvent());
                     Toaster.show("请点击屏幕采集坐标");
                     hideFloatingMenu();
+                    showFloatingPanel();
                 }
             });
             floatingMenu.findViewById(R.id.rl_content).setOnClickListener(new View.OnClickListener() {
@@ -191,7 +193,6 @@ public class FloatingViewManager {
                     hideFloatingMenu();
                 }
             });
-            Toaster.show("请选择菜单");
         } catch (Exception e) {
         }
     }
@@ -205,11 +206,47 @@ public class FloatingViewManager {
     }
 
     public void showFloatingPanel() {
-
+        if (windowManager == null) {
+            return;
+        }
+        floatingPanel = new View(context);
+        if (floatPanelParams == null) {
+            floatPanelParams = new WindowManager.LayoutParams();
+            floatPanelParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+            floatPanelParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+            floatPanelParams.gravity = Gravity.CENTER;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                floatPanelParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+            } else {
+                floatPanelParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+            }
+            floatPanelParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+            floatPanelParams.format = PixelFormat.RGBA_8888;
+        }
+        windowManager.addView(floatingPanel, floatPanelParams);
+        floatingPanel.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        int clickX = (int) event.getX();
+                        int clickY = (int) event.getY();
+                        EventBus.getDefault().post(new CollectMenuEvent(clickX, clickY));
+                        hideFloatingPanel();
+                        Toaster.show("已采集屏幕坐标["+clickX+","+clickY+"]");
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     public void hideFloatingPanel() {
-
+        if (windowManager != null && floatingPanel != null) {
+            windowManager.removeView(floatingPanel);
+            floatingPanel = null;
+            floatPanelParams = null;
+        }
     }
 
 

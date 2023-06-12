@@ -2,6 +2,7 @@ package com.meteorshower.autoclock.activity;
 
 import android.content.Intent;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 
 import com.hjq.toast.Toaster;
@@ -46,6 +47,7 @@ public class HomeActivity extends BaseActivity {
     @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_stop_running, R.id.btn_look,
             R.id.btn_test, R.id.btn_reset, R.id.btn_exc_cmd, R.id.btn_setting, R.id.btn_scroll_setting})
     public void doClick(View view) {
+        Log.d("lqwtest","doClick id="+view.getId());
         switch (view.getId()) {
             case R.id.btn_start:
                 if (!JobExecutor.getInstance().isRunning()) {
