@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:text="悬浮窗功能：" />
 
-                <RadioGroup
+                <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_floating_fun"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -111,7 +111,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     </RadioButton>
-                </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/rb_menu"
+                        android:textSize="14sp"
+                        android:layout_marginLeft="5dp"
+                        android:text="菜单"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -285,7 +293,7 @@
                     android:layout_height="wrap_content"
                     android:text="滑动距离：" />
 
-                <RadioGroup
+                <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_scroll_distance"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -309,7 +317,7 @@
                         android:layout_height="wrap_content">
                     </RadioButton>
 
-                </RadioGroup>
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -324,7 +332,7 @@
                     android:layout_height="wrap_content"
                     android:text="增加随机时间：" />
 
-                <RadioGroup
+                <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_random_time"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -348,7 +356,7 @@
                         android:layout_height="wrap_content">
                     </RadioButton>
 
-                </RadioGroup>
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -422,7 +430,7 @@
                     android:layout_height="wrap_content"
                     android:text="定时方式：" />
 
-                <RadioGroup
+                <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_timer_type"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -445,7 +453,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     </RadioButton>
-                </RadioGroup>
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -460,7 +468,7 @@
                     android:layout_height="wrap_content"
                     android:text="检测跳过：" />
 
-                <RadioGroup
+                <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_jump"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -484,7 +492,7 @@
                         android:layout_height="wrap_content">
                     </RadioButton>
 
-                </RadioGroup>
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -499,7 +507,7 @@
                     android:layout_height="wrap_content"
                     android:text="返回是否执行：" />
 
-                <RadioGroup
+                <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_return_continue"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -523,7 +531,7 @@
                         android:layout_height="wrap_content">
                     </RadioButton>
 
-                </RadioGroup>
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout

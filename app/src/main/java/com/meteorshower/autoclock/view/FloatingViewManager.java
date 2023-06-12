@@ -5,13 +5,17 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.hjq.toast.Toaster;
+import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.constant.AppConstant;
+import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
+import com.meteorshower.autoclock.event.ScrollMenuEvent;
 import com.meteorshower.autoclock.util.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,11 +23,13 @@ import org.greenrobot.eventbus.EventBus;
 
 public class FloatingViewManager {
 
-    FloatingView floatBall;
-    WindowManager windowManager;
+    private FloatingView floatBall;
+    private View floatingMenu;
+    private WindowManager windowManager;
     public static FloatingViewManager manager;
-    Context context;
+    private Context context;
     private WindowManager.LayoutParams floatBallParams;
+    private WindowManager.LayoutParams floatMenuParams;
 
     private FloatingViewManager(Context context) {
         this.context = context;
@@ -142,6 +148,70 @@ public class FloatingViewManager {
 //            LogUtils.getInstance().e("ViewManager hideFloatingBall error : "+ Log.getStackTraceString(e));
         }
     }
+
+    public void showFloatingMenu() {
+        try {
+            if (windowManager == null) {
+                return;
+            }
+            floatingMenu = LayoutInflater.from(context).inflate(R.layout.floating_menu_view, null);
+            if (floatMenuParams == null) {
+                floatMenuParams = new WindowManager.LayoutParams();
+                floatMenuParams.width = WindowManager.LayoutParams.MATCH_PARENT;
+                floatMenuParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+                floatMenuParams.gravity = Gravity.CENTER;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    floatMenuParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+                } else {
+                    floatMenuParams.type = WindowManager.LayoutParams.TYPE_PHONE;
+                }
+                floatMenuParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+                floatMenuParams.format = PixelFormat.RGBA_8888;
+            }
+            windowManager.addView(floatingMenu, floatMenuParams);
+            floatingMenu.findViewById(R.id.rl_scroll).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toaster.show("开始执行滑动");
+                    EventBus.getDefault().post(new ScrollMenuEvent());
+                    hideFloatingMenu();
+                }
+            });
+            floatingMenu.findViewById(R.id.rl_collect).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    EventBus.getDefault().post(new CollectMenuEvent());
+                    Toaster.show("请点击屏幕采集坐标");
+                    hideFloatingMenu();
+                }
+            });
+            floatingMenu.findViewById(R.id.rl_content).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hideFloatingMenu();
+                }
+            });
+            Toaster.show("请选择菜单");
+        } catch (Exception e) {
+        }
+    }
+
+    public void hideFloatingMenu() {
+        if (windowManager != null && floatingMenu != null) {
+            windowManager.removeView(floatingMenu);
+            floatingMenu = null;
+            floatMenuParams = null;
+        }
+    }
+
+    public void showFloatingPanel() {
+
+    }
+
+    public void hideFloatingPanel() {
+
+    }
+
 
     public void changeFloatingViewState(boolean isRunning) {
         if (floatBall != null) {

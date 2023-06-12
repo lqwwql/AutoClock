@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rl_content"
+    android:background="#99ffffff"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/black"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/rl_scroll"
+            android:layout_width="150dp"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_centerInParent="true"
+                android:textColor="#ffffff"
+                android:text="开启滑动"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+        </RelativeLayout>
+        <View
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="1dp">
+        </View>
+        <RelativeLayout
+            android:id="@+id/rl_collect"
+            android:layout_width="150dp"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_centerInParent="true"
+                android:textColor="#ffffff"
+                android:text="坐标采集"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+        </RelativeLayout>
+    </LinearLayout>
+</RelativeLayout>

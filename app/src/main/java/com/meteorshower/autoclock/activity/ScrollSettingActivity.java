@@ -88,7 +88,7 @@ public class ScrollSettingActivity extends BaseActivity {
     private int finishOp = 1;
     private int timerType = 1;
     private int range = 1;
-    private int floatingViewFun = 2;//1-系统导航 点击返回上一页，长按返回桌面 2-滑动开关 3-功能键
+    private int floatingViewFun = 2;//1-系统导航 点击返回上一页，长按返回桌面 2-滑动开关 3-功能键 4-打开菜单
     private int floatingViewSize = AppConstant.FloatingViewSize;//悬浮窗按钮大小
     private int clickX = 0;
     private int clickY = 0;
@@ -266,6 +266,9 @@ public class ScrollSettingActivity extends BaseActivity {
             case 3:
                 rgFloatingFun.check(R.id.rb_fun);
                 break;
+            case 4:
+                rgFloatingFun.check(R.id.rb_menu);
+                break;
         }
         rgFloatingFun.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -280,6 +283,10 @@ public class ScrollSettingActivity extends BaseActivity {
                     case R.id.rb_fun:
                         floatingViewFun = 3;
                         break;
+                    case R.id.rb_menu:
+                        floatingViewFun = 4;
+                        break;
+
                 }
                 SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_FUNCTION_KEY, floatingViewFun, SharedPreferencesUtil.SCROLL_CONFIG);
             }
@@ -390,6 +397,8 @@ public class ScrollSettingActivity extends BaseActivity {
                 runScroll();
             } else if (floatingViewFun == 3) {
                 AutoClickUtil.getInstance().showNodes();
+            } else if(floatingViewFun == 4){
+                FloatingViewManager.getInstance(ScrollSettingActivity.this).showFloatingMenu();
             }
         } else if (event != null && event.getType() == 2) {
             if (floatingViewFun == 1) {
