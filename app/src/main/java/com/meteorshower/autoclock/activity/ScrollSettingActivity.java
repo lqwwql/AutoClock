@@ -16,6 +16,7 @@ import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
 import com.meteorshower.autoclock.event.ScrollFinishEvent;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
+import com.meteorshower.autoclock.util.AutoClickUtil;
 import com.meteorshower.autoclock.util.SharedPreferencesUtil;
 import com.meteorshower.autoclock.util.StringUtils;
 import com.meteorshower.autoclock.view.FloatingViewManager;
@@ -59,10 +60,18 @@ public class ScrollSettingActivity extends BaseActivity {
     RadioGroup rgFloatingFun;
     @BindView(R.id.rg_jump)
     RadioGroup rgJump;
+    @BindView(R.id.rg_return_continue)
+    RadioGroup rgContinue;
     @BindView(R.id.ll_floating_size)
     LinearLayout llFloatingSize;
     @BindView(R.id.et_floating_size)
     EditText etFloatingSize;
+    @BindView(R.id.et_continue_times)
+    EditText etContinueTimes;
+    @BindView(R.id.et_continue_x)
+    EditText etContinueX;
+    @BindView(R.id.et_continue_y)
+    EditText etContinueY;
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
@@ -74,12 +83,16 @@ public class ScrollSettingActivity extends BaseActivity {
     private boolean isStop = false;
     private boolean isRandomTime = false;
     private boolean isCheckJump = false;
+    private boolean isContinue = false;
     private int direction = 1;//1-上滑，2-下滑，3-左滑，4-右滑
     private int finishOp = 1;
     private int timerType = 1;
     private int range = 1;
     private int floatingViewFun = 2;//1-系统导航 点击返回上一页，长按返回桌面 2-滑动开关 3-功能键
     private int floatingViewSize = AppConstant.FloatingViewSize;//悬浮窗按钮大小
+    private int clickX = 0;
+    private int clickY = 0;
+    private int clickTimes = 0;
 
     @Override
     protected int getLayoutID() {
@@ -104,6 +117,10 @@ public class ScrollSettingActivity extends BaseActivity {
         floatingViewFun = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_FUNCTION_KEY, 2, SharedPreferencesUtil.SCROLL_CONFIG);
         floatingViewSize = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_SIZE_KEY, AppConstant.FloatingViewSize, SharedPreferencesUtil.SCROLL_CONFIG);
         isCheckJump = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CHECK_JUMP_KEY, false, SharedPreferencesUtil.SCROLL_CONFIG);
+        isContinue = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_CONTINUE_KEY, false, SharedPreferencesUtil.SCROLL_CONFIG);
+        clickX = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_X_KEY, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+        clickY = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_Y_KEY, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+        clickTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CONTINUE_TIMES_KEY, 0, SharedPreferencesUtil.SCROLL_CONFIG);
 
         etTimes.setText(scrollTimes + "");
         etDurations.setText(scrollDuration + "");
@@ -285,7 +302,7 @@ public class ScrollSettingActivity extends BaseActivity {
             }
         });
 
-        rgJump.check(isCheckJump?R.id.rb_jump_yes:R.id.rb_jump_no);
+        rgJump.check(isCheckJump ? R.id.rb_jump_yes : R.id.rb_jump_no);
         rgJump.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -300,6 +317,26 @@ public class ScrollSettingActivity extends BaseActivity {
                 SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CHECK_JUMP_KEY, isCheckJump, SharedPreferencesUtil.SCROLL_CONFIG);
             }
         });
+
+
+        etContinueTimes.setText(clickTimes + "");
+        etContinueX.setText(clickX + "");
+        etContinueY.setText(clickY + "");
+        rgContinue.check(isContinue ? R.id.rb_continue_yes : R.id.rb_continue_no);
+        rgContinue.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_continue_yes:
+                        isContinue = true;
+                        break;
+                    case R.id.rb_continue_no:
+                        isContinue = false;
+                        break;
+                }
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_CONTINUE_KEY, isContinue, SharedPreferencesUtil.SCROLL_CONFIG);
+            }
+        });
     }
 
     @Override
@@ -307,7 +344,7 @@ public class ScrollSettingActivity extends BaseActivity {
         super.onStart();
         isStop = false;
         if (ControllerAccessibilityService.getInstance() != null) {
-            isRunning = ControllerAccessibilityService.getInstance().isRunning();
+            isRunning = AutoClickUtil.getInstance().isRunning();
         }
         if (isRunning) {
             btnOperation.setText("关闭");
@@ -348,17 +385,16 @@ public class ScrollSettingActivity extends BaseActivity {
     public void doFloatingViewClickEvent(FloatingViewClickEvent event) {
         if (event != null && event.getType() == 1) {
             if (floatingViewFun == 1) {
-                ControllerAccessibilityService.getInstance().performGlobalAction(GLOBAL_ACTION_BACK);
+                AutoClickUtil.getInstance().performGlobalAction(GLOBAL_ACTION_BACK);
             } else if (floatingViewFun == 2) {
                 runScroll();
             } else if (floatingViewFun == 3) {
-                ControllerAccessibilityService.getInstance().showNodes();
+                AutoClickUtil.getInstance().showNodes();
             }
         } else if (event != null && event.getType() == 2) {
             if (floatingViewFun == 1) {
-                ControllerAccessibilityService.getInstance().performGlobalAction(GLOBAL_ACTION_HOME);
+                AutoClickUtil.getInstance().performGlobalAction(GLOBAL_ACTION_HOME);
             } else {
-//                runScroll();
                 startActivity(new Intent(this, ScrollSettingActivity.class));
             }
         }
@@ -384,14 +420,13 @@ public class ScrollSettingActivity extends BaseActivity {
         if (isRunning) {
             btnOperation.setText("启动");
             Toaster.show("滑动程序已关闭");
-            ControllerAccessibilityService.getInstance().stopRunning();
+            AutoClickUtil.getInstance().stopRunning();
         } else {
             btnOperation.setText("关闭");
             Toaster.show("滑动程序将在" + scrollDuration + "秒后启动");
-            ControllerAccessibilityService.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
-                    direction, finishOp, timerType, range, true, isRandomTime,isCheckJump);
-//            ControllerAccessibilityService.getInstance().sendDelayMessage();
-            ControllerAccessibilityService.getInstance().startRunning();
+            AutoClickUtil.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
+                    direction, finishOp, timerType, range, true, isRandomTime, isCheckJump, isContinue, clickTimes, clickX, clickY);
+            AutoClickUtil.getInstance().startRunning();
         }
         isRunning = !isRunning;
         FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewState(isRunning);
@@ -414,6 +449,18 @@ public class ScrollSettingActivity extends BaseActivity {
             floatingViewSize = Integer.parseInt(etFloatingSize.getText().toString());
         }
 
+        if (!StringUtils.isEmptyOrNull(etContinueX.getText().toString())) {
+            clickX = Integer.parseInt(etContinueX.getText().toString());
+        }
+
+        if (!StringUtils.isEmptyOrNull(etContinueY.getText().toString())) {
+            clickY = Integer.parseInt(etContinueY.getText().toString());
+        }
+
+        if (!StringUtils.isEmptyOrNull(etContinueTimes.getText().toString())) {
+            clickTimes = Integer.parseInt(etContinueTimes.getText().toString());
+        }
+
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, scrollTimes, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, scrollDuration, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, slideDuration, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -425,10 +472,14 @@ public class ScrollSettingActivity extends BaseActivity {
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_FUNCTION_KEY, floatingViewFun, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FLOATING_VIEW_SIZE_KEY, floatingViewSize, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CHECK_JUMP_KEY, isCheckJump, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_CONTINUE_KEY, isContinue, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CONTINUE_TIMES_KEY, clickTimes, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_X_KEY, clickX, SharedPreferencesUtil.SCROLL_CONFIG);
+        SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_Y_KEY, clickY, SharedPreferencesUtil.SCROLL_CONFIG);
 
-        if(ControllerAccessibilityService.getInstance()!=null){
-            ControllerAccessibilityService.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
-                    direction, finishOp, timerType, range, true, isRandomTime,isCheckJump);
+        if (ControllerAccessibilityService.getInstance() != null) {
+            AutoClickUtil.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
+                    direction, finishOp, timerType, range, true, isRandomTime, isCheckJump, isContinue, clickTimes, clickX, clickY);
         }
 
         if (swFloatingView.isChecked()) {

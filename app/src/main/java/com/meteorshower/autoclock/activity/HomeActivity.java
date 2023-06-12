@@ -11,6 +11,7 @@ import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
+import com.meteorshower.autoclock.util.AutoClickUtil;
 
 import butterknife.OnClick;
 
@@ -80,6 +81,7 @@ public class HomeActivity extends BaseActivity {
                 break;
             case R.id.btn_reset:
                 Toaster.show("任务执行:"+(JobExecutor.getInstance().isRunning()) +" 任务获取:"+(JobFactory.getInstance().isRunning()));
+                AutoClickUtil.getInstance().resetParam();
                 break;
             case R.id.btn_exc_cmd:
                 startActivity(new Intent(HomeActivity.this, CommandExecuteActivity.class));

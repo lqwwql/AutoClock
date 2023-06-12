@@ -21,6 +21,10 @@ public class SharedPreferencesUtil {
     public static final String FLOATING_VIEW_FUNCTION_KEY = "FLOATING_VIEW_FUNCTION_KEY";
     public static final String FLOATING_VIEW_SIZE_KEY = "FLOATING_VIEW_SIZE_KEY";
     public static final String CHECK_JUMP_KEY = "CHECK_JUMP_KEY";
+    public static final String IS_CONTINUE_KEY = "IS_CONTINUE_KEY";
+    public static final String CONTINUE_TIMES_KEY = "CONTINUE_TIMES_KEY";
+    public static final String CLICK_X_KEY = "CLICK_X_KEY";
+    public static final String CLICK_Y_KEY = "CLICK_Y_KEY";
 
     //String的保存及获取
     public static void saveDataToSharedPreferences(Context context,

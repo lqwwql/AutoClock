@@ -24,20 +24,6 @@ public class AccessibilityUtils {
     static int KEYCODE_TAB = 61;
     static int KEYCODE_DEL = 67;
 
-    /**
-     * 打开指定Activity
-     */
-    public static boolean openAppByName(String activityName) throws InterruptedException {
-        ShellUtils.performSuCommand("am start --activity-clear-top " + activityName);
-        return ControllerAccessibilityService.Wait(25 * 100);
-    }
-
-    public static boolean openAppByPackageAndName(String packageName, String activityName) throws InterruptedException {
-        String command = "adb shell am start -n \"" + packageName + "/" + activityName + "\" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER";
-        ShellUtils.performSuCommand(command);
-        return ControllerAccessibilityService.Wait(25 * 100);
-    }
-
     public static ShellUtils.CommandResult openAppByExeCommand(String packageName, String activityName) throws InterruptedException {
         String command = "am start -n \"" + packageName + "/" + activityName + "\" -a android.intent.action.MAIN -c android.intent.category.LAUNCHER";
         return ShellUtils.execCommand(command, false);

@@ -29,7 +29,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         if (intent.getAction() != null && intent.getAction().equalsIgnoreCase(AppConstant.ALARM_RECEIVER_ACTION)) {
             if (mHandler != null) {
-                mHandler.sendEmptyMessage(ControllerAccessibilityService.SCROLL_WHAT);
+//                mHandler.sendEmptyMessage(ControllerAccessibilityService.SCROLL_WHAT);
             }
         }
     }
