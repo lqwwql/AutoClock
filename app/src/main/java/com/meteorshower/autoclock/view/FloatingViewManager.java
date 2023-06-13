@@ -1,6 +1,7 @@
 package com.meteorshower.autoclock.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.Log;
@@ -210,17 +211,20 @@ public class FloatingViewManager {
             return;
         }
         floatingPanel = new View(context);
+        floatingPanel.setBackgroundColor(context.getResources().getColor(R.color.black));
         if (floatPanelParams == null) {
             floatPanelParams = new WindowManager.LayoutParams();
             floatPanelParams.width = WindowManager.LayoutParams.MATCH_PARENT;
             floatPanelParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+//            floatPanelParams.width = AppConstant.ScreenWidth;
+//            floatPanelParams.height = AppConstant.ScreenHeight;
             floatPanelParams.gravity = Gravity.CENTER;
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 floatPanelParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
             } else {
                 floatPanelParams.type = WindowManager.LayoutParams.TYPE_PHONE;
             }
-            floatPanelParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+            floatPanelParams.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
             floatPanelParams.format = PixelFormat.RGBA_8888;
         }
         windowManager.addView(floatingPanel, floatPanelParams);
@@ -230,10 +234,14 @@ public class FloatingViewManager {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_UP:
                         int clickX = (int) event.getX();
-                        int clickY = (int) event.getY();
+                        int clickY = (int) event.getY() + (AppConstant.ScreenHeight - floatingPanel.getHeight());
                         EventBus.getDefault().post(new CollectMenuEvent(clickX, clickY));
-                        hideFloatingPanel();
                         Toaster.show("已采集屏幕坐标["+clickX+","+clickY+"]");
+                        Log.d(AppConstant.TAG,"floatingPanel onTouch ScreenWidth="+AppConstant.ScreenWidth +" ScreenHeight="+AppConstant.ScreenHeight);
+                        Log.d(AppConstant.TAG,"floatingPanel onTouch getWidth="+floatingPanel.getWidth() +" getHeight="+floatingPanel.getHeight());
+                        Log.d(AppConstant.TAG,"floatingPanel onTouch getX="+floatingPanel.getX() +" getY="+floatingPanel.getY());
+                        Log.d(AppConstant.TAG,"floatingPanel onTouch clickX="+clickX +" clickY="+clickY);
+                        hideFloatingPanel();
                         break;
                 }
                 return true;
