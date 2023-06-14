@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -246,6 +247,17 @@ public class StartActivity extends FragmentActivity {
                 d.mkdirs();
             }
         }
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        if (dm.heightPixels > dm.widthPixels) {
+            AppConstant.ScreenHeight = dm.heightPixels;
+            AppConstant.ScreenWidth = dm.widthPixels;
+        } else {
+            AppConstant.ScreenHeight = dm.widthPixels;
+            AppConstant.ScreenWidth = dm.heightPixels;
+        }
+        Log.d(AppConstant.TAG,"initAllDirs ScreenWidth="+AppConstant.ScreenWidth +" ScreenHeight="+AppConstant.ScreenHeight);
         jumpToHomePage();
     }
 

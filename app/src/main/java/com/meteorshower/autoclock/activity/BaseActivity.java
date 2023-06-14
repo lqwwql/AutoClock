@@ -1,6 +1,7 @@
 package com.meteorshower.autoclock.activity;
 
 import android.app.Activity;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -20,6 +21,12 @@ public abstract class BaseActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕常亮
+        //允许window 的内容可以上移到刘海屏状态栏
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            WindowManager.LayoutParams lp = getWindow().getAttributes();
+            lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            getWindow().setAttributes(lp);
+        }
         setContentView(getLayoutID());
         unbinder = ButterKnife.bind(this);
         initView();

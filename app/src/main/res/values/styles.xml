@@ -6,6 +6,17 @@
         <!--<item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/action_bar_background</item>-->
+        <!-- 导航栏透明 -->
+        <item name="android:navigationBarColor">
+            @android:color/transparent
+        </item>
+        <!-- 状态栏透明 -->
+        <item name="android:statusBarColor">
+            @android:color/transparent
+        </item>
+        <!-- 不要标题栏 -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>

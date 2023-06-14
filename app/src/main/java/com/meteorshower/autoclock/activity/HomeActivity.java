@@ -33,15 +33,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        if (dm.heightPixels > dm.widthPixels) {
-            AppConstant.ScreenHeight = dm.heightPixels;
-            AppConstant.ScreenWidth = dm.widthPixels;
-        } else {
-            AppConstant.ScreenHeight = dm.widthPixels;
-            AppConstant.ScreenWidth = dm.heightPixels;
-        }
+
     }
 
     @OnClick({R.id.btn_start, R.id.btn_end, R.id.btn_add, R.id.btn_stop_running, R.id.btn_look,

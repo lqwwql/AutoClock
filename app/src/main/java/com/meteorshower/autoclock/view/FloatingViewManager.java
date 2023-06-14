@@ -233,9 +233,14 @@ public class FloatingViewManager {
                     case MotionEvent.ACTION_UP:
                         int clickX = (int) event.getX();
                         int clickY = (int) event.getY();
+                        Log.d(AppConstant.TAG, "onTouch before clickX=" + clickX + " clickY=" + clickY);
+                        clickY += AppConstant.ScreenHeight - floatingPanel.getHeight();
+                        Log.d(AppConstant.TAG, "onTouch after clickX=" + clickX + " clickY=" + clickY);
                         EventBus.getDefault().post(new CollectMenuEvent(clickX, clickY));
+                        Log.d(AppConstant.TAG, "onTouch getWidth=" + floatingPanel.getWidth() + " getHeight=" + floatingPanel.getHeight());
+                        Log.d(AppConstant.TAG, "onTouch ScreenWidth=" + AppConstant.ScreenWidth + " ScreenHeight=" + AppConstant.ScreenHeight);
                         hideFloatingPanel();
-                        Toaster.show("已采集屏幕坐标["+clickX+","+clickY+"]");
+                        Toaster.show("已采集屏幕坐标[" + clickX + "," + clickY + "]");
                         break;
                 }
                 return true;
