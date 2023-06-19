@@ -20,6 +20,7 @@ import com.hjq.permissions.XXPermissions;
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.constant.AppConstant;
+import com.meteorshower.autoclock.util.DeviceUtils;
 import com.meteorshower.autoclock.util.DialogUtils;
 import com.meteorshower.autoclock.util.IOUtils;
 
@@ -257,11 +258,14 @@ public class StartActivity extends FragmentActivity {
             AppConstant.ScreenHeight = dm.widthPixels;
             AppConstant.ScreenWidth = dm.heightPixels;
         }
-        Log.d(AppConstant.TAG,"initAllDirs ScreenWidth="+AppConstant.ScreenWidth +" ScreenHeight="+AppConstant.ScreenHeight);
+        if (Build.VERSION.SDK_INT >= 28) {
+            DeviceUtils.getStatusBarHeight(this);
+        }
+        Log.d(AppConstant.TAG, "initAllDirs ScreenWidth=" + AppConstant.ScreenWidth + " ScreenHeight=" + AppConstant.ScreenHeight);
         jumpToHomePage();
     }
 
-    private void jumpToHomePage(){
+    private void jumpToHomePage() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -273,7 +277,7 @@ public class StartActivity extends FragmentActivity {
                     }
                 });
             }
-        },500);
+        }, 500);
     }
 
 }

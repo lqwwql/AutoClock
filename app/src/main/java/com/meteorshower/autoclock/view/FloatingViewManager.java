@@ -17,6 +17,7 @@ import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
 import com.meteorshower.autoclock.event.ScrollMenuEvent;
+import com.meteorshower.autoclock.util.DeviceUtils;
 import com.meteorshower.autoclock.util.LogUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -176,8 +177,8 @@ public class FloatingViewManager {
                 @Override
                 public void onClick(View view) {
                     Toaster.show("开始执行滑动");
-                    EventBus.getDefault().post(new ScrollMenuEvent());
                     hideFloatingMenu();
+                    EventBus.getDefault().post(new ScrollMenuEvent());
                 }
             });
             floatingMenu.findViewById(R.id.rl_collect).setOnClickListener(new View.OnClickListener() {
@@ -234,7 +235,7 @@ public class FloatingViewManager {
                         int clickX = (int) event.getX();
                         int clickY = (int) event.getY();
                         Log.d(AppConstant.TAG, "onTouch before clickX=" + clickX + " clickY=" + clickY);
-                        clickY += AppConstant.ScreenHeight - floatingPanel.getHeight();
+                        clickY += DeviceUtils.getStatusBarHeight();
                         Log.d(AppConstant.TAG, "onTouch after clickX=" + clickX + " clickY=" + clickY);
                         EventBus.getDefault().post(new CollectMenuEvent(clickX, clickY));
                         Log.d(AppConstant.TAG, "onTouch getWidth=" + floatingPanel.getWidth() + " getHeight=" + floatingPanel.getHeight());
