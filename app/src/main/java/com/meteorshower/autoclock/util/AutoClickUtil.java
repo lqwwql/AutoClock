@@ -250,6 +250,7 @@ public class AutoClickUtil {
             alarmManager.cancel(pendingIntent);
         }
         isRunning = !isRunning;
+        resetParam();
     }
 
 
@@ -504,8 +505,9 @@ public class AutoClickUtil {
         isRunning = false;
         clickCount = 0;
         scrollCount = 0;
-        scrollTimes = 0;
-        scrollHandler.removeMessages(SCROLL_WHAT);
-        scrollHandler.removeMessages(CONTINUE_SCROLL_WHAT);
+        if (scrollHandler != null) {
+            scrollHandler.removeMessages(SCROLL_WHAT);
+            scrollHandler.removeMessages(CONTINUE_SCROLL_WHAT);
+        }
     }
 }

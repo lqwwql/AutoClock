@@ -212,7 +212,6 @@ public class FloatingViewManager {
             return;
         }
         floatingPanel = new View(context);
-        floatingPanel.setBackgroundColor(context.getResources().getColor(R.color.black));
         if (floatPanelParams == null) {
             floatPanelParams = new WindowManager.LayoutParams();
             floatPanelParams.width = WindowManager.LayoutParams.MATCH_PARENT;
