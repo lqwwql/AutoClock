@@ -6,6 +6,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +23,7 @@ import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
 import java.util.Random;
 
 import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;
@@ -53,6 +55,7 @@ public class AutoClickUtil {
     private int timerType = 1;//1-Handler,2-闹钟
     private int clickCount = 0;
     private int scrollCount = 0;
+    private List<Point> trackList;
 
     private AutoClickUtil() {
     }
@@ -92,7 +95,7 @@ public class AutoClickUtil {
     public void setScrollParam(int scrollTimes, int scrollDuration, int slideDuration, int direction,
                                int finishOp, int timerType, int range,
                                boolean isRunning, boolean isRandomSeconds, boolean isCheckJump, boolean isContinue,
-                               int clickTimes, int clickX, int clickY) {
+                               int clickTimes, int clickX, int clickY, List<Point> trackList) {
         this.scrollTimes = scrollTimes;
         this.scrollDuration = scrollDuration;
         this.slideDuration = slideDuration;
@@ -109,6 +112,7 @@ public class AutoClickUtil {
         this.clickY = clickY;
         clickCount = 0;
         scrollCount = 0;
+        this.trackList = trackList;
     }
 
     public void executeScrollView() {
@@ -122,6 +126,9 @@ public class AutoClickUtil {
         Log.d(AppConstant.TAG, "executeScrollView scrollTimes=" + scrollTimes + " scrollCount=" + scrollCount);
         if (scrollCount >= scrollTimes) {
             scrollCount = 0;
+            if (direction == 6) {
+                direction = 5;
+            }
             if (finishOp == 2) {
                 service.performGlobalAction(GLOBAL_ACTION_BACK);
                 clickCount++;
@@ -197,7 +204,11 @@ public class AutoClickUtil {
         }
         Toaster.show("执行" + directionStr + "滑动,间隔:" + scrollDuration + ",剩余次数:" + (scrollTimes - scrollCount));
         int randomX = (new Random().nextInt(2) == 0 ? -getRandomXY() : +getRandomXY());
-        mockSwipe(startX + randomX, startY + getRandomXY(), endX + randomX, endY + getRandomXY(), 0, slideDuration);
+        if (trackList != null && !trackList.isEmpty()) {
+            mockSwipeLine(trackList, 0, scrollDuration);
+        } else {
+            mockSwipe(startX + randomX, startY + getRandomXY(), endX + randomX, endY + getRandomXY(), 0, slideDuration);
+        }
         if (timerType == 1) {
             sendDelayMessage();
         } else {
@@ -254,7 +265,7 @@ public class AutoClickUtil {
     }
 
 
-    //滑动
+    //滑动-起止点
     public void mockSwipe(int fromX, int fromY, int toX, int toY, long startTime, long duration) {
         if (service == null) {
             Toaster.show("辅助服务未启动");
@@ -288,7 +299,50 @@ public class AutoClickUtil {
         }, null); //handler为空即可
     }
 
-    //滑动
+    //滑动-轨迹集合
+    public void mockSwipeLine(List<Point> dataList, long startTime, long duration) {
+        if (service == null) {
+            Toaster.show("辅助服务未启动");
+            return;
+        }
+        if (dataList == null || dataList.isEmpty()) {
+            Toaster.show("轨迹点为空");
+            return;
+        }
+        final Path path = new Path();
+        //滑动的起始位置，例如屏幕的中心点X、Y
+        path.moveTo(dataList.get(0).x, dataList.get(0).y);
+        for (int i = 1; i < dataList.size(); i++) {
+            //需要滑动的位置，如从中心点滑到屏幕 的顶部
+            Log.d(AppConstant.TAG,"mockSwipeLine x="+dataList.get(i).x+" y="+dataList.get(i).y);
+            path.lineTo(dataList.get(i).x, dataList.get(i).y);
+            path.moveTo(dataList.get(i).x, dataList.get(i).y);
+        }
+
+
+        GestureDescription.Builder builder = new GestureDescription.Builder();
+        builder.addStroke(new GestureDescription.StrokeDescription(path, startTime, duration));
+
+        GestureDescription gestureDescription = builder.build();
+        //移动到中心点，100ms后开始滑动，滑动的时间持续400ms，可以调整
+        //如果滑动成功，会回调如下函数，可以在下面记录是否滑动成功，滑动成功或失败都要关闭该路径笔
+        service.dispatchGesture(gestureDescription, new AccessibilityService.GestureResultCallback() {
+            @Override
+            public void onCompleted(GestureDescription gestureDescription) {
+                super.onCompleted(gestureDescription);
+                path.close();
+            }
+
+            @Override
+            public void onCancelled(GestureDescription gestureDescription) {
+                super.onCancelled(gestureDescription);
+                path.close();
+            }
+        }, null); //handler为空即可
+    }
+
+
+    //滑动-起止点加速
     public void mockSwipeSpeedUp(int fromX, int fromY, int toX, int toY, long startTime, long duration) {
         if (service == null) {
             Toaster.show("辅助服务未启动");

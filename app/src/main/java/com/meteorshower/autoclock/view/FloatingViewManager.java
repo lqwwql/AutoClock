@@ -1,8 +1,11 @@
 package com.meteorshower.autoclock.view;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.os.Build;
 import android.util.Log;
 import android.view.Gravity;
@@ -10,17 +13,24 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
 import com.meteorshower.autoclock.event.ScrollMenuEvent;
+import com.meteorshower.autoclock.util.AutoClickUtil;
 import com.meteorshower.autoclock.util.DeviceUtils;
 import com.meteorshower.autoclock.util.LogUtils;
+import com.meteorshower.autoclock.util.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FloatingViewManager {
@@ -34,6 +44,8 @@ public class FloatingViewManager {
     private WindowManager.LayoutParams floatBallParams;
     private WindowManager.LayoutParams floatMenuParams;
     private WindowManager.LayoutParams floatPanelParams;
+    private int collectMode = 0;//0-坐标采集 1-轨迹采集
+    private List<Point> pointList;//轨迹点
 
     private FloatingViewManager(Context context) {
         this.context = context;
@@ -159,6 +171,12 @@ public class FloatingViewManager {
                 return;
             }
             floatingMenu = LayoutInflater.from(context).inflate(R.layout.floating_menu_view, null);
+            TextView tvScroll = floatingMenu.findViewById(R.id.tv_scroll_text);
+            if (AutoClickUtil.getInstance().isRunning()) {
+                tvScroll.setText("关闭滑动");
+            } else {
+                tvScroll.setText("开启滑动");
+            }
             if (floatMenuParams == null) {
                 floatMenuParams = new WindowManager.LayoutParams();
                 floatMenuParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -181,10 +199,25 @@ public class FloatingViewManager {
                     EventBus.getDefault().post(new ScrollMenuEvent());
                 }
             });
-            floatingMenu.findViewById(R.id.rl_collect).setOnClickListener(new View.OnClickListener() {
+            floatingMenu.findViewById(R.id.rl_collect_point).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toaster.show("请点击屏幕采集坐标");
+                    collectMode = 0;
+                    hideFloatingMenu();
+                    showFloatingPanel();
+                }
+            });
+            floatingMenu.findViewById(R.id.rl_collect_track).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toaster.show("请滑动屏幕采集轨迹");
+                    if (pointList == null) {
+                        pointList = new ArrayList<>();
+                    } else {
+                        pointList.clear();
+                    }
+                    collectMode = 1;
                     hideFloatingMenu();
                     showFloatingPanel();
                 }
@@ -229,23 +262,58 @@ public class FloatingViewManager {
         floatingPanel.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                int clickX = (int) event.getX();
+                int clickY = (int) event.getY();
+                clickY += DeviceUtils.getStatusBarHeight();//补充头部刘海屏高度
                 switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (collectMode == 1) {
+                            pointList.add(new Point(clickX, clickY));
+                            drawLineView(pointList, floatingPanel);
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if (collectMode == 1) {
+                            pointList.add(new Point(clickX, clickY));
+                            drawLineView(pointList, floatingPanel);
+                        }
+                        break;
                     case MotionEvent.ACTION_UP:
-                        int clickX = (int) event.getX();
-                        int clickY = (int) event.getY();
-                        Log.d(AppConstant.TAG, "onTouch before clickX=" + clickX + " clickY=" + clickY);
-                        clickY += DeviceUtils.getStatusBarHeight();
-                        Log.d(AppConstant.TAG, "onTouch after clickX=" + clickX + " clickY=" + clickY);
-                        EventBus.getDefault().post(new CollectMenuEvent(clickX, clickY));
-                        Log.d(AppConstant.TAG, "onTouch getWidth=" + floatingPanel.getWidth() + " getHeight=" + floatingPanel.getHeight());
-                        Log.d(AppConstant.TAG, "onTouch ScreenWidth=" + AppConstant.ScreenWidth + " ScreenHeight=" + AppConstant.ScreenHeight);
-                        hideFloatingPanel();
-                        Toaster.show("已采集屏幕坐标[" + clickX + "," + clickY + "]");
+                        if (collectMode == 0) {
+                            EventBus.getDefault().post(new CollectMenuEvent(collectMode, clickX, clickY));
+                            hideFloatingPanel();
+                            Toaster.show("已采集屏幕坐标[" + clickX + "," + clickY + "]");
+                        } else {
+                            drawLineView(pointList, floatingPanel);
+                            EventBus.getDefault().post(new CollectMenuEvent(collectMode, pointList));
+                            Log.d(AppConstant.TAG, "onTouch ACTION_UP pointList=" + pointList.size());
+                            hideFloatingPanel();
+                            Toaster.show("已采集屏幕轨迹");
+                        }
                         break;
                 }
                 return true;
             }
         });
+    }
+
+    private void drawLineView(List<Point> lines, View view) {
+        //画线
+        Paint paint = new Paint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(UIUtils.px2dp(2));
+
+        Canvas canvas = new Canvas();
+        float[] linePoint = new float[lines.size() * 2];
+        for (int i = 0; i < lines.size(); i++) {
+            linePoint[i * 2] = lines.get(i).x;
+            linePoint[i * 2 + 1] = lines.get(i).y;
+        }
+        Log.d(AppConstant.TAG, "linePoint = " + new Gson().toJson(linePoint));
+        canvas.drawLines(linePoint, paint);
+        view.draw(canvas);
+        view.invalidate();
     }
 
     public void hideFloatingPanel() {

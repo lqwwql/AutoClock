@@ -1,6 +1,7 @@
 package com.meteorshower.autoclock.activity;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -26,6 +27,9 @@ import com.meteorshower.autoclock.view.FlowRadioGroup;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -95,6 +99,7 @@ public class ScrollSettingActivity extends BaseActivity {
     private int clickX = 0;
     private int clickY = 0;
     private int clickTimes = 0;
+    private List<Point> trackList = new ArrayList<>();
 
     @Override
     protected int getLayoutID() {
@@ -429,8 +434,13 @@ public class ScrollSettingActivity extends BaseActivity {
     @Subscribe
     public void doCollectXYEvent(CollectMenuEvent event) {
         if (event != null) {
-            etContinueX.setText(event.getClickX() + "");
-            etContinueY.setText(event.getClickY() + "");
+            trackList.clear();
+            if (event.getType() == 0) {
+                etContinueX.setText(event.getClickX() + "");
+                etContinueY.setText(event.getClickY() + "");
+            } else {
+                trackList.addAll(event.getTrackList());
+            }
             saveValue(false);
         }
     }
@@ -451,8 +461,6 @@ public class ScrollSettingActivity extends BaseActivity {
         } else {
             btnOperation.setText("关闭");
             Toaster.show("滑动程序将在" + scrollDuration + "秒后启动");
-            AutoClickUtil.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
-                    direction, finishOp, timerType, range, true, isRandomTime, isCheckJump, isContinue, clickTimes, clickX, clickY);
             AutoClickUtil.getInstance().startRunning();
         }
         isRunning = !isRunning;
@@ -505,7 +513,8 @@ public class ScrollSettingActivity extends BaseActivity {
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_Y_KEY, clickY, SharedPreferencesUtil.SCROLL_CONFIG);
 
         AutoClickUtil.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
-                direction, finishOp, timerType, range, true, isRandomTime, isCheckJump, isContinue, clickTimes, clickX, clickY);
+                direction, finishOp, timerType, range, true, isRandomTime, isCheckJump,
+                isContinue, clickTimes, clickX, clickY, trackList);
 
         if (swFloatingView.isChecked()) {
             FloatingViewManager.getInstance(ScrollSettingActivity.this).changeFloatingViewSize(floatingViewSize);

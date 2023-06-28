@@ -17,6 +17,7 @@
             android:layout_width="150dp"
             android:layout_height="50dp">
             <TextView
+                android:id="@+id/tv_scroll_text"
                 android:layout_centerInParent="true"
                 android:textColor="#ffffff"
                 android:text="开启滑动"
@@ -31,13 +32,31 @@
             android:layout_height="1dp">
         </View>
         <RelativeLayout
-            android:id="@+id/rl_collect"
+            android:id="@+id/rl_collect_point"
             android:layout_width="150dp"
             android:layout_height="50dp">
             <TextView
                 android:layout_centerInParent="true"
                 android:textColor="#ffffff"
                 android:text="坐标采集"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+        </RelativeLayout>
+        <View
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="1dp">
+        </View>
+        <RelativeLayout
+            android:id="@+id/rl_collect_track"
+            android:layout_width="150dp"
+            android:layout_height="50dp">
+            <TextView
+                android:layout_centerInParent="true"
+                android:textColor="#ffffff"
+                android:text="轨迹采集"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
