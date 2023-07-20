@@ -12,6 +12,43 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="150dp"
+            android:layout_height="50dp">
+            <com.meteorshower.autoclock.view.FlowRadioGroup
+                android:id="@+id/rg_scroll_time_select"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rb_time_15"
+                    android:text="15秒"
+                    android:checked="true"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/rb_time_30"
+                    android:text="30秒"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
+
+            </com.meteorshower.autoclock.view.FlowRadioGroup>
+        </RelativeLayout>
+        <View
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="1dp">
+        </View>
         <RelativeLayout
             android:id="@+id/rl_scroll"
             android:layout_width="150dp"
@@ -46,10 +83,12 @@
         </RelativeLayout>
         <View
             android:background="#fff"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="1dp">
         </View>
         <RelativeLayout
+            android:visibility="gone"
             android:id="@+id/rl_collect_track"
             android:layout_width="150dp"
             android:layout_height="50dp">

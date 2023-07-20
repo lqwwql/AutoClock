@@ -99,7 +99,6 @@ public class AutoClickUtil {
         this.scrollTimes = scrollTimes;
         this.scrollDuration = scrollDuration;
         this.slideDuration = slideDuration;
-        this.isRunning = isRunning;
         this.isRandomSeconds = isRandomSeconds;
         this.direction = direction;
         this.finishOp = finishOp;
@@ -242,6 +241,7 @@ public class AutoClickUtil {
     }
 
     public void startRunning() {
+        isRunning = true;
         if (timerType == 1) {
             scrollHandler.sendEmptyMessage(SCROLL_WHAT);
         } else {

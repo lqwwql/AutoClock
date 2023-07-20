@@ -13,18 +13,22 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
+import com.meteorshower.autoclock.application.MyApplication;
 import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
 import com.meteorshower.autoclock.event.ScrollMenuEvent;
+import com.meteorshower.autoclock.event.ScrollTypeChangeEvent;
 import com.meteorshower.autoclock.util.AutoClickUtil;
 import com.meteorshower.autoclock.util.DeviceUtils;
 import com.meteorshower.autoclock.util.LogUtils;
+import com.meteorshower.autoclock.util.SharedPreferencesUtil;
 import com.meteorshower.autoclock.util.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -172,6 +176,31 @@ public class FloatingViewManager {
             }
             floatingMenu = LayoutInflater.from(context).inflate(R.layout.floating_menu_view, null);
             TextView tvScroll = floatingMenu.findViewById(R.id.tv_scroll_text);
+            RadioGroup scrollType = floatingMenu.findViewById(R.id.rg_scroll_time_select);
+            int scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+            switch (scrollTimeSelect) {
+                case 0:
+                    scrollType.check(R.id.rb_time_15);
+                    break;
+                case 1:
+                    scrollType.check(R.id.rb_time_30);
+                    break;
+            }
+            scrollType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    int type = 0;
+                    switch (checkedId) {
+                        case R.id.rb_time_15:
+                            type = 0;
+                            break;
+                        case R.id.rb_time_30:
+                            type = 1;
+                            break;
+                    }
+                   EventBus.getDefault().post(new ScrollTypeChangeEvent(type));
+                }
+            });
             if (AutoClickUtil.getInstance().isRunning()) {
                 tvScroll.setText("关闭滑动");
             } else {

@@ -27,7 +27,8 @@ public class HomeActivity extends BaseActivity {
     protected void initView() {
         if (ControllerAccessibilityService.getInstance() == null) {
             Toaster.show("无障碍服务未启动");
-            return;
+        }else{
+            Toaster.show("无障碍服务已启动");
         }
     }
 

@@ -160,61 +160,145 @@
                     android:layout_width="wrap_content"
                     android:textSize="14sp"
                     android:layout_height="wrap_content"
-                    android:text="滑动次数：" />
+                    android:text="滑动方式：" />
 
-                <EditText
-                    android:id="@+id/et_scroll_time"
-                    android:inputType="number"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:padding="2dp"
+                <com.meteorshower.autoclock.view.FlowRadioGroup
+                    android:id="@+id/rg_scroll_type"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_simple"
+                        android:text="简单"
+                        android:textSize="14sp"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_complex"
+                        android:text="详细"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_scroll_simple"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:textSize="14sp"
                     android:layout_height="wrap_content"
-                    android:text="滑动间隔(秒)：" />
+                    android:text="滑动时间：" />
 
-                <EditText
-                    android:id="@+id/et_scroll_duration"
-                    android:inputType="number"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:padding="2dp"
+                <com.meteorshower.autoclock.view.FlowRadioGroup
+                    android:id="@+id/rg_scroll_time_select"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:id="@+id/rb_time_15"
+                        android:text="15秒"
+                        android:textSize="14sp"
+                        android:checked="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rb_time_30"
+                        android:text="30秒"
+                        android:layout_marginLeft="5dp"
+                        android:textSize="14sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </RadioButton>
+
+                </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/ll_scroll_complex"
+                android:visibility="gone"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_height="wrap_content"
-                    android:text="持续时间(毫秒)：" />
-
-                <EditText
-                    android:id="@+id/et_slide_duration"
-                    android:inputType="number"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:padding="2dp"
+                android:layout_height="wrap_content">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"/>
+                    android:paddingVertical="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:text="滑动次数：" />
+
+                    <EditText
+                        android:id="@+id/et_scroll_time"
+                        android:inputType="number"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:padding="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingVertical="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:text="滑动间隔(秒)：" />
+
+                    <EditText
+                        android:id="@+id/et_scroll_duration"
+                        android:inputType="number"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:padding="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:paddingVertical="10dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:text="持续时间(毫秒)：" />
+
+                    <EditText
+                        android:id="@+id/et_slide_duration"
+                        android:inputType="number"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:padding="2dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -301,6 +385,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_scroll_distance"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:paddingVertical="10dp"
                 android:layout_height="wrap_content"
@@ -341,6 +427,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_random_time"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:paddingVertical="10dp"
                 android:layout_height="wrap_content"
@@ -441,6 +529,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_timer_type"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:paddingVertical="10dp"
                 android:layout_height="wrap_content"
@@ -480,6 +570,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_check_jump"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:paddingVertical="10dp"
                 android:layout_height="wrap_content"

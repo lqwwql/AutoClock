@@ -79,6 +79,9 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.41'
     // 吐司框架：https://github.com/getActivity/Toaster
     implementation 'com.github.getActivity:Toaster:12.3'
+    // https://mvnrepository.com/artifact/com.github.getActivity/ToastUtils
+//    implementation 'com.github.getActivity:ToastUtils:12.3'
+
     // 手机显示logcat
 //    debugImplementation 'com.github.getActivity:Logcat:10.6'
     implementation("org.greenrobot:eventbus:3.3.1")

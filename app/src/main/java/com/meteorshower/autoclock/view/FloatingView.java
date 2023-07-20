@@ -15,6 +15,7 @@ public class FloatingView extends View {
     public int width = AppConstant.FloatingViewSize;
     private Paint paint;
     private boolean isRunning = false;
+    private int backgroundColor = getResources().getColor(R.color.floating_view_black);
 
     public FloatingView(Context context) {
         super(context);
@@ -40,7 +41,7 @@ public class FloatingView extends View {
         //画大圆
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
-        paint.setColor(getResources().getColor(R.color.floating_view));
+        paint.setColor(backgroundColor);
         paint.setAlpha(200);
         canvas.drawCircle(width / 2, width / 2, width / 2, paint);
         //画小圆圈
@@ -62,6 +63,11 @@ public class FloatingView extends View {
     public void changeSize(int size) {
         this.height = size;
         this.width = size;
+        invalidate();
+    }
+
+    public void changeBackgroundColor(int color){
+        backgroundColor = color;
         invalidate();
     }
 

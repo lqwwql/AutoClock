@@ -18,6 +18,7 @@ import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
 import com.meteorshower.autoclock.event.ScrollFinishEvent;
 import com.meteorshower.autoclock.event.ScrollMenuEvent;
+import com.meteorshower.autoclock.event.ScrollTypeChangeEvent;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AutoClickUtil;
 import com.meteorshower.autoclock.util.SharedPreferencesUtil;
@@ -78,6 +79,22 @@ public class ScrollSettingActivity extends BaseActivity {
     EditText etContinueX;
     @BindView(R.id.et_continue_y)
     EditText etContinueY;
+    @BindView(R.id.rg_scroll_type)
+    RadioGroup rgScrollType;
+    @BindView(R.id.rg_scroll_time_select)
+    RadioGroup rgScrollTimeSelect;
+    @BindView(R.id.ll_scroll_simple)
+    LinearLayout llScrollSimple;
+    @BindView(R.id.ll_scroll_complex)
+    LinearLayout llScrollComplex;
+    @BindView(R.id.ll_check_jump)
+    LinearLayout llCheckJump;
+    @BindView(R.id.ll_timer_type)
+    LinearLayout llTimerType;
+    @BindView(R.id.ll_scroll_distance)
+    LinearLayout llScrollDistance;
+    @BindView(R.id.ll_random_time)
+    LinearLayout llRandomTime;
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
@@ -99,6 +116,8 @@ public class ScrollSettingActivity extends BaseActivity {
     private int clickX = 0;
     private int clickY = 0;
     private int clickTimes = 0;
+    private int scrollType = 0;//滑动时间设置 0-简单 1-详细
+    private int scrollTimeSelect = 0;//简单时间选择 0-15秒 1-30秒
     private List<Point> trackList = new ArrayList<>();
 
     @Override
@@ -128,6 +147,8 @@ public class ScrollSettingActivity extends BaseActivity {
         clickX = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_X_KEY, 0, SharedPreferencesUtil.SCROLL_CONFIG);
         clickY = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_Y_KEY, 0, SharedPreferencesUtil.SCROLL_CONFIG);
         clickTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CONTINUE_TIMES_KEY, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+        scrollType = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TYPE, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+        scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
 
         etTimes.setText(scrollTimes + "");
         etDurations.setText(scrollDuration + "");
@@ -351,6 +372,79 @@ public class ScrollSettingActivity extends BaseActivity {
                 SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_CONTINUE_KEY, isContinue, SharedPreferencesUtil.SCROLL_CONFIG);
             }
         });
+
+        switch (scrollType) {
+            case 0:
+                rgScrollType.check(R.id.rb_simple);
+                llScrollSimple.setVisibility(View.VISIBLE);
+                llScrollComplex.setVisibility(View.GONE);
+                llScrollDistance.setVisibility(View.GONE);
+                llTimerType.setVisibility(View.GONE);
+                llRandomTime.setVisibility(View.GONE);
+                llCheckJump.setVisibility(View.GONE);
+                setSelectTime(scrollTimeSelect);
+                break;
+            case 1:
+                rgScrollType.check(R.id.rb_complex);
+                llScrollSimple.setVisibility(View.GONE);
+                llScrollComplex.setVisibility(View.VISIBLE);
+                llScrollDistance.setVisibility(View.VISIBLE);
+                llTimerType.setVisibility(View.VISIBLE);
+                llRandomTime.setVisibility(View.VISIBLE);
+                llCheckJump.setVisibility(View.VISIBLE);
+                break;
+        }
+        rgScrollType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_simple:
+                        llScrollSimple.setVisibility(View.VISIBLE);
+                        llScrollComplex.setVisibility(View.GONE);
+                        llScrollDistance.setVisibility(View.GONE);
+                        llTimerType.setVisibility(View.GONE);
+                        llRandomTime.setVisibility(View.GONE);
+                        llCheckJump.setVisibility(View.GONE);
+                        scrollType = 0;
+                        setSelectTime(scrollTimeSelect);
+                        break;
+                    case R.id.rb_complex:
+                        scrollType = 1;
+                        llScrollSimple.setVisibility(View.GONE);
+                        llScrollComplex.setVisibility(View.VISIBLE);
+                        llScrollDistance.setVisibility(View.VISIBLE);
+                        llTimerType.setVisibility(View.VISIBLE);
+                        llRandomTime.setVisibility(View.VISIBLE);
+                        llCheckJump.setVisibility(View.VISIBLE);
+                        break;
+                }
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TYPE, scrollType, SharedPreferencesUtil.SCROLL_CONFIG);
+            }
+        });
+
+        switch (scrollTimeSelect) {
+            case 0:
+                rgScrollTimeSelect.check(R.id.rb_time_15);
+                break;
+            case 1:
+                rgScrollTimeSelect.check(R.id.rb_time_30);
+                break;
+        }
+        rgScrollTimeSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rb_time_15:
+                        scrollTimeSelect = 0;
+                        break;
+                    case R.id.rb_time_30:
+                        scrollTimeSelect = 1;
+                        break;
+                }
+                setSelectTime(scrollTimeSelect);
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, scrollTimeSelect, SharedPreferencesUtil.SCROLL_CONFIG);
+            }
+        });
     }
 
     @Override
@@ -445,6 +539,20 @@ public class ScrollSettingActivity extends BaseActivity {
         }
     }
 
+    @Subscribe
+    public void doScrollTypeChangeEvent(ScrollTypeChangeEvent event) {
+        if (event != null) {
+            switch (event.getType()) {
+                case 0:
+                    rgScrollTimeSelect.check(R.id.rb_time_15);
+                    break;
+                case 1:
+                    rgScrollTimeSelect.check(R.id.rb_time_30);
+                    break;
+            }
+        }
+    }
+
 
     private void runScroll() {
         saveValue(false);
@@ -513,7 +621,7 @@ public class ScrollSettingActivity extends BaseActivity {
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CLICK_Y_KEY, clickY, SharedPreferencesUtil.SCROLL_CONFIG);
 
         AutoClickUtil.getInstance().setScrollParam(scrollTimes, scrollDuration, slideDuration,
-                direction, finishOp, timerType, range, true, isRandomTime, isCheckJump,
+                direction, finishOp, timerType, range, false, isRandomTime, isCheckJump,
                 isContinue, clickTimes, clickX, clickY, trackList);
 
         if (swFloatingView.isChecked()) {
@@ -523,6 +631,22 @@ public class ScrollSettingActivity extends BaseActivity {
         if (isShow) {
             Toaster.show("保存成功");
         }
+    }
+
+    private void setSelectTime(int selectType){
+        switch (selectType){
+            case 0:
+                etTimes.setText("3");
+                etDurations.setText("6");
+                etSlideDurations.setText("6200");
+                break;
+            case 1:
+                etTimes.setText("4");
+                etDurations.setText("8");
+                etSlideDurations.setText("8200");
+                break;
+        }
+        saveValue(true);
     }
 
 }
