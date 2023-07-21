@@ -1,10 +1,10 @@
 package com.meteorshower.autoclock.event;
 
-public class ScrollTypeChangeEvent {
+public class ScrollEndActionEvent {
 
     private int type;
 
-    public ScrollTypeChangeEvent(int type) {
+    public ScrollEndActionEvent(int type) {
         this.type = type;
     }
 

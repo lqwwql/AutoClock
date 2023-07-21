@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <RelativeLayout
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="50dp">
             <com.meteorshower.autoclock.view.FlowRadioGroup
                 android:id="@+id/rg_scroll_time_select"
@@ -50,8 +50,54 @@
             android:layout_height="1dp">
         </View>
         <RelativeLayout
+            android:layout_width="170dp"
+            android:layout_height="50dp">
+            <com.meteorshower.autoclock.view.FlowRadioGroup
+                android:id="@+id/rg_scroll_end_select"
+                android:orientation="horizontal"
+                android:layout_centerInParent="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/rb_end_no"
+                    android:text="无"
+                    android:checked="true"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/rb_end_back"
+                    android:text="返"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/rb_end_back_click"
+                    android:text="返击"
+                    android:textColor="#ffffff"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                </RadioButton>
+
+
+            </com.meteorshower.autoclock.view.FlowRadioGroup>
+        </RelativeLayout>
+        <View
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="1dp">
+        </View>
+        <RelativeLayout
             android:id="@+id/rl_scroll"
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="50dp">
             <TextView
                 android:id="@+id/tv_scroll_text"
@@ -70,7 +116,7 @@
         </View>
         <RelativeLayout
             android:id="@+id/rl_collect_point"
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="50dp">
             <TextView
                 android:layout_centerInParent="true"
@@ -90,7 +136,7 @@
         <RelativeLayout
             android:visibility="gone"
             android:id="@+id/rl_collect_track"
-            android:layout_width="150dp"
+            android:layout_width="170dp"
             android:layout_height="50dp">
             <TextView
                 android:layout_centerInParent="true"

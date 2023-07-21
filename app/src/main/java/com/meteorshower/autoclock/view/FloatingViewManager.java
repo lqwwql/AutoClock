@@ -23,6 +23,7 @@ import com.meteorshower.autoclock.application.MyApplication;
 import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
+import com.meteorshower.autoclock.event.ScrollEndActionEvent;
 import com.meteorshower.autoclock.event.ScrollMenuEvent;
 import com.meteorshower.autoclock.event.ScrollTypeChangeEvent;
 import com.meteorshower.autoclock.util.AutoClickUtil;
@@ -198,9 +199,48 @@ public class FloatingViewManager {
                             type = 1;
                             break;
                     }
-                   EventBus.getDefault().post(new ScrollTypeChangeEvent(type));
+                    EventBus.getDefault().post(new ScrollTypeChangeEvent(type));
                 }
             });
+
+            RadioGroup scrollEndAction = floatingMenu.findViewById(R.id.rg_scroll_end_select);
+            scrollEndAction.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    int type = 0;
+                    switch (checkedId) {
+                        case R.id.rb_end_no:
+                            type = 0;
+                            break;
+                        case R.id.rb_end_back:
+                            type = 1;
+                            break;
+                        case R.id.rb_end_back_click:
+                            type = 2;
+                            break;
+                    }
+                    SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_END_ACTION, type, SharedPreferencesUtil.SCROLL_CONFIG);
+                    EventBus.getDefault().post(new ScrollEndActionEvent(type));
+                }
+            });
+            int scrollEnd = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_END_ACTION, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+            int finishOp = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
+            if (finishOp == 1) {
+                scrollEnd = 0;
+            } else if (finishOp == 2 && scrollEnd == 0) {
+                scrollEnd = 1;
+            }
+            switch (scrollEnd) {
+                case 0:
+                    scrollEndAction.check(R.id.rb_end_no);
+                    break;
+                case 1:
+                    scrollEndAction.check(R.id.rb_end_back);
+                    break;
+                case 2:
+                    scrollEndAction.check(R.id.rb_end_back_click);
+                    break;
+            }
             if (AutoClickUtil.getInstance().isRunning()) {
                 tvScroll.setText("关闭滑动");
             } else {

@@ -27,6 +27,7 @@ public class SharedPreferencesUtil {
     public static final String CLICK_Y_KEY = "CLICK_Y_KEY";
     public static final String SCROLL_TYPE = "SCROLL_TYPE";
     public static final String SCROLL_TIME_SELECT = "SCROLL_TIME_SELECT";
+    public static final String SCROLL_END_ACTION = "SCROLL_END_ACTION";
 
     //String的保存及获取
     public static void saveDataToSharedPreferences(Context context,

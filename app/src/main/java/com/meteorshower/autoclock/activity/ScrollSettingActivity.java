@@ -16,6 +16,7 @@ import com.meteorshower.autoclock.application.MyApplication;
 import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.event.CollectMenuEvent;
 import com.meteorshower.autoclock.event.FloatingViewClickEvent;
+import com.meteorshower.autoclock.event.ScrollEndActionEvent;
 import com.meteorshower.autoclock.event.ScrollFinishEvent;
 import com.meteorshower.autoclock.event.ScrollMenuEvent;
 import com.meteorshower.autoclock.event.ScrollTypeChangeEvent;
@@ -550,6 +551,27 @@ public class ScrollSettingActivity extends BaseActivity {
                     rgScrollTimeSelect.check(R.id.rb_time_30);
                     break;
             }
+        }
+    }
+
+    @Subscribe
+    public void doScrollEndActionEvent(ScrollEndActionEvent event) {
+        if (event != null) {
+            switch (event.getType()) {
+                case 0:
+                    rgFinishOp.check(R.id.rb_nothing);
+                    rgContinue.check(R.id.rb_continue_no);
+                    break;
+                case 1:
+                    rgFinishOp.check(R.id.rb_goback);
+                    rgContinue.check(R.id.rb_continue_no);
+                    break;
+                case 2:
+                    rgFinishOp.check(R.id.rb_goback);
+                    rgContinue.check(R.id.rb_continue_yes);
+                    break;
+            }
+            saveValue(true);
         }
     }
 
