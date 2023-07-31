@@ -8,6 +8,7 @@ import android.os.Process;
 import android.view.Gravity;
 
 import com.hjq.toast.Toaster;
+import com.meteorshower.autoclock.greendao.GreenDaoManager;
 
 /**
  * 程序application
@@ -28,6 +29,7 @@ public class MyApplication extends Application {
         mHandler = new Handler();
         // 初始化 Toast 框架
         Toaster.init(this);
+        GreenDaoManager.getInstance();
     }
 
     public static Context getContext() {

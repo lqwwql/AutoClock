@@ -22,10 +22,13 @@ public class AppConstant {
     public static final String DIR_LOG = "Log";
     //异常捕获保存路径
     public static String ERROR = APP_PATH + "ERROR/";
+    public static final String DB_DIR = "DB";
+    public static final String DB_NAME = "ac.db";
+
     /**
      * 系统用到的文件目录
      */
-    public static final String[] DIRECTORYS = new String[]{DIR_LOG};
+    public static final String[] DIRECTORYS = new String[]{DIR_LOG,DB_DIR};
 
     //TAG
     public static String TAG = "lqwtest";
@@ -59,28 +62,47 @@ public class AppConstant {
     public static final int EXC_JOP_SLEEP_TIME = 10 * 1000;
 
 
-    public static final int[] DESKTOP_DD_8 = {1,3};
-    public static final int[] DESKTOP_AU_8 = {1,3};
-    public static final int[] DD_NEWS_8 = {1,3};
-    public static final int[] DD_WORK_8 = {1,3};
-    public static final int[] DD_KAO_8 = {1,3};
-    public static final int[] DD_UP_8 = {1,3};
-    public static final int[] DD_DOWN_8 = {1,3};
+    public static final int[] DESKTOP_DD_8 = {1, 3};
+    public static final int[] DESKTOP_AU_8 = {1, 3};
+    public static final int[] DD_NEWS_8 = {1, 3};
+    public static final int[] DD_WORK_8 = {1, 3};
+    public static final int[] DD_KAO_8 = {1, 3};
+    public static final int[] DD_UP_8 = {1, 3};
+    public static final int[] DD_DOWN_8 = {1, 3};
 
-    public static final int[] DESKTOP_DD_LT = {78,952};
-    public static final int[] DESKTOP_AU_LT = {636,966};
-    public static final int[] DD_NEWS_LT = {70,1234};
-    public static final int[] DD_WORK_LT = {355,1234};
-//    public static final int[] DD_KAO_LT = {88,840};
-    public static final int[] DD_KAO_LT = {92,722};
-//    public static final int[] DD_UP_LT = {357,375};
-    public static final int[] DD_UP_LT = {370,725};
-//    public static final int[] DD_DOWN_LT = {368,656};
-    public static final int[] DD_DOWN_LT = {370,725};
+    public static final int[] DESKTOP_DD_LT = {78, 952};
+    public static final int[] DESKTOP_AU_LT = {636, 966};
+    public static final int[] DD_NEWS_LT = {70, 1234};
+    public static final int[] DD_WORK_LT = {355, 1234};
+    //    public static final int[] DD_KAO_LT = {88,840};
+    public static final int[] DD_KAO_LT = {92, 722};
+    //    public static final int[] DD_UP_LT = {357,375};
+    public static final int[] DD_UP_LT = {370, 725};
+    //    public static final int[] DD_DOWN_LT = {368,656};
+    public static final int[] DD_DOWN_LT = {370, 725};
 
-    public static final int[] ZFB_QJ =  {550,745};
+    public static final int[] ZFB_QJ = {550, 745};
 
-    public static final String ALARM_RECEIVER_ACTION =  "com.meteorshower.autoclock.receiver.AlarmReceiver.ALARM_RECEIVER_ACTION";
+    public static final String ALARM_RECEIVER_ACTION = "com.meteorshower.autoclock.receiver.AlarmReceiver.ALARM_RECEIVER_ACTION";
 
+    public enum Action {
+        ACTION_SINGLE_CLICK(1011,"单击"),
+        ACTION_DOUBLE_CLICK(1012,"双击"),
+        ACTION_LONG_CLICK(1013,"长按"),
+        ACTION_INPUT(1014,"输入"),
+        ACTION_SLIDE_UP(1015,"上滑"),
+        ACTION_SLIDE_DOWN(1016,"下滑"),
+        ACTION_SLIDE_LEFT(1017,"左滑"),
+        ACTION_SLIDE_RIGHT(1018,"右滑"),
+        ACTION_SLIDE_UP_DOWN(1019,"上下");
+
+        public int actionCode;
+        public String actionName;
+
+        Action(int actionCode,String actionName){
+            this.actionCode = actionCode;
+            this.actionName = actionName;
+        }
+    }
 
 }

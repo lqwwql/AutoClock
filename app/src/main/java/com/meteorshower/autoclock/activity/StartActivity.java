@@ -2,6 +2,8 @@ package com.meteorshower.autoclock.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -23,6 +26,7 @@ import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.util.DeviceUtils;
 import com.meteorshower.autoclock.util.DialogUtils;
 import com.meteorshower.autoclock.util.IOUtils;
+import com.meteorshower.autoclock.util.StringUtils;
 
 import java.io.File;
 import java.util.List;
@@ -42,7 +46,7 @@ public class StartActivity extends FragmentActivity {
             Permission.RECORD_AUDIO
     };
     private boolean normalPermission = false, installPermission = false, alertPermission = false;//普通权限，安装权限，悬浮窗权限
-
+    private TextView tvVersion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,16 @@ public class StartActivity extends FragmentActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);//保持屏幕常亮
         setContentView(R.layout.activity_start);
+        tvVersion = findViewById(R.id.tv_version);
+        PackageInfo info = null;
+        try {
+            info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (StringUtils.isEmptyOrNull(info.versionName)) {
+                return;
+            }
+            tvVersion.setText(info.versionName);
+        } catch (Exception e) {
+        }
     }
 
 

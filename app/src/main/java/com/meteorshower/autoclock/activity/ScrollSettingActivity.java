@@ -571,7 +571,7 @@ public class ScrollSettingActivity extends BaseActivity {
                     rgContinue.check(R.id.rb_continue_yes);
                     break;
             }
-            saveValue(true);
+            saveValue(false);
         }
     }
 
