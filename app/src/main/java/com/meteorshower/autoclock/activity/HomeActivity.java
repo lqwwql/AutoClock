@@ -38,15 +38,19 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        List<ActionMode> actionModes = ActionModeDbHelper.getInstance().getAllAction();
-        if (actionModes.size() < AppConstant.Action.values().length) {
-            Log.d(AppConstant.TAG, "HomeActivity initData actionModes is less actionValues ");
-            ActionModeDbHelper.getInstance().deleteAll();
-            actionModes.clear();
-            for (AppConstant.Action action : AppConstant.Action.values()) {
-                actionModes.add(new ActionMode(StringUtils.newGUID(), action.actionCode, action.actionName));
+        try {
+            List<ActionMode> actionModes = ActionModeDbHelper.getInstance().getAllAction();
+            if (actionModes.size() < AppConstant.Action.values().length) {
+                Log.d(AppConstant.TAG, "HomeActivity initData actionModes is less actionValues ");
+                ActionModeDbHelper.getInstance().deleteAll();
+                actionModes.clear();
+                for (AppConstant.Action action : AppConstant.Action.values()) {
+                    actionModes.add(new ActionMode(StringUtils.newGUID(), action.actionCode, action.actionName));
+                }
+                ActionModeDbHelper.getInstance().insertList(actionModes);
             }
-            ActionModeDbHelper.getInstance().insertList(actionModes);
+        } catch (Exception e) {
+
         }
     }
 

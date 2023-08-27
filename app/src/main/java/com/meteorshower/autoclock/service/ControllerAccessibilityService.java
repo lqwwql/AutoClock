@@ -41,8 +41,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ControllerAccessibilityService extends AccessibilityService {
 
-    private static AtomicInteger atomicInteger = new AtomicInteger(0);
-
     private static ControllerAccessibilityService controllerAccessibilityService;
 
     public static ControllerAccessibilityService getInstance() {
@@ -68,8 +66,8 @@ public class ControllerAccessibilityService extends AccessibilityService {
 //        JobExecutor.getInstance().start();
 
 //        alarmReceiver = new AlarmReceiver(scrollHandler);
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(AppConstant.ALARM_RECEIVER_ACTION);
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction(AppConstant.ALARM_RECEIVER_ACTION);
 //        registerReceiver(alarmReceiver, intentFilter);
 //        if (alarmManager == null) {
 //            alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -80,7 +78,6 @@ public class ControllerAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         int eventType = event.getEventType();
-
         switch (eventType) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                 break;

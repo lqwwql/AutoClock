@@ -1,7 +1,5 @@
 package com.meteorshower.autoclock.constant;
 
-import java.io.File;
-
 public class AppConstant {
 
     public static int ScreenWidth = 0;
@@ -13,15 +11,13 @@ public class AppConstant {
     public static String LOCAL_APPNAME = "com.meteorshower.autoclock";
     public static String LOCAL_ACTIVITY_NAME = "com.meteorshower.autoclock.activity.HomeActivity";
 
-    //钉钉
-    public static String TARGET_APPNAME = "com.alibaba.android.rimet";
-    public static String TARGET_APP_ACTIVITY_NAME = "com.alibaba.android.rimet.biz.SplashActivity";
 
     //APP文件目录
     public static String APP_PATH = "辅助程序";
     public static final String DIR_LOG = "Log";
     //异常捕获保存路径
     public static String ERROR = APP_PATH + "ERROR/";
+    //数据库路径
     public static final String DB_DIR = "DB";
     public static final String DB_NAME = "ac.db";
 

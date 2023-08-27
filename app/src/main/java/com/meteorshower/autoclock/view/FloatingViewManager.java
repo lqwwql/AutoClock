@@ -13,7 +13,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -30,6 +33,7 @@ import com.meteorshower.autoclock.util.AutoClickUtil;
 import com.meteorshower.autoclock.util.DeviceUtils;
 import com.meteorshower.autoclock.util.LogUtils;
 import com.meteorshower.autoclock.util.SharedPreferencesUtil;
+import com.meteorshower.autoclock.util.StringUtils;
 import com.meteorshower.autoclock.util.UIUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -179,6 +183,7 @@ public class FloatingViewManager {
             TextView tvScroll = floatingMenu.findViewById(R.id.tv_scroll_text);
             RadioGroup scrollType = floatingMenu.findViewById(R.id.rg_scroll_time_select);
             int scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+            int customTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_CUSTOM_TIMES, 0, SharedPreferencesUtil.SCROLL_CONFIG);
             switch (scrollTimeSelect) {
                 case 0:
                     scrollType.check(R.id.rb_time_15);
@@ -186,11 +191,16 @@ public class FloatingViewManager {
                 case 1:
                     scrollType.check(R.id.rb_time_30);
                     break;
+                case 2:
+                    ((RadioButton) floatingMenu.findViewById(R.id.rb_time_custom)).setText(customTimes + "s");
+                    scrollType.check(R.id.rb_time_custom);
+                    break;
             }
             scrollType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     int type = 0;
+                    int value = 0;
                     switch (checkedId) {
                         case R.id.rb_time_15:
                             type = 0;
@@ -198,8 +208,11 @@ public class FloatingViewManager {
                         case R.id.rb_time_30:
                             type = 1;
                             break;
+                        case R.id.rb_time_custom:
+                            type = 2;
+                            break;
                     }
-                    EventBus.getDefault().post(new ScrollTypeChangeEvent(type));
+                    EventBus.getDefault().post(new ScrollTypeChangeEvent(type, value));
                 }
             });
 

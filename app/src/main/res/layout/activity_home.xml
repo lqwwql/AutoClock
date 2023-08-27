@@ -61,155 +61,162 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_margin="10dp"
-        android:visibility="visible"
+        android:id="@+id/ll_normal_function"
+        android:orientation="vertical"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_stop_running"
-                android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="停止线程" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_stop_running"
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="停止线程" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_add"
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:gravity="center"
+                    android:layout_height="50dp"
+                    android:text="添加任务" />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_add"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
                 android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:gravity="center"
-                android:layout_height="50dp"
-                android:text="添加任务" />
-        </RelativeLayout>
-    </LinearLayout>
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_start"
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="接受任务" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <Button
+                    android:id="@+id/btn_end"
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="拒绝任务" />
+            </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_start"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
                 android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="接受任务" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_test"
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="查看心跳" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_look"
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="查看任务" />
+            </RelativeLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:visibility="visible"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_end"
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
                 android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="拒绝任务" />
-        </RelativeLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_test"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_reset"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:gravity="center"
+                    android:text="检查状态" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_weight="1"
+                android:padding="3dp"
                 android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="查看心跳" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_look"
-                android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="查看任务" />
-        </RelativeLayout>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_margin="10dp"
-        android:visibility="visible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_reset"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:gravity="center"
-                android:text="检查状态" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_weight="1"
-            android:padding="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_exc_cmd"
-                android:layout_width="match_parent"
-                android:textSize="14sp"
-                android:background="@drawable/btn_click_selector"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="执行命令" />
-        </RelativeLayout>
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btn_exc_cmd"
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:background="@drawable/btn_click_selector"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:text="执行命令" />
+            </RelativeLayout>
 
 
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

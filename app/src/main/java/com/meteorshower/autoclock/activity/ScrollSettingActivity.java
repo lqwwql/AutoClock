@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 import com.hjq.toast.Toaster;
@@ -96,6 +97,10 @@ public class ScrollSettingActivity extends BaseActivity {
     LinearLayout llScrollDistance;
     @BindView(R.id.ll_random_time)
     LinearLayout llRandomTime;
+    @BindView(R.id.rl_custom)
+    RelativeLayout rlCustom;
+    @BindView(R.id.et_scroll_times)
+    EditText etCustomTimes;
     @BindView(R.id.btn_operation)
     Button btnOperation;
 
@@ -118,7 +123,8 @@ public class ScrollSettingActivity extends BaseActivity {
     private int clickY = 0;
     private int clickTimes = 0;
     private int scrollType = 0;//滑动时间设置 0-简单 1-详细
-    private int scrollTimeSelect = 0;//简单时间选择 0-15秒 1-30秒
+    private int scrollTimeSelect = 0;//简单时间选择 0-15秒 1-30秒 2-自定义时间
+    private int customTimes = 0;//自定义滑动时间
     private List<Point> trackList = new ArrayList<>();
 
     @Override
@@ -133,9 +139,9 @@ public class ScrollSettingActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        scrollTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, 100 * 1000, SharedPreferencesUtil.SCROLL_CONFIG);
+        scrollTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, 300, SharedPreferencesUtil.SCROLL_CONFIG);
         scrollDuration = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, 10, SharedPreferencesUtil.SCROLL_CONFIG);
-        slideDuration = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, 500, SharedPreferencesUtil.SCROLL_CONFIG);
+        slideDuration = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, 200, SharedPreferencesUtil.SCROLL_CONFIG);
         isRandomTime = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.IS_RANDOM_TIME_KEY, false, SharedPreferencesUtil.SCROLL_CONFIG);
         direction = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
         finishOp = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.FINISH_OP_KEY, 1, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -150,6 +156,7 @@ public class ScrollSettingActivity extends BaseActivity {
         clickTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.CONTINUE_TIMES_KEY, 0, SharedPreferencesUtil.SCROLL_CONFIG);
         scrollType = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TYPE, 0, SharedPreferencesUtil.SCROLL_CONFIG);
         scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+        customTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_CUSTOM_TIMES, 0, SharedPreferencesUtil.SCROLL_CONFIG);
 
         etTimes.setText(scrollTimes + "");
         etDurations.setText(scrollDuration + "");
@@ -383,7 +390,7 @@ public class ScrollSettingActivity extends BaseActivity {
                 llTimerType.setVisibility(View.GONE);
                 llRandomTime.setVisibility(View.GONE);
                 llCheckJump.setVisibility(View.GONE);
-                setSelectTime(scrollTimeSelect);
+                setSelectTime(scrollTimeSelect, 0);
                 break;
             case 1:
                 rgScrollType.check(R.id.rb_complex);
@@ -407,11 +414,12 @@ public class ScrollSettingActivity extends BaseActivity {
                         llRandomTime.setVisibility(View.GONE);
                         llCheckJump.setVisibility(View.GONE);
                         scrollType = 0;
-                        setSelectTime(scrollTimeSelect);
+                        setSelectTime(scrollTimeSelect, 0);
                         break;
                     case R.id.rb_complex:
                         scrollType = 1;
                         llScrollSimple.setVisibility(View.GONE);
+                        rlCustom.setVisibility(View.GONE);
                         llScrollComplex.setVisibility(View.VISIBLE);
                         llScrollDistance.setVisibility(View.VISIBLE);
                         llTimerType.setVisibility(View.VISIBLE);
@@ -426,23 +434,36 @@ public class ScrollSettingActivity extends BaseActivity {
         switch (scrollTimeSelect) {
             case 0:
                 rgScrollTimeSelect.check(R.id.rb_time_15);
+                rlCustom.setVisibility(View.GONE);
                 break;
             case 1:
                 rgScrollTimeSelect.check(R.id.rb_time_30);
+                rlCustom.setVisibility(View.GONE);
+                break;
+            case 2:
+                rgScrollTimeSelect.check(R.id.rb_time_custom);
+                rlCustom.setVisibility(View.VISIBLE);
                 break;
         }
+        etCustomTimes.setText(customTimes + "");
         rgScrollTimeSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId) {
                     case R.id.rb_time_15:
                         scrollTimeSelect = 0;
+                        rlCustom.setVisibility(View.GONE);
                         break;
                     case R.id.rb_time_30:
                         scrollTimeSelect = 1;
+                        rlCustom.setVisibility(View.GONE);
+                        break;
+                    case R.id.rb_time_custom:
+                        scrollTimeSelect = 2;
+                        Toaster.show("请填写时间并保存");
                         break;
                 }
-                setSelectTime(scrollTimeSelect);
+                setSelectTime(scrollTimeSelect, 0);
                 SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, scrollTimeSelect, SharedPreferencesUtil.SCROLL_CONFIG);
             }
         });
@@ -468,7 +489,7 @@ public class ScrollSettingActivity extends BaseActivity {
         isStop = true;
     }
 
-    @OnClick({R.id.btn_operation, R.id.tv_back, R.id.btn_save})
+    @OnClick({R.id.btn_operation, R.id.tv_back, R.id.btn_save, R.id.btn_reset})
     public void doClick(View view) {
         switch (view.getId()) {
             case R.id.btn_operation:
@@ -479,6 +500,9 @@ public class ScrollSettingActivity extends BaseActivity {
                 break;
             case R.id.btn_save:
                 saveValue(true);
+                break;
+            case R.id.btn_reset:
+                resetValue();
                 break;
         }
     }
@@ -549,6 +573,9 @@ public class ScrollSettingActivity extends BaseActivity {
                     break;
                 case 1:
                     rgScrollTimeSelect.check(R.id.rb_time_30);
+                    break;
+                case 2:
+                    rgScrollTimeSelect.check(R.id.rb_time_custom);
                     break;
             }
         }
@@ -626,6 +653,14 @@ public class ScrollSettingActivity extends BaseActivity {
             clickTimes = Integer.parseInt(etContinueTimes.getText().toString());
         }
 
+        if (scrollTimeSelect == 2 && !StringUtils.isEmptyOrNull(etCustomTimes.getText().toString())) {
+            customTimes = Integer.parseInt(etCustomTimes.getText().toString());
+            SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_CUSTOM_TIMES, customTimes, SharedPreferencesUtil.SCROLL_CONFIG);
+            etTimes.setText(customTimes + "");
+            etDurations.setText("1");
+            etSlideDurations.setText("1200");
+        }
+
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_KEY, scrollTimes, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DURATION_KEY, scrollDuration, SharedPreferencesUtil.SCROLL_CONFIG);
         SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SLIDE_DURATION_KEY, slideDuration, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -655,19 +690,33 @@ public class ScrollSettingActivity extends BaseActivity {
         }
     }
 
-    private void setSelectTime(int selectType){
-        switch (selectType){
+    private void setSelectTime(int selectType, int value) {
+        switch (selectType) {
             case 0:
                 etTimes.setText("3");
                 etDurations.setText("6");
                 etSlideDurations.setText("6200");
+                rlCustom.setVisibility(View.GONE);
                 break;
             case 1:
                 etTimes.setText("4");
                 etDurations.setText("8");
                 etSlideDurations.setText("8200");
+                rlCustom.setVisibility(View.GONE);
+                break;
+            case 2:
+                rlCustom.setVisibility(View.VISIBLE);
                 break;
         }
+        saveValue(true);
+    }
+
+    private void resetValue() {
+        rgScrollTimeSelect.check(R.id.rb_time_15);
+        etTimes.setText("300");
+        etDurations.setText("10");
+        etSlideDurations.setText("200");
+
         saveValue(true);
     }
 

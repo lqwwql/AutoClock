@@ -29,6 +29,9 @@ import java.util.Random;
 import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_BACK;
 import static android.accessibilityservice.AccessibilityService.GLOBAL_ACTION_HOME;
 
+/**
+ * 自动点击/滑动工具类
+ */
 public class AutoClickUtil {
 
     private static AutoClickUtil instance;
@@ -159,7 +162,7 @@ public class AutoClickUtil {
             case 1:
             case 5:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    startX = AppConstant.ScreenWidth * 6 / 8;
+                    startX = (AppConstant.ScreenWidth * 6 / 8) - (AppConstant.ScreenWidth / 10);
                     startY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
                     endX = AppConstant.ScreenWidth * 6 / 8;
                     endY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
@@ -172,7 +175,7 @@ public class AutoClickUtil {
             case 2:
             case 6:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    startX = AppConstant.ScreenWidth * 6 / 8;
+                    startX = (AppConstant.ScreenWidth * 6 / 8) - (AppConstant.ScreenWidth / 10);
                     startY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
                     endX = AppConstant.ScreenWidth * 6 / 8;
                     endY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
@@ -185,7 +188,7 @@ public class AutoClickUtil {
             case 3:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
                     startX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
-                    startY = AppConstant.ScreenHeight / 2;
+                    startY = (AppConstant.ScreenHeight / 2) - (AppConstant.ScreenHeight / 20) ;
                     endX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
                     endY = AppConstant.ScreenHeight / 2;
                 }
@@ -194,7 +197,7 @@ public class AutoClickUtil {
             case 4:
                 if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
                     startX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
-                    startY = AppConstant.ScreenHeight / 2;
+                    startY = (AppConstant.ScreenHeight / 2) - (AppConstant.ScreenHeight / 20) ;
                     endX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
                     endY = AppConstant.ScreenHeight / 2;
                 }
@@ -314,7 +317,7 @@ public class AutoClickUtil {
         path.moveTo(dataList.get(0).x, dataList.get(0).y);
         for (int i = 1; i < dataList.size(); i++) {
             //需要滑动的位置，如从中心点滑到屏幕 的顶部
-            Log.d(AppConstant.TAG,"mockSwipeLine x="+dataList.get(i).x+" y="+dataList.get(i).y);
+            Log.d(AppConstant.TAG, "mockSwipeLine x=" + dataList.get(i).x + " y=" + dataList.get(i).y);
             path.lineTo(dataList.get(i).x, dataList.get(i).y);
             path.moveTo(dataList.get(i).x, dataList.get(i).y);
         }
