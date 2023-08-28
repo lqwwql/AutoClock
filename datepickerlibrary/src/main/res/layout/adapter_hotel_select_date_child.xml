@@ -32,7 +32,7 @@
         android:visibility="visible"
         tools:ignore="SmallSp" />
 
-    <com.atuan.datepickerlibrary.LineTextview
+    <com.hw.datepickerlibrary.view.LineTextview
         android:id="@+id/tv_dateDel"
         android:visibility="gone"
         android:gravity="center"

@@ -1,11 +1,10 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
 
 android {
     compileSdkVersion 31
     defaultConfig {
-        applicationId "com.hw.datepickerlibrary"
         minSdkVersion 24
         targetSdkVersion 31
         versionCode 1
