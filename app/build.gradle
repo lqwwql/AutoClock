@@ -49,6 +49,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':datepickerlibrary')
+
     implementation 'androidx.multidex:multidex:2.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 //    implementation 'androidx.cardview:cardview:1.0.0'
