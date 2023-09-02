@@ -2,6 +2,7 @@ package com.meteorshower.autoclock.activity;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Build;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -23,6 +24,7 @@ import com.meteorshower.autoclock.event.ScrollMenuEvent;
 import com.meteorshower.autoclock.event.ScrollTypeChangeEvent;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AutoClickUtil;
+import com.meteorshower.autoclock.util.NotchScreenUtils;
 import com.meteorshower.autoclock.util.SharedPreferencesUtil;
 import com.meteorshower.autoclock.util.StringUtils;
 import com.meteorshower.autoclock.view.FloatingViewManager;
@@ -98,7 +100,7 @@ public class ScrollSettingActivity extends BaseActivity {
     @BindView(R.id.ll_random_time)
     LinearLayout llRandomTime;
     @BindView(R.id.rl_custom)
-    RelativeLayout rlCustom;
+    LinearLayout rlCustom;
     @BindView(R.id.et_scroll_times)
     EditText etCustomTimes;
     @BindView(R.id.btn_operation)

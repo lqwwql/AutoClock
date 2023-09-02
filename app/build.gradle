@@ -96,4 +96,5 @@ dependencies {
     //greendao框架
     implementation 'org.greenrobot:greendao:3.3.0'
     implementation 'org.greenrobot:greendao-generator:3.3.0'
+    implementation 'com.google.android.material:material:1.2.1'
 }

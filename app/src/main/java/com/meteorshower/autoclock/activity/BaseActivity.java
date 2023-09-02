@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.meteorshower.autoclock.util.StatusBarUtil;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -27,6 +29,8 @@ public abstract class BaseActivity extends Activity {
             lp.layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
             getWindow().setAttributes(lp);
         }
+        //设置状态栏透明
+//        StatusBarUtil.setTranslucentStatus(this);
         setContentView(getLayoutID());
         unbinder = ButterKnife.bind(this);
         initView();

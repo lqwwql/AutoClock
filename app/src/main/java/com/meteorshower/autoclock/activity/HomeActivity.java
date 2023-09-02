@@ -3,15 +3,25 @@ package com.meteorshower.autoclock.activity;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import com.hjq.toast.Toaster;
 import com.hw.datepickerlibrary.util.CalendarUtil;
@@ -24,9 +34,11 @@ import com.meteorshower.autoclock.entity.ActionMode;
 import com.meteorshower.autoclock.greendao.ActionModeDbHelper;
 import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
+import com.meteorshower.autoclock.util.AnimUtils;
 import com.meteorshower.autoclock.util.AutoClickUtil;
 import com.meteorshower.autoclock.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -36,7 +48,9 @@ public class HomeActivity extends BaseActivity {
 
     private LinearLayout llCalendar;
     private LinearLayout llContent;
+    private RelativeLayout llFilter;
     private ImageView ivArrow;
+    private ListView lvContent;
     private int startGroup = -1;//全局量
     private int endGroup = -1;
     private int startChild = -1;
@@ -59,6 +73,8 @@ public class HomeActivity extends BaseActivity {
         llCalendar = findViewById(R.id.ll_calendar);
         llContent = findViewById(R.id.ll_content);
         ivArrow = findViewById(R.id.iv_arrow);
+        llFilter = findViewById(R.id.rl_filter);
+        lvContent = findViewById(R.id.lv_content);
     }
 
     @Override
@@ -74,6 +90,12 @@ public class HomeActivity extends BaseActivity {
                 }
                 ActionModeDbHelper.getInstance().insertList(actionModes);
             }
+
+            List<String> contentList = new ArrayList<>();
+            for (int i = 0; i < 100; i++) {
+                contentList.add("项目" + i);
+            }
+            lvContent.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, contentList));
         } catch (Exception e) {
 
         }
@@ -132,81 +154,58 @@ public class HomeActivity extends BaseActivity {
                 startActivity(new Intent(HomeActivity.this, ScrollSettingActivity.class));
                 break;
             case R.id.btn_test_view:
-                llContent.setPivotX(1.f);
-                llContent.setPivotY(0.f);
-                float transY = llContent.getHeight();
-                Log.d(AppConstant.TAG,"transY="+llContent.getHeight()+" "+llContent.getMeasuredHeight());
-//                ObjectAnimator translationY = ObjectAnimator.ofFloat(ivArrow, "translationY", 0f,transY);
-                ObjectAnimator animatorY = ObjectAnimator.ofFloat(llContent, "scaleY", 0f,1f);
-                ObjectAnimator animatorX = ObjectAnimator.ofFloat(llContent, "scaleX", 1f,1f);
-                AnimatorSet animationSet = new AnimatorSet();
-                animationSet.playTogether(animatorX,animatorY);
-                animationSet.setDuration(500);
-                animationSet.addListener(new Animator.AnimatorListener() {
+                final int filterHeight = llFilter.getHeight();
+                Log.d(AppConstant.TAG, "before filterHeight=" + filterHeight);
+                PropertyValuesHolder translationY = PropertyValuesHolder.ofFloat("translationY", 0f, -llContent.getHeight());
+                ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(llContent, translationY);
+                objectAnimator.setDuration(500);
+                objectAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
-                    public void onAnimationStart(Animator animation) {
-                        llContent.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        int distance = Float.valueOf((Float) animation.getAnimatedValue()).intValue();
+                        Log.d(AppConstant.TAG, "llContent translationY distance=" + distance);
+                        ViewGroup.LayoutParams params = llFilter.getLayoutParams();
+                        params.height = filterHeight + Math.abs(distance);
+                        llFilter.setLayoutParams(params);
                     }
                 });
-                animationSet.start();
-//                animator.setDuration(500);
-//                animator.start();
+                objectAnimator.start();
+
+                PropertyValuesHolder translationY1 = PropertyValuesHolder.ofFloat("translationY", 0f, -llContent.getHeight());
+                ObjectAnimator objectAnimator1 = ObjectAnimator.ofPropertyValuesHolder(llFilter, translationY1);
+                objectAnimator1.setDuration(500);
+                objectAnimator1.start();
                 break;
             case R.id.btn_test_view1:
-                llContent.setPivotX(1.f);
-                llContent.setPivotY(0.f);
-                float transY1 = llContent.getHeight();
-                Log.d(AppConstant.TAG,"transY1="+llContent.getHeight()+" "+llContent.getMeasuredHeight());
-//                ObjectAnimator translationY1 = ObjectAnimator.ofFloat(ivArrow, "translationY", 0f,-transY1);
-                ObjectAnimator animatorY1 = ObjectAnimator.ofFloat(llContent, "scaleY", 1f,0f);
-                ObjectAnimator animatorX1 = ObjectAnimator.ofFloat(llContent, "scaleX", 1f,1f);
-                AnimatorSet animationSet1 = new AnimatorSet();
-                animationSet1.playTogether(animatorX1,animatorY1);
-                animationSet1.setDuration(500);
-                animationSet1.addListener(new Animator.AnimatorListener() {
+                final int filterHeight1 = llFilter.getHeight();
+                Log.d(AppConstant.TAG, "after filterHeight1=" + filterHeight1);
+                PropertyValuesHolder translationY2 = PropertyValuesHolder.ofFloat("translationY", -llContent.getHeight(), 0f);
+                ObjectAnimator objectAnimator2 = ObjectAnimator.ofPropertyValuesHolder(llContent, translationY2);
+                objectAnimator2.setDuration(500);
+                objectAnimator2.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
-                    public void onAnimationStart(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animator animation) {
-                        llContent.setVisibility(View.GONE);
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
+                    public void onAnimationUpdate(ValueAnimator animation) {
+                        int distance = Float.valueOf((Float) animation.getAnimatedValue()).intValue();
+                        Log.d(AppConstant.TAG, "llFilter translationY distance=" + distance);
+                        ViewGroup.LayoutParams params = llFilter.getLayoutParams();
+                        params.height = filterHeight1 - Math.abs(distance + llContent.getHeight());
+                        llFilter.setLayoutParams(params);
                     }
                 });
-                animationSet1.start();
+                objectAnimator2.start();
 
-
+                PropertyValuesHolder translationY3 = PropertyValuesHolder.ofFloat("translationY", -llContent.getHeight(), 0f);
+                ObjectAnimator objectAnimator3 = ObjectAnimator.ofPropertyValuesHolder(llFilter, translationY3);
+                objectAnimator3.setDuration(500);
+                objectAnimator3.start();
                 break;
             case R.id.iv_arrow:
-                Animation animation = AnimationUtils.loadAnimation(this, isRotate ? R.anim.rotate180to0 : R.anim.rotate0to180);
-                animation.setFillAfter(true);
-                ivArrow.startAnimation(animation);
+                if (isRotate) {
+                    AnimUtils.rotateAnticlockwise(ivArrow, 1000, null);
+                } else {
+                    llContent.setVisibility(View.VISIBLE);
+                    AnimUtils.rotateClockWise(ivArrow, 1000, null);
+                }
                 isRotate = !isRotate;
                 break;
             case R.id.btn_content:

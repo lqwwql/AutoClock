@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#ffffff"
+    android:background="#ABE6C7"
     android:layout_height="match_parent">
 
 
@@ -44,46 +44,62 @@
             android:layout_height="0dp"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:paddingVertical="10dp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:paddingVertical="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/tv_floating"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="悬浮窗：" />
-
-                <Switch
-                    android:layout_toRightOf="@id/tv_floating"
-                    android:layout_marginLeft="5dp"
-                    android:text="关"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/sw_floating_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
+                    android:textSize="14sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:text="悬浮窗：" />
+                <RelativeLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <Switch
+                        android:text="关"
+                        android:gravity="right|center_vertical"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/sw_floating_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                    </Switch>
+                </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_floating_fun"
                 android:visibility="gone"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:layout_marginTop="6dp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="悬浮窗功能：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_floating_fun"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -127,21 +143,26 @@
             <LinearLayout
                 android:id="@+id/ll_floating_size"
                 android:visibility="gone"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="悬浮窗大小：" />
 
                 <EditText
                     android:id="@+id/et_floating_size"
                     android:inputType="number"
+                    android:layout_weight="1"
                     android:textSize="18sp"
                     android:background="@drawable/square_shape_black"
                     android:textColor="@color/black"
@@ -152,20 +173,25 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="滑动方式：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_scroll_type"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -196,14 +222,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="滑动时间：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_scroll_time_select"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -237,13 +268,26 @@
                 </com.meteorshower.autoclock.view.FlowRadioGroup>
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/rl_custom"
-                android:visibility="gone"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                android:layout_gravity="top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:text="自定义时间：" />
                 <EditText
                     android:id="@+id/et_scroll_times"
+                    android:layout_weight="1"
                     android:layout_toLeftOf="@id/tv_confirm"
                     android:layout_margin="5dp"
                     android:hint="请输入滑动时间s"
@@ -271,7 +315,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                 </TextView>
-            </RelativeLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_scroll_complex"
@@ -281,20 +325,25 @@
                 android:layout_height="wrap_content">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:paddingVertical="10dp"
+                    android:paddingVertical="5dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:textSize="14sp"
+                        android:gravity="right"
+                        android:layout_weight="2"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:text="滑动次数：" />
 
                     <EditText
                         android:id="@+id/et_scroll_time"
                         android:inputType="number"
+                        android:layout_weight="1"
                         android:background="@drawable/square_shape_black"
                         android:textSize="18sp"
                         android:textColor="@color/black"
@@ -304,20 +353,25 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:paddingVertical="10dp"
+                    android:paddingVertical="5dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:textSize="14sp"
+                        android:gravity="right"
+                        android:layout_weight="2"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:text="滑动间隔(秒)：" />
 
                     <EditText
                         android:id="@+id/et_scroll_duration"
                         android:inputType="number"
+                        android:layout_weight="1"
                         android:background="@drawable/square_shape_black"
                         android:textSize="18sp"
                         android:textColor="@color/black"
@@ -327,19 +381,24 @@
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:paddingVertical="10dp"
+                    android:paddingVertical="5dp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:textSize="14sp"
+                        android:gravity="right"
+                        android:layout_weight="2"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:layout_height="wrap_content"
                         android:text="持续时间(毫秒)：" />
 
                     <EditText
                         android:id="@+id/et_slide_duration"
+                        android:layout_weight="1"
                         android:inputType="number"
                         android:background="@drawable/square_shape_black"
                         android:textSize="18sp"
@@ -352,18 +411,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="top"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="6dp"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="滑动方向：" />
 
                 <RelativeLayout
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -437,20 +502,25 @@
                 android:id="@+id/ll_scroll_distance"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="滑动距离：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_scroll_distance"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -479,20 +549,25 @@
                 android:id="@+id/ll_random_time"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="增加随机时间：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_random_time"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -519,20 +594,26 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="top"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:layout_marginTop="6dp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="结束后动作：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_finish_op"
                     android:orientation="vertical"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -581,19 +662,24 @@
                 android:id="@+id/ll_timer_type"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="定时方式：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_timer_type"
+                    android:layout_weight="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -622,20 +708,25 @@
                 android:id="@+id/ll_check_jump"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="检测跳过：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_jump"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -662,20 +753,25 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="返回是否执行：" />
 
                 <com.meteorshower.autoclock.view.FlowRadioGroup
                     android:id="@+id/rg_return_continue"
                     android:orientation="horizontal"
+                    android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -702,13 +798,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:textSize="14sp"
                     android:layout_height="wrap_content"
                     android:text="返回执行次数：" />
@@ -717,6 +817,7 @@
                     android:id="@+id/et_continue_times"
                     android:inputType="number"
                     android:textSize="18sp"
+                    android:layout_weight="1"
                     android:background="@drawable/square_shape_black"
                     android:textColor="@color/black"
                     android:padding="5dp"
@@ -726,50 +827,60 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:paddingVertical="10dp"
+                android:paddingVertical="5dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:textSize="14sp"
+                    android:gravity="right"
+                    android:layout_weight="2"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
                     android:layout_height="wrap_content"
                     android:text="返回点击坐标：" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_height="wrap_content"
-                    android:text="x：" />
-
-                <EditText
-                    android:id="@+id/et_continue_x"
-                    android:inputType="number"
-                    android:textSize="18sp"
-                    android:background="@drawable/square_shape_black"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
-                    android:layout_weight="1"
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:textSize="14sp"
-                    android:layout_height="wrap_content"
-                    android:text=" y：" />
-
-                <EditText
-                    android:id="@+id/et_continue_y"
-                    android:inputType="number"
-                    android:background="@drawable/square_shape_black"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:padding="5dp"
                     android:layout_weight="1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:text="x：" />
+
+                    <EditText
+                        android:id="@+id/et_continue_x"
+                        android:inputType="number"
+                        android:textSize="18sp"
+                        android:background="@drawable/square_shape_black"
+                        android:textColor="@color/black"
+                        android:padding="5dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="14sp"
+                        android:layout_height="wrap_content"
+                        android:text=" y：" />
+
+                    <EditText
+                        android:id="@+id/et_continue_y"
+                        android:inputType="number"
+                        android:background="@drawable/square_shape_black"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:padding="5dp"
+                        android:layout_weight="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

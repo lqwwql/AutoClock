@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="#fff"
     tools:context=".activity.HomeActivity">
@@ -106,36 +107,97 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/ll_content"
-        android:background="@color/text"
-        android:visibility="gone"
         android:orientation="vertical"
+        android:id="@+id/cl_main"
+        android:visibility="visible"
+        android:background="@color/action_bar_background"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_content"
-            android:background="@color/white"
-            android:layout_gravity="center"
-            android:text="内容测试"
-            android:padding="10dp"
-            android:layout_margin="10dp"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_content"
+            android:background="@color/text"
+            android:visibility="visible"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/rl_filter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        </Button>
+
+            <Button
+                android:id="@+id/btn_content"
+                android:background="@color/white"
+                android:layout_gravity="center"
+                android:text="内容测试"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_filter"
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ListView
+                    android:id="@+id/lv_content"
+                    android:textSize="18sp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:gravity="bottom"
+                    android:textColor="@color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                </ListView>
+            </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/iv_arrow"
-        android:layout_margin="10dp"
-        android:src="@mipmap/arrow_down"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-    </ImageView>
+    <FrameLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:background="@null"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+            </Button>
+
+            <ImageView
+                android:id="@+id/iv_arrow"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/arrow_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/ll_normal_function"

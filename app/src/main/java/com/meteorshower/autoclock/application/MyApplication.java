@@ -8,7 +8,13 @@ import android.os.Process;
 import android.view.Gravity;
 
 import com.hjq.toast.Toaster;
+import com.meteorshower.autoclock.constant.AppConstant;
 import com.meteorshower.autoclock.greendao.GreenDaoManager;
+import com.meteorshower.autoclock.util.CrashLogCatchUtils;
+import com.meteorshower.autoclock.util.IOUtils;
+import com.meteorshower.autoclock.util.UIUtils;
+
+import java.io.File;
 
 /**
  * 程序application
@@ -30,7 +36,14 @@ public class MyApplication extends Application {
         // 初始化 Toast 框架
         Toaster.init(this);
         GreenDaoManager.getInstance();
+        initCrashUtil();
     }
+
+    private void initCrashUtil(){
+        CrashLogCatchUtils.getInstance().init(this, IOUtils.getRootStoragePath(mContext) + AppConstant.DIR_LOG);
+    }
+
+
 
     public static Context getContext() {
         return mContext;
