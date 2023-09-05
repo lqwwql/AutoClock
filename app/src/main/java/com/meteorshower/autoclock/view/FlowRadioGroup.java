@@ -4,7 +4,9 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RadioGroup;
-
+/**
+ * 流式单选布局
+ * */
 public class FlowRadioGroup extends RadioGroup {
 
     public FlowRadioGroup(Context context) {

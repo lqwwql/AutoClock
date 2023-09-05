@@ -1,5 +1,6 @@
 package com.meteorshower.autoclock.view;
 
+import android.app.Service;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -58,19 +60,19 @@ public class FloatingViewManager {
 
     private FloatingViewManager(Context context) {
         this.context = context;
+        this.windowManager = getWindowManager();
     }
 
     public static FloatingViewManager getInstance(Context context) {
         if (manager == null) {
-            manager = new FloatingViewManager(context);
+            manager = new FloatingViewManager(context.getApplicationContext());
         }
         return manager;
     }
 
     public void showFloatingBall(int floatingViewSize) {
         try {
-            floatBall = new FloatingView(context, floatingViewSize, floatingViewSize);
-            windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            floatBall = new FloatingView(context.getApplicationContext(), floatingViewSize, floatingViewSize);
             if (floatBallParams == null) {
                 floatBallParams = new WindowManager.LayoutParams();
                 floatBallParams.width = floatBall.width;
@@ -161,6 +163,11 @@ public class FloatingViewManager {
 
     public void hideFloatingBall() {
         try {
+            if(windowManager == null){
+                Toaster.show("重新获取窗口管理器");
+                LogUtils.getInstance().e("windowManager is null , reload");
+                windowManager = getWindowManager();
+            }
             if (windowManager != null && floatBall != null) {
                 windowManager.removeView(floatBall);
                 floatBall = null;
@@ -176,12 +183,26 @@ public class FloatingViewManager {
 
     public void showFloatingMenu() {
         try {
+            if(windowManager == null){
+                Toaster.show("重新获取窗口管理器");
+                LogUtils.getInstance().e("windowManager is null , reload");
+                windowManager = getWindowManager();
+            }
             if (windowManager == null) {
                 return;
             }
-            floatingMenu = LayoutInflater.from(context).inflate(R.layout.floating_menu_view, null);
+            floatingMenu = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.floating_menu_view, null);
             TextView tvScroll = floatingMenu.findViewById(R.id.tv_scroll_text);
             RadioGroup scrollType = floatingMenu.findViewById(R.id.rg_scroll_time_select);
+            ImageView ivClose = floatingMenu.findViewById(R.id.iv_close);
+            ivClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toaster.show("关闭弹窗");
+                    LogUtils.getInstance().e("floatingMenu ivClose click");
+                    ((WindowManager) context.getApplicationContext().getSystemService(Service.WINDOW_SERVICE)).removeView(floatingMenu);
+                }
+            });
             int scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
             int customTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_CUSTOM_TIMES, 0, SharedPreferencesUtil.SCROLL_CONFIG);
             switch (scrollTimeSelect) {
@@ -261,8 +282,8 @@ public class FloatingViewManager {
             }
             if (floatMenuParams == null) {
                 floatMenuParams = new WindowManager.LayoutParams();
-                floatMenuParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-                floatMenuParams.height = WindowManager.LayoutParams.MATCH_PARENT;
+                floatMenuParams.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                floatMenuParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
                 floatMenuParams.gravity = Gravity.CENTER;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     floatMenuParams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
@@ -315,6 +336,11 @@ public class FloatingViewManager {
     }
 
     public void hideFloatingMenu() {
+        if(windowManager == null){
+            Toaster.show("重新获取窗口管理器");
+            LogUtils.getInstance().e("windowManager is null , reload");
+            windowManager = getWindowManager();
+        }
         if (windowManager != null && floatingMenu != null) {
             windowManager.removeView(floatingMenu);
             floatingMenu = null;
@@ -323,10 +349,15 @@ public class FloatingViewManager {
     }
 
     public void showFloatingPanel() {
+        if(windowManager == null){
+            Toaster.show("重新获取窗口管理器");
+            LogUtils.getInstance().e("windowManager is null , reload");
+            windowManager = getWindowManager();
+        }
         if (windowManager == null) {
             return;
         }
-        floatingPanel = new View(context);
+        floatingPanel = new View(context.getApplicationContext());
         if (floatPanelParams == null) {
             floatPanelParams = new WindowManager.LayoutParams();
             floatPanelParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -399,6 +430,11 @@ public class FloatingViewManager {
     }
 
     public void hideFloatingPanel() {
+        if(windowManager == null){
+            Toaster.show("重新获取窗口管理器");
+            LogUtils.getInstance().e("windowManager is null , reload");
+            windowManager = getWindowManager();
+        }
         if (windowManager != null && floatingPanel != null) {
             windowManager.removeView(floatingPanel);
             floatingPanel = null;
@@ -421,6 +457,25 @@ public class FloatingViewManager {
 
     public int getScreenWidth() {
         return windowManager.getDefaultDisplay().getWidth();
+    }
+
+    public WindowManager getWindowManager(){
+        return (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+    }
+
+    public void removeAll(){
+        if(floatBall!=null){
+            getWindowManager().removeView(floatBall);
+            floatBall = null;
+        }
+        if(floatingMenu!=null){
+            getWindowManager().removeView(floatingMenu);
+            floatingMenu = null;
+        }
+        if(floatingPanel!=null){
+            getWindowManager().removeView(floatingPanel);
+            floatingPanel = null;
+        }
     }
 
 }

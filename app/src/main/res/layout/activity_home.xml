@@ -63,6 +63,7 @@
 
     <LinearLayout
         android:layout_margin="10dp"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -109,7 +110,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/cl_main"
-        android:visibility="visible"
+        android:visibility="gone"
         android:background="@color/action_bar_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

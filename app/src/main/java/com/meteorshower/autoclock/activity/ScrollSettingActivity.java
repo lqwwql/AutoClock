@@ -512,7 +512,7 @@ public class ScrollSettingActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        FloatingViewManager.getInstance(ScrollSettingActivity.this).hideFloatingBall();
+        FloatingViewManager.getInstance(ScrollSettingActivity.this).removeAll();
         EventBus.getDefault().unregister(this);
     }
 

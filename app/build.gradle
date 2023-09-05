@@ -15,8 +15,8 @@ android {
         applicationId "com.meteorshower.autoclock"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 2
-        versionName "1.2.2"
+        versionCode 3
+        versionName "1.2.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,7 +37,7 @@ android {
         variant ->
             variant.outputs.all {
                 // 此处指定生成的apk文件名
-                outputFileName = "AutoClock.apk"
+                outputFileName = "AutoClock_${versionName}_${variant.buildType.name}.apk"
             }
     }
     greendao{
