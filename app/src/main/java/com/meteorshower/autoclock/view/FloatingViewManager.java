@@ -51,7 +51,6 @@ public class FloatingViewManager {
     private View floatingPanel;
     private WindowManager windowManager;
     public static FloatingViewManager manager;
-    private Context context;
     private WindowManager.LayoutParams floatBallParams;
     private WindowManager.LayoutParams floatMenuParams;
     private WindowManager.LayoutParams floatPanelParams;
@@ -59,20 +58,19 @@ public class FloatingViewManager {
     private List<Point> pointList;//轨迹点
 
     private FloatingViewManager(Context context) {
-        this.context = context;
         this.windowManager = getWindowManager();
     }
 
     public static FloatingViewManager getInstance(Context context) {
         if (manager == null) {
-            manager = new FloatingViewManager(context.getApplicationContext());
+            manager = new FloatingViewManager(MyApplication.getContext());
         }
         return manager;
     }
 
     public void showFloatingBall(int floatingViewSize) {
         try {
-            floatBall = new FloatingView(context.getApplicationContext(), floatingViewSize, floatingViewSize);
+            floatBall = new FloatingView(MyApplication.getContext(), floatingViewSize, floatingViewSize);
             if (floatBallParams == null) {
                 floatBallParams = new WindowManager.LayoutParams();
                 floatBallParams.width = floatBall.width;
@@ -191,7 +189,7 @@ public class FloatingViewManager {
             if (windowManager == null) {
                 return;
             }
-            floatingMenu = LayoutInflater.from(context.getApplicationContext()).inflate(R.layout.floating_menu_view, null);
+            floatingMenu = LayoutInflater.from(MyApplication.getContext()).inflate(R.layout.floating_menu_view, null);
             TextView tvScroll = floatingMenu.findViewById(R.id.tv_scroll_text);
             RadioGroup scrollType = floatingMenu.findViewById(R.id.rg_scroll_time_select);
             ImageView ivClose = floatingMenu.findViewById(R.id.iv_close);
@@ -200,7 +198,7 @@ public class FloatingViewManager {
                 public void onClick(View v) {
                     Toaster.show("关闭弹窗");
                     LogUtils.getInstance().e("floatingMenu ivClose click");
-                    ((WindowManager) context.getApplicationContext().getSystemService(Service.WINDOW_SERVICE)).removeView(floatingMenu);
+                    ((WindowManager) MyApplication.getContext().getSystemService(Service.WINDOW_SERVICE)).removeView(floatingMenu);
                 }
             });
             int scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -357,7 +355,7 @@ public class FloatingViewManager {
         if (windowManager == null) {
             return;
         }
-        floatingPanel = new View(context.getApplicationContext());
+        floatingPanel = new View(MyApplication.getContext());
         if (floatPanelParams == null) {
             floatPanelParams = new WindowManager.LayoutParams();
             floatPanelParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -460,7 +458,7 @@ public class FloatingViewManager {
     }
 
     public WindowManager getWindowManager(){
-        return (WindowManager) context.getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
+        return (WindowManager) MyApplication.getContext().getSystemService(Context.WINDOW_SERVICE);
     }
 
     public void removeAll(){
