@@ -46,9 +46,9 @@ import java.util.List;
 
 public class FloatingViewManager {
 
-    private FloatingView floatBall;
-    private View floatingMenu;
-    private View floatingPanel;
+    private FloatingView floatBall;//悬浮球
+    private View floatingMenu;//悬浮菜单
+    private View floatingPanel;//坐标采集透明窗
     private WindowManager windowManager;
     public static FloatingViewManager manager;
     private WindowManager.LayoutParams floatBallParams;
@@ -161,6 +161,7 @@ public class FloatingViewManager {
 
     public void hideFloatingBall() {
         try {
+            LogUtils.getInstance().e("hideFloatingBall windowManager="+windowManager +" floatBall="+floatBall);
             if(windowManager == null){
                 Toaster.show("重新获取窗口管理器");
                 LogUtils.getInstance().e("windowManager is null , reload");
@@ -199,6 +200,7 @@ public class FloatingViewManager {
                     Toaster.show("关闭弹窗");
                     LogUtils.getInstance().e("floatingMenu ivClose click");
                     ((WindowManager) MyApplication.getContext().getSystemService(Service.WINDOW_SERVICE)).removeView(floatingMenu);
+                    floatingMenu = null;
                 }
             });
             int scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -306,6 +308,7 @@ public class FloatingViewManager {
                     Toaster.show("请点击屏幕采集坐标");
                     collectMode = 0;
                     hideFloatingMenu();
+                    hideFloatingPanel();
                     showFloatingPanel();
                 }
             });
@@ -320,6 +323,7 @@ public class FloatingViewManager {
                     }
                     collectMode = 1;
                     hideFloatingMenu();
+                    hideFloatingPanel();
                     showFloatingPanel();
                 }
             });
@@ -329,11 +333,19 @@ public class FloatingViewManager {
                     hideFloatingMenu();
                 }
             });
+            floatingMenu.findViewById(R.id.rl_remove_all).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    removeAll();
+                }
+            });
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void hideFloatingMenu() {
+        LogUtils.getInstance().e("hideFloatingMenu windowManager="+windowManager +" floatingMenu="+floatingMenu);
         if(windowManager == null){
             Toaster.show("重新获取窗口管理器");
             LogUtils.getInstance().e("windowManager is null , reload");
@@ -355,7 +367,9 @@ public class FloatingViewManager {
         if (windowManager == null) {
             return;
         }
-        floatingPanel = new View(MyApplication.getContext());
+//        floatingPanel = new View(MyApplication.getContext());
+        floatingPanel =  LayoutInflater.from(MyApplication.getContext()).inflate(R.layout.floating_panel_view, null);
+        TrackView trackView = floatingPanel.findViewById(R.id.custom_track_view);
         if (floatPanelParams == null) {
             floatPanelParams = new WindowManager.LayoutParams();
             floatPanelParams.width = WindowManager.LayoutParams.MATCH_PARENT;
@@ -369,6 +383,17 @@ public class FloatingViewManager {
             floatPanelParams.flags = WindowManager.LayoutParams.FLAG_FULLSCREEN;
             floatPanelParams.format = PixelFormat.RGBA_8888;
         }
+        floatingPanel.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    Toaster.show("开始执行滑动");
+                    EventBus.getDefault().post(new ScrollMenuEvent());
+//                    ((WindowManager) MyApplication.getContext().getSystemService(Context.WINDOW_SERVICE)).removeView(floatingPanel);
+                }catch (Exception e){
+                }
+            }
+        });
         windowManager.addView(floatingPanel, floatPanelParams);
         floatingPanel.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -380,13 +405,15 @@ public class FloatingViewManager {
                     case MotionEvent.ACTION_DOWN:
                         if (collectMode == 1) {
                             pointList.add(new Point(clickX, clickY));
-                            drawLineView(pointList, floatingPanel);
+//                            drawLineView(pointList, floatingPanel);
+                            trackView.setTrackPoints(pointList);
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (collectMode == 1) {
                             pointList.add(new Point(clickX, clickY));
-                            drawLineView(pointList, floatingPanel);
+//                            drawLineView(pointList, floatingPanel);
+                            trackView.setTrackPoints(pointList);
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -395,15 +422,16 @@ public class FloatingViewManager {
                             hideFloatingPanel();
                             Toaster.show("已采集屏幕坐标[" + clickX + "," + clickY + "]");
                         } else {
-                            drawLineView(pointList, floatingPanel);
+                            trackView.setTrackPoints(pointList);
+//                            drawLineView(pointList, floatingPanel);
                             EventBus.getDefault().post(new CollectMenuEvent(collectMode, pointList));
                             Log.d(AppConstant.TAG, "onTouch ACTION_UP pointList=" + pointList.size());
                             hideFloatingPanel();
-                            Toaster.show("已采集屏幕轨迹");
+                            Toaster.show("已采集屏幕"+pointList.size()+"个轨迹点");
                         }
                         break;
                 }
-                return true;
+                return false;
             }
         });
     }
@@ -428,6 +456,7 @@ public class FloatingViewManager {
     }
 
     public void hideFloatingPanel() {
+        LogUtils.getInstance().e("hideFloatingPanel windowManager="+windowManager +" floatingPanel="+floatingPanel);
         if(windowManager == null){
             Toaster.show("重新获取窗口管理器");
             LogUtils.getInstance().e("windowManager is null , reload");

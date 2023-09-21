@@ -494,6 +494,15 @@
                             android:layout_height="wrap_content">
                         </RadioButton>
 
+                        <RadioButton
+                            android:id="@+id/rb_trace"
+                            android:layout_marginLeft="5dp"
+                            android:textSize="14sp"
+                            android:text="轨迹"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                        </RadioButton>
+
                     </com.meteorshower.autoclock.view.FlowRadioGroup>
                 </RelativeLayout>
             </LinearLayout>

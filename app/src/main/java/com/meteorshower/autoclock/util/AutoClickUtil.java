@@ -23,6 +23,7 @@ import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -156,61 +157,64 @@ public class AutoClickUtil {
         }
         scrollCount++;
 
-        int startX = 260, startY = 820, endX = 260, endY = 260;
-        String directionStr = "";
-        switch (direction) {
-            case 1:
-            case 5:
-                if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    startX = (AppConstant.ScreenWidth * 6 / 8) - (AppConstant.ScreenWidth / 10);
-                    startY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
-                    endX = AppConstant.ScreenWidth * 6 / 8;
-                    endY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
-                }
-                directionStr = "向上";
-                if (direction == 5) {
-                    direction = 6;
-                }
-                break;
-            case 2:
-            case 6:
-                if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    startX = (AppConstant.ScreenWidth * 6 / 8) - (AppConstant.ScreenWidth / 10);
-                    startY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
-                    endX = AppConstant.ScreenWidth * 6 / 8;
-                    endY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
-                }
-                directionStr = "向下";
-                if (direction == 6) {
-                    direction = 5;
-                }
-                break;
-            case 3:
-                if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    startX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
-                    startY = (AppConstant.ScreenHeight / 2) - (AppConstant.ScreenHeight / 20) ;
-                    endX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
-                    endY = AppConstant.ScreenHeight / 2;
-                }
-                directionStr = "向左";
-                break;
-            case 4:
-                if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
-                    startX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
-                    startY = (AppConstant.ScreenHeight / 2) - (AppConstant.ScreenHeight / 20) ;
-                    endX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
-                    endY = AppConstant.ScreenHeight / 2;
-                }
-                directionStr = "向右";
-                break;
-        }
-        Toaster.show("执行" + directionStr + "滑动,间隔:" + scrollDuration + ",剩余次数:" + (scrollTimes - scrollCount));
-        int randomX = (new Random().nextInt(2) == 0 ? -getRandomXY() : +getRandomXY());
-        if (trackList != null && !trackList.isEmpty()) {
-            mockSwipeLine(trackList, 0, scrollDuration);
+        //轨迹滑动
+        if (direction == 7 && trackList != null && !trackList.isEmpty()) {
+            mockSwipeLine(trackList, 0, slideDuration);
         } else {
+            //定向滑动
+            int startX = 260, startY = 820, endX = 260, endY = 260;
+            String directionStr = "";
+            switch (direction) {
+                case 1:
+                case 5:
+                    if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
+                        startX = (AppConstant.ScreenWidth * 6 / 8) - (AppConstant.ScreenWidth / 10);
+                        startY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
+                        endX = AppConstant.ScreenWidth * 6 / 8;
+                        endY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
+                    }
+                    directionStr = "向上";
+                    if (direction == 5) {
+                        direction = 6;
+                    }
+                    break;
+                case 2:
+                case 6:
+                    if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
+                        startX = (AppConstant.ScreenWidth * 6 / 8) - (AppConstant.ScreenWidth / 10);
+                        startY = (range == 1 ? AppConstant.ScreenHeight / 7 : AppConstant.ScreenHeight * 3 / 7);
+                        endX = AppConstant.ScreenWidth * 6 / 8;
+                        endY = (range == 1 ? AppConstant.ScreenHeight * 6 / 7 : AppConstant.ScreenHeight * 4 / 7);
+                    }
+                    directionStr = "向下";
+                    if (direction == 6) {
+                        direction = 5;
+                    }
+                    break;
+                case 3:
+                    if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
+                        startX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
+                        startY = (AppConstant.ScreenHeight / 2) - (AppConstant.ScreenHeight / 20);
+                        endX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
+                        endY = AppConstant.ScreenHeight / 2;
+                    }
+                    directionStr = "向左";
+                    break;
+                case 4:
+                    if (AppConstant.ScreenHeight > 0 && AppConstant.ScreenWidth > 0) {
+                        startX = (range == 1 ? AppConstant.ScreenWidth / 7 : AppConstant.ScreenWidth * 3 / 7);
+                        startY = (AppConstant.ScreenHeight / 2) - (AppConstant.ScreenHeight / 20);
+                        endX = (range == 1 ? AppConstant.ScreenWidth * 6 / 7 : AppConstant.ScreenWidth * 4 / 7);
+                        endY = AppConstant.ScreenHeight / 2;
+                    }
+                    directionStr = "向右";
+                    break;
+            }
+            Toaster.show("执行" + directionStr + "滑动,间隔:" + scrollDuration + ",剩余次数:" + (scrollTimes - scrollCount));
+            int randomX = (new Random().nextInt(2) == 0 ? -getRandomXY() : +getRandomXY());
             mockSwipe(startX + randomX, startY + getRandomXY(), endX + randomX, endY + getRandomXY(), 0, slideDuration);
         }
+
         if (timerType == 1) {
             sendDelayMessage();
         } else {
@@ -312,23 +316,43 @@ public class AutoClickUtil {
             Toaster.show("轨迹点为空");
             return;
         }
+
+        //只取9个点和最终点
+        List<Point> lastData = new ArrayList<>();
+        if (dataList.size() > 10) {
+            int dis = dataList.size() / 10;
+            Log.d(AppConstant.TAG, "滑动轨迹点 dis=" + dis);
+            for (int i = 0; i * dis < dataList.size() - 1; i++) {
+                lastData.add(dataList.get(i * dis));
+            }
+            lastData.add(dataList.get(dataList.size() - 1));
+        } else {
+            lastData.addAll(dataList);
+        }
+        Log.d(AppConstant.TAG, "滑动轨迹点 dataList="+dataList.size()+" lastData=" + lastData.size() +" duration="+duration);
+
         final Path path = new Path();
         //滑动的起始位置，例如屏幕的中心点X、Y
-        path.moveTo(dataList.get(0).x, dataList.get(0).y);
-        for (int i = 1; i < dataList.size(); i++) {
-            //需要滑动的位置，如从中心点滑到屏幕 的顶部
-            Log.d(AppConstant.TAG, "mockSwipeLine x=" + dataList.get(i).x + " y=" + dataList.get(i).y);
-            path.lineTo(dataList.get(i).x, dataList.get(i).y);
-            path.moveTo(dataList.get(i).x, dataList.get(i).y);
+        int startX = lastData.get(0).x;
+        int startY = lastData.get(0).y;
+        path.moveTo(startX, startY);
+        for (int i = 1; i < lastData.size(); i++) {
+            //结束位置
+            int endX = lastData.get(i).x;
+            int endY = lastData.get(i).y;
+            //距离大于3则绘制
+            if (Math.abs(startX - endX) > 3 || Math.abs(startY - endY) > 3) {
+                //绘制贝塞尔曲线
+                path.quadTo(startX, startY, endX, endY);
+            }
+            startX = endX;
+            startY = endY;
         }
-
 
         GestureDescription.Builder builder = new GestureDescription.Builder();
         builder.addStroke(new GestureDescription.StrokeDescription(path, startTime, duration));
 
         GestureDescription gestureDescription = builder.build();
-        //移动到中心点，100ms后开始滑动，滑动的时间持续400ms，可以调整
-        //如果滑动成功，会回调如下函数，可以在下面记录是否滑动成功，滑动成功或失败都要关闭该路径笔
         service.dispatchGesture(gestureDescription, new AccessibilityService.GestureResultCallback() {
             @Override
             public void onCompleted(GestureDescription gestureDescription) {

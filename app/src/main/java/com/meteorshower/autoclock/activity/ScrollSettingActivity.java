@@ -12,6 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.hjq.toast.Toaster;
 import com.meteorshower.autoclock.R;
 import com.meteorshower.autoclock.application.MyApplication;
@@ -159,6 +161,14 @@ public class ScrollSettingActivity extends BaseActivity {
         scrollType = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TYPE, 0, SharedPreferencesUtil.SCROLL_CONFIG);
         scrollTimeSelect = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TIME_SELECT, 0, SharedPreferencesUtil.SCROLL_CONFIG);
         customTimes = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_CUSTOM_TIMES, 0, SharedPreferencesUtil.SCROLL_CONFIG);
+        String traceStr = SharedPreferencesUtil.getDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TRACE, "", SharedPreferencesUtil.SCROLL_CONFIG);
+        if (!StringUtils.isEmptyOrNull(traceStr)) {
+            List<Point> traceData = new Gson().fromJson(traceStr, new TypeToken<List<Point>>() {
+            }.getType());
+            if (traceData != null) {
+                trackList.addAll(traceData);
+            }
+        }
 
         etTimes.setText(scrollTimes + "");
         etDurations.setText(scrollDuration + "");
@@ -188,6 +198,9 @@ public class ScrollSettingActivity extends BaseActivity {
             case 5:
                 rgDirection.check(R.id.rb_up_down);
                 break;
+            case 7:
+                rgDirection.check(R.id.rb_trace);
+                break;
         }
         rgDirection.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -207,6 +220,9 @@ public class ScrollSettingActivity extends BaseActivity {
                         break;
                     case R.id.rb_up_down:
                         direction = 5;
+                        break;
+                    case R.id.rb_trace:
+                        direction = 7;
                         break;
                 }
                 SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_DIRECTION_KEY, direction, SharedPreferencesUtil.SCROLL_CONFIG);
@@ -526,6 +542,7 @@ public class ScrollSettingActivity extends BaseActivity {
             } else if (floatingViewFun == 3) {
                 AutoClickUtil.getInstance().showNodes();
             } else if (floatingViewFun == 4) {
+                FloatingViewManager.getInstance(ScrollSettingActivity.this).hideFloatingMenu();
                 FloatingViewManager.getInstance(ScrollSettingActivity.this).showFloatingMenu();
             }
         } else if (event != null && event.getType() == 2) {
@@ -561,6 +578,8 @@ public class ScrollSettingActivity extends BaseActivity {
                 etContinueY.setText(event.getClickY() + "");
             } else {
                 trackList.addAll(event.getTrackList());
+                String traceStr = new Gson().toJson(trackList);
+                SharedPreferencesUtil.saveDataToSharedPreferences(MyApplication.getContext(), SharedPreferencesUtil.SCROLL_TRACE, traceStr, SharedPreferencesUtil.SCROLL_CONFIG);
             }
             saveValue(false);
         }

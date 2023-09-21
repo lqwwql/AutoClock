@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/ll_content"
+    android:background="@color/transparency_black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.meteorshower.autoclock.view.TrackView
+        android:id="@+id/custom_track_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.meteorshower.autoclock.view.TrackView>
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_gravity="center|top"
+        android:src="@drawable/clean_edit"
+        android:layout_width="30dp"
+        android:layout_height="30dp">
+    </ImageView>
+
+</FrameLayout>

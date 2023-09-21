@@ -1,7 +1,11 @@
 package com.meteorshower.autoclock.util;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.widget.EditText;
+
+import com.meteorshower.autoclock.application.MyApplication;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -428,6 +432,18 @@ public class StringUtils {
             return true;
         }
         return false;
+    }
+
+    public static String getAppVersion(){
+         String versionName = "";
+        try {
+            PackageInfo info = MyApplication.getContext().getPackageManager().getPackageInfo(MyApplication.getContext().getPackageName(), PackageManager.GET_ACTIVITIES);
+            if (!StringUtils.isEmptyOrNull(info.versionName)) {
+                versionName = info.versionName;
+            }
+        } catch (Exception e) {
+        }
+        return versionName;
     }
 
 }

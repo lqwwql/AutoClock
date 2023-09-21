@@ -67,7 +67,7 @@
 
         <LinearLayout
             android:layout_margin="10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -346,6 +346,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll_view_list"
+        android:visibility="gone"
         android:orientation="vertical"
         android:layout_gravity="bottom"
         android:background="@drawable/shape_top_left_right_corner_bg"

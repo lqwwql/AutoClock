@@ -35,6 +35,7 @@ import com.meteorshower.autoclock.service.ControllerAccessibilityService;
 import com.meteorshower.autoclock.util.AccessibilityUtils;
 import com.meteorshower.autoclock.util.AnimUtils;
 import com.meteorshower.autoclock.util.AutoClickUtil;
+import com.meteorshower.autoclock.util.LogUtils;
 import com.meteorshower.autoclock.util.StringUtils;
 
 import java.util.ArrayList;
@@ -42,7 +43,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.OnClick;
-
+/**
+ * 应用主界面
+ * */
 public class HomeActivity extends BaseActivity {
 
     private final static int MOVE_VIEW = 1001;
@@ -75,7 +78,9 @@ public class HomeActivity extends BaseActivity {
     protected void initView() {
         if (ControllerAccessibilityService.getInstance() == null) {
             Toaster.show("无障碍服务未启动");
+            LogUtils.getInstance().e("HomeActivity 无障碍服务未启动 version="+StringUtils.getAppVersion());
         } else {
+            LogUtils.getInstance().e("HomeActivity 无障碍服务已启动"+StringUtils.getAppVersion());
             Toaster.show("无障碍服务已启动");
         }
         llContent = findViewById(R.id.ll_content);

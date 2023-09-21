@@ -78,6 +78,7 @@ public class ControllerAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
         int eventType = event.getEventType();
+        Log.d("onAccessibilityEvent","eventType="+eventType +" event="+event);
         switch (eventType) {
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED:
                 break;

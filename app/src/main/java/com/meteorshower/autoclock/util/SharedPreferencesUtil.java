@@ -29,6 +29,7 @@ public class SharedPreferencesUtil {
     public static final String SCROLL_TIME_SELECT = "SCROLL_TIME_SELECT";
     public static final String SCROLL_END_ACTION = "SCROLL_END_ACTION";
     public static final String SCROLL_CUSTOM_TIMES = "SCROLL_CUSTOM_TIMES";
+    public static final String SCROLL_TRACE = "SCROLL_TRACE";
 
     //String的保存及获取
     public static void saveDataToSharedPreferences(Context context,
